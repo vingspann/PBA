@@ -33,18 +33,18 @@ we want present in the Battling page of our Pokemon Battling Application (PBA). 
 the Battle Log, Pokemon Status Frame, and Command Button Interface.
 
 The Login/Team Creation page is still being designed and will be fully implemented for Handin-2.
-This page will allow the user to login using Facebook, and will use their 
+This page will allow the user to login using Facebook, and will use their decisions to create a team
+of Pokemon to battle with on the Battle Page.
 
-The added elements are currently placeholders, with Command Buttons simply printing to the
-Battle Log, due to Spring Break taking up a great deal of the time in between the project
-being assigned and Handin-1 being due.
+The added and modified elements are currently placeholders, as Babel is being difficult and not rendering components
+as it should. This will be fixed in the future.
 
 ## Known Problems
 ### Handin-1
 It goes without saying that our application will not do very much as is, but we've built a skeletal
 structure for the PBA at this point. No actual battling is occurring, and we do not have a bot or
-any interaction with the API active. Since there will only be one user on the page, the Chat Log
-will not have any real activity other than that which the single user may enter.
+any interaction with the API active. Even the Chat Log is currently a placeholder, as Babel is being
+a jerk and not rendering components as of yet.
 
 ## Improvements Over Time
 As detailed in the description, each "official" iteration of the PBA will integrate more complex
