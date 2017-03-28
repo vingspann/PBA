@@ -1,9 +1,15 @@
 import * as React from 'react';
-import '../src/App.css';
 
 
-export class Content extends React.Component {
+export class yoPokemon extends React.Component {
+    constructor(props){
+        super(props);
+        
+    };
     
+    componentDidMount(){
+        
+    }
     render() {
         return (
             <div>
