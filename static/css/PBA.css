@@ -1,86 +1,32 @@
 
 
-html {
+body {
     font-family: Helvetica, sans-serif;
-    color: red;
+    background-color: red;
 }
 
-.heading {
-    font-size: 3em;
-    text-shadow: 0 0 2em red;
-    margin-top: 1em;
-    margin-bottom: 0.125em;
-    margin-left: auto;
-    margin-right: auto;
-}
 
-.number-item {
-    background-color: green;
-}
-
-.chatBox {
-    background-color: gray;
-    opacity: 0.5;
-    margin: 50px;
-    padding: 15px;
-    border-radius: 25px;
-    overflow-y: scroll;
-    height: 35%;
-    font-family: Helvetica, sans-serif;
-    color: black;
-    font-weight: bold;
-}
-
-.input {
-    background-color: gray;
-    opacity: 0.5;
-    margin: 50px;
-    padding: 15px;
-    border-radius: 5px;
-    display: block;
-}
-
-input {
-    width: 100%;
-    box-sizing:border-box;
-}
-
-span {
-    display: block;
-    overflow: hidden;
-}
-
-.userList {
-    background-color: gray;
-    opacity: 0.5;
-    margin: 50px;
-    padding: 5px;
-    border-radius: 10px;
-    height: 50%;
-    font-family: Helvetica, sans-serif;
-    color: black;
-    font-weight: bold;
-    order: 1;
-    flex-grow: 1;
-}
-
-.container {
+.page{
     display: flex;
+    flex-direction: column;
+}
+
+.info{
     flex-direction: row;
 }
 
-.inputBox {
-    order:2;
-    flex-grow: 2;
+.commandBtn{
+    flex-direction: row;
 }
 
-.list {
-     overflow-y: scroll;
-     width: 100%;
-     flex-grow:1;
+.gameAction{
+    flex-direction: row;
 }
 
-.resize{
-    max-width: 100px;
-    max-height: 100px;
+#actionBtn{
+     border-radius: 5px;
+      background-color: #8c8e91;
+      margin-left: 10px;
+      margin-right: 10px;
+      padding: 5px;
 }
