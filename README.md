@@ -43,8 +43,8 @@ being assigned and Handin-1 being due.
 ### Handin-1
 It goes without saying that our application will not do very much as is, but we've built a skeletal
 structure for the PBA at this point. No actual battling is occurring, and we do not have a bot or
-any interaction with the API active. Since there will only be one user on the page, the Chat Log
-will not have any real activity other than that which the single user may enter.
+any interaction with the API active. Even the Chat Log is currently a placeholder, as Babel is being
+a jerk and not rendering components as of yet.
 
 ## Improvements Over Time
 As detailed in the description, each "official" iteration of the PBA will integrate more complex
