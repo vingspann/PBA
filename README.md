@@ -27,7 +27,7 @@ Will Czubiak - Backend development, sassy CSS eye-opener, master of potatoes
 Jason Fitzgerald - Chat log, Battle log, backend lumberjack (logs? heyo!)
 
 ## Aspects Completed
-### Handin -1
+### Handin-1
 At this point, we've converted a React-based chatroom application to include other elements
 we want present in the Battling page of our Pokemon Battling Application (PBA). These include
 the Battle Log, Pokemon Status Frame, and Command Button Interface.
