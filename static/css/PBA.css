@@ -2,28 +2,36 @@
 
 body {
     font-family: Helvetica, sans-serif;
-    background-color: red;
+    background: red;
 }
 
 
-.page{
+.content{
     display: flex;
     flex-direction: column;
 }
 
-.info{
+#info{
+    display: flex;
     flex-direction: row;
+    justify-content: center;
+    height: 80%;
+    
 }
 
-.commandBtn{
+#cmdBtn{
+    display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
-.gameAction{
+#gameAction{
+    display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
-#actionBtn{
+.actionBtn{
      border-radius: 5px;
       background-color: #8c8e91;
       margin-left: 10px;
