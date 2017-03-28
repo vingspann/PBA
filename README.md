@@ -19,8 +19,11 @@ the Battle Page where they can either wait for another user to battle against, o
 
 ## Contributors
 Sean Carpenter - Team lead, battle algorithms, huge Pokemon nerd
+
 Brandon Avery - Page layout, logic flow, coast-based imbibing extraordinaire
+
 Will Czubiak - Backend development, sassy CSS eye-opener, master of potatoes
+
 Jason Fitzgerald - Chat log, Battle log, backend lumberjack (logs? heyo!)
 
 ## Aspects Completed
