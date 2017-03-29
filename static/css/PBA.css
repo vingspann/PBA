@@ -16,6 +16,7 @@ body {
     flex-direction: row;
     justify-content: center;
     height: 80%;
+    margin: 15px;
     
 }
 
@@ -23,12 +24,14 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 15px;
 }
 
 #gameAction{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 15px;
 }
 
 .actionBtn{
