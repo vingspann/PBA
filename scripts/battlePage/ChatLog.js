@@ -4,12 +4,14 @@ export class ChatLog extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            'messages': [],
-            'value': ''
+             value : '',
+            'messages': []
         };
         
         this.handleChange = this.handleChange.bind(this);
-        this.hangleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+
     }
     
     componentDidMount(){
@@ -17,13 +19,18 @@ export class ChatLog extends React.Component {
     
     }
 
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
     // Handles 
     handleSubmit(event){
         event.preventDefault();
         
         // Prints to the chatlog without authentication
-        this.state.messages.push({'name': 'test', 'messages' : this.state.value});
-        this.setState({'value':''});
+        console.log(this.state.value);
+        this.state.messages.push({'name': 'test', 'text' : this.state.value});
+        this.setState({value:''});
     }
     
     render(){
@@ -44,10 +51,10 @@ export class ChatLog extends React.Component {
                 </div>
             
                 <div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form>
                         <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message">
                         </input>
-                        <button> Enter! </button>
+                        <button onClick={this.handleSubmit}> Enter! </button>
                     </form>
                 </div>
             
