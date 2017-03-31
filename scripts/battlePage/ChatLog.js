@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Socket } from './Socket';
+
 export class ChatLog extends React.Component {
     constructor(props){
         super(props);
@@ -16,20 +18,25 @@ export class ChatLog extends React.Component {
     
     componentDidMount(){
         
-    
+        Socket.on('chatLogEmit', (data) =>{
+        this.state.messages.push({'name': data['name'], 'text' : data['text']});
+        });
     }
 
     handleChange(event) {
         this.setState({value: event.target.value});
     }
 
-    // Handles 
+    
     handleSubmit(event){
         event.preventDefault();
         
         // Prints to the chatlog without authentication
         console.log(this.state.value);
-        this.state.messages.push({'name': 'test', 'text' : this.state.value});
+        Socket.emit('chatLogSubmit', {
+            'name' : 'test',
+            'text' : this.state.value
+        });        
         this.setState({value:''});
     }
     
