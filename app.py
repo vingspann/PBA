@@ -1,8 +1,10 @@
 import os, flask, flask_socketio
+from chatBot import bot
+
+oak = bot()
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
-
 
 
 @app.route('/')
@@ -12,7 +14,10 @@ def hello():
 @socketio.on('chatLogSubmit')
 def chatLogSubmit(data):
     socketio.emit('chatLogEmit', {'name' : data['name'], 'text' : data['text']})
-    #send data to chatbot to respond with commands
+    allow, message = oak.check(data['text'])
+    if allow:
+        socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
+
 
 socketio.run(
         app,
