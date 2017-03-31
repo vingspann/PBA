@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ChatLog } from './ChatLog';
+import { CmdBtn } from './CmdBtn';
 
 export class Content extends React.Component{
     constructor(props){
@@ -22,7 +23,7 @@ export class Content extends React.Component{
                     <div id="battleLog">battle log div</div>
                     <div id="chat"><ChatLog/></div>
                 </div>
-                <div id="cmdBtn"><cmdBtn/></div>
+                <div id="cmdButton"><CmdBtn/></div>
                 <div id="gameAction">
                    <div class="actionBtn"><input type="submit" value="Switch" /></div>
                    <div class="actionBtn"><input type="submit" value="Surrender" /></div>
