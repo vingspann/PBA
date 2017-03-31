@@ -16,20 +16,16 @@ export class Content extends React.Component{
         
         return (
             <div>
+            
                 <div id="info">
                     <div id="pokeInfo">pokemon info div</div>
                     <div id="battleLog">battle log div</div>
                     <div id="chat"><ChatLog/></div>
                 </div>
-                <div id="cmdBtn">
-                    <div class="actionBtn">move1</div>
-                    <div class="actionBtn">move2</div>
-                    <div class="actionBtn">move3</div>
-                    <div class="actionBtn">move4</div>
-                </div>
+                <div id="cmdBtn"><cmdBtn/></div>
                 <div id="gameAction">
-                    <div class="actionBtn">Switch</div>
-                    <div class="actionBtn">Surrender</div>
+                   <div class="actionBtn"><input type="submit" value="Switch" /></div>
+                   <div class="actionBtn"><input type="submit" value="Surrender" /></div>
                 </div>
             </div>
            
