@@ -34,6 +34,30 @@ body {
     margin: 15px;
 }
 
+#pokeInfo {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 10px;
+    border: inset black;
+}
+
+#battleLog {
+    display: flex;
+    flex-grow: 3;
+    justify-content: center;
+    margin: 10px;
+    border: inset black;
+}
+
+#chat {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 10px;
+    border: inset black;
+}
+
 .actionBtn{
      border-radius: 5px;
       background-color: #8c8e91;
