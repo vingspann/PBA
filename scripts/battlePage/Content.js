@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ChatLog } from './ChatLog';
+import { yoPokemon } from './yoPokemon';
 
 export class Content extends React.Component{
     constructor(props){
@@ -11,15 +12,14 @@ export class Content extends React.Component{
         
     }
     
-    
     render(){
         
         return (
             <div>
                 <div id="info">
-                    <div id="pokeInfo">pokemon info div</div>
-                    <div id="battleLog">battle log div</div>
-                    <div id="chat">{ ChatLog }</div>
+                    <div id="pokeInfo">pokemon info div<yoPokemon/></div>
+                    <div id="battleLog">battle log div </div>
+                    <div id="chat"><ChatLog/></div>
                 </div>
                 <div id="cmdBtn">
                     <div class="actionBtn">move1</div>

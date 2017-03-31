@@ -13,13 +13,13 @@ export class yoPokemon extends React.Component {
     render() {
         return (
             <div>
-                <h1>pokemon</h1>
+                <h1>Pokemon</h1>
                 <div>
                      'Pikachu'
                      '90/100'
                      'Charizard'
                      '80/100'
-                     'blastoise'
+                     'Blastoise'
                      '80/100'
                 </div>
             </div>
