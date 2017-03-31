@@ -20,7 +20,7 @@ body {
     
 }
 
-#cmdBtn{
+#cmdButton{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -39,6 +39,7 @@ body {
     flex-grow: 1;
     justify-content: center;
     margin: 10px;
+    border-radius: 5px;
     border: inset black;
 }
 
@@ -47,6 +48,7 @@ body {
     flex-grow: 3;
     justify-content: center;
     margin: 10px;
+    border-radius: 5px;
     border: inset black;
 }
 
@@ -55,7 +57,14 @@ body {
     flex-grow: 1;
     justify-content: center;
     margin: 10px;
+    border-radius: 5px;
     border: inset black;
+}
+
+#chatLog {
+    height: 90%;
+    background: gray;
+    width: auto;
 }
 
 .actionBtn{
