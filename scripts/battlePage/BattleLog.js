@@ -14,8 +14,9 @@ export class BattleLog extends React.Component{
     
     componentDidMount(){
         
-        Socket.on('battleLog', (data) =>{
-           this.state.log.push({'text' : data['text']}) 
+        Socket.on('battleLogEmit', (data) =>{
+           this.state.log.push({'text' : data['text']})
+           this.forceUpdate();
         });
     }
 
