@@ -20,7 +20,7 @@ export class Content extends React.Component{
             <div>
             
                 <div id="info">
-                    <div id="pokeInfo">pokemon info div<YoPokemon/></div>
+                    <div id="pokeInfo"><YoPokemon/></div>
                     <div id="battleLog">battle log div</div>
                     <div id="chat"><ChatLog/></div>
                 </div>
