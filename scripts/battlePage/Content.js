@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ChatLog } from './ChatLog';
 import { CmdBtn } from './CmdBtn';
+import { BattleLog } from './BattleLog';
 import { YoPokemon } from './YoPokemon';
 
 export class Content extends React.Component{
@@ -20,8 +21,9 @@ export class Content extends React.Component{
             <div>
             
                 <div id="info">
-                    <div id="pokeInfo">pokemon info div<YoPokemon/></div>
-                    <div id="battleLog">battle log div</div>
+
+                    <div id="pokeInfo"><YoPokemon/></div>
+                    <div id="battleLog"><BattleLog/></div>
                     <div id="chat"><ChatLog/></div>
                 </div>
                 <div id="cmdButton"><CmdBtn/></div>

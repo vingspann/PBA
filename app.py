@@ -19,6 +19,10 @@ def chatLogSubmit(data):
         socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
 
 
+@socketio.on('battleLog')
+def battleLog(data):
+    socketio.emit('battleLogEmit', {'text' : data['text']})
+
 socketio.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
