@@ -65,6 +65,7 @@ body {
     height: 90%;
     background: gray;
     width: auto;
+    word-wrap: normal;
 }
 #HealthLog {
     height: 40%;
