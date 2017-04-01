@@ -23,19 +23,23 @@ export class CmdBtn extends React.Component {
     }
     
     onClick1(){
+        Socket.emit('battleLog', {'text' : 'Button 1 clicked.'});
         console.log('Button 1 clicked.')
     }
     
     onClick2(){
         console.log('Button 2 clicked.')
+        Socket.emit('battleLog', {'text' : 'Button 2 clicked.'});
     }
     
     onClick3(){
         console.log('Button 3 clicked.')
+        Socket.emit('battleLog', {'text' : 'Button 3 clicked.'});
     }
     
     onClick4(){
         console.log('Button 4 clicked.')
+        Socket.emit('battleLog', {'text' : 'Button 4 clicked.'});
     }
 
     componentDidMount(){
