@@ -57,10 +57,10 @@ export class ChatLog extends React.Component {
                     <ul> {messages} </ul>
                 </div>
             
-                <div>
+                <div id="chatInput">
                     <form>
-                        <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message">
-                        </input>
+                        <span><input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message">
+                        </input></span>
                         <button onClick={this.handleSubmit}> Enter! </button>
                     </form>
                 </div>

@@ -36,7 +36,7 @@ body {
 
 #pokeInfo {
     display: flex;
-    flex-grow: 1;
+    width: 20%;
     justify-content: center;
     margin: 10px;
     border-radius: 5px;
@@ -45,7 +45,7 @@ body {
 
 #battleLog {
     display: flex;
-    flex-grow: 3;
+    width: 45%;
     justify-content: center;
     margin: 10px;
     border-radius: 5px;
@@ -54,18 +54,28 @@ body {
 
 #chat {
     display: flex;
-    flex-grow: 1;
-    justify-content: center;
+    width: 25%;
     margin: 10px;
     border-radius: 5px;
     border: inset black;
 }
 
 #chatLog {
+    
+    width: 90%;
     height: 90%;
     background: gray;
-    width: auto;
     word-wrap: normal;
+}
+
+#chatInput{
+    display: inline;
+    width: 90%;
+    height: 10%;
+}
+
+li{
+    list-style: none;
 }
 
 .actionBtn{
