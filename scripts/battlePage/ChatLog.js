@@ -52,17 +52,19 @@ export class ChatLog extends React.Component {
         
         
         return(
-            <div id="chatArea">
+            <div>
             
                 <div id="chatLog">
                     <ul> {messages} </ul>
                 </div>
             
-                <div>
+                <div id="input-group">
+                    
                     <form>
-                        <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message">
+                        <span><input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message">
                         </input>
                         <button onClick={this.handleSubmit}> Enter! </button>
+                        </span>
                     </form>
                 </div>
             

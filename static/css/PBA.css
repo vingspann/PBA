@@ -1,8 +1,27 @@
 
+@font-face {
+  font-family: 'pokemon-font';
+  src: url('../fonts/pokemon-font.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/pokemon-font.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/pokemon-font.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/pokemon-font.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/pokemon-font.ttf')  format('truetype') /* Safari, Android, iOS */
+  /* There is no SVG version of this font due to support being dropped in SVG 2 */
+}
+
+@font-face {
+  font-family: 'Pokemon';
+  src: url('http://www.fontsaddict.com/fontface/pokemon-pixel-font-regular.ttf');
+}
 
 body {
     font-family: Helvetica, sans-serif;
     background: red;
+    height: 100%;
+}
+
+.h {
+    font-family: 'Pokemon', Verdana, Tahoma;
 }
 
 
@@ -36,7 +55,7 @@ body {
 
 #pokeInfo {
     display: flex;
-    flex-grow: 1;
+    width: 20%;
     justify-content: center;
     margin: 10px;
     border-radius: 5px;
@@ -45,27 +64,35 @@ body {
 
 #battleLog {
     display: flex;
-    flex-grow: 3;
+    width: 45%;
     justify-content: center;
     margin: 10px;
     border-radius: 5px;
     border: inset black;
+    overflow-y: scroll;
 }
 
 #chat {
     display: flex;
-    flex-grow: 1;
-    justify-content: center;
+    flex-direction: column;
+    width: 25%;
     margin: 10px;
     border-radius: 5px;
+    justify-content: space-between;
+    box-sizing: border-box;
     border: inset black;
 }
 
 #chatLog {
-    height: 90%;
-    background: gray;
-    width: auto;
+    background-color: gray;
+    opacity: 0.5;
+    flex-direction:row;
+    overflow-y: scroll;
+    color: black;
+    font-weight: bold;
+    flex: 1;
     word-wrap: normal;
+    height: 100%;
 }
 #HealthLog {
     height: 40%;
@@ -75,6 +102,25 @@ body {
     border-radius: 5px;
     background: gray;
     
+}
+
+#chatInput{
+    display: block;
+    flex:1;
+}
+
+input {
+  width: 100%;
+  box-sizing:border-box;
+}
+
+span {
+    display: block;
+    overflow: hidden;
+}
+
+li{
+    list-style: none;
 }
 
 .actionBtn{
