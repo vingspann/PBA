@@ -14,13 +14,15 @@ export class YoPokemon extends React.Component {
     render() {
         let pokemon = this.state.pokemon.map((n, index) =>
             <li key={index}>
-                {n.character}: {n.health}
-                
+                <div id="HealthLog">
+                    {n.character} : {n.health}
+                </div>
             </li>
         );
         
         return (
             <div>
+                <h2>Pokemon</h2>
                 <div>
                     <ul> {pokemon} </ul>
                 </div>

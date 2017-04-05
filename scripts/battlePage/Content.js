@@ -22,6 +22,7 @@ export class Content extends React.Component{
             
                 <div id="info">
 
+
                     <div id="pokeInfo"><YoPokemon/></div>
                     <div id="battleLog"><BattleLog/></div>
                     <div id="chat"><ChatLog/></div>

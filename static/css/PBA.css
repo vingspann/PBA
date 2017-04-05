@@ -67,6 +67,15 @@ body {
     width: auto;
     word-wrap: normal;
 }
+#HealthLog {
+    height: 40%;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 10px;
+    border-radius: 5px;
+    background: gray;
+    
+}
 
 .actionBtn{
      border-radius: 5px;
