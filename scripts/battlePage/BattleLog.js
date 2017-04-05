@@ -30,7 +30,7 @@ export class BattleLog extends React.Component{
     
         return(
         
-            <div id="battleLog">
+            <div id="Log">
                 <ul> {log} </ul>
             </div>
         
