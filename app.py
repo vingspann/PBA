@@ -7,6 +7,17 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 
+# This function will emit to CmdBtn to dynamically update the names of the moves
+# This is necessary for switching pokemon
+def updateMoves():
+    socketio.emit('updateMoves', {
+        'move1' : 'MOVEPLACEHOLDER',
+        'move2' : 'MOVEPLACEHOLDER',
+        'move3' : 'MOVEPLACEHOLDER',
+        'move4' : 'MOVEPLACEHOLDER'
+    })
+
+
 @app.route('/')
 def hello():
     return flask.render_template('index.html')
@@ -22,6 +33,7 @@ def chatLogSubmit(data):
 @socketio.on('battleLog')
 def battleLog(data):
     socketio.emit('battleLogEmit', {'text' : data['text']})
+
 
 socketio.run(
         app,
