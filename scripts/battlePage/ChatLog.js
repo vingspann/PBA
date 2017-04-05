@@ -20,6 +20,7 @@ export class ChatLog extends React.Component {
         
         Socket.on('chatLogEmit', (data) =>{
         this.state.messages.push({'name': data['name'], 'text' : data['text']});
+        this.forceUpdate();
         });
     }
 
