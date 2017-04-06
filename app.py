@@ -1,7 +1,8 @@
 import os, flask, flask_socketio
 from chatBot import bot
-
+from character import pokemon
 oak = bot()
+pokemon = pokemon()
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
