@@ -17,3 +17,24 @@ class pokemon():
           self.move2 = move2
           self.move3 = move3
           self.move4 = move4
+    
+    attack = 85
+    sAttack = 90
+    attackMod = 91
+    sAttackMod = 92
+
+    defense = 70
+    sDefense = 75
+    defenseMod = 80
+    sDefenseMod = 82
+
+    speed = 80
+    speedMod = 82
+
+    evasion = 90
+    evasionMod = 92
+
+    accuracy = 80
+    accuracyMod = 85
+    
+    spriteLink = "https://cdn.iconverticons.com/files/png/1e2faeab4fac4558_128x128.png"
