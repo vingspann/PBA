@@ -1,6 +1,10 @@
 import * as React from 'react';
-
+import * as ReactBootstrap from 'react-bootstrap';
 import { Socket } from './Socket';
+import { Button } from 'react-bootstrap';
+import { InputGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+import { FormGroup } from 'react-bootstrap';
 
 export class ChatLog extends React.Component {
     constructor(props){
@@ -61,10 +65,18 @@ export class ChatLog extends React.Component {
                 <div id="input-group">
                     
                     <form>
-                        <span><input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message">
-                        </input>
-                        <button onClick={this.handleSubmit}> Enter! </button>
-                        </span>
+                    
+                        <FormGroup>
+                            <InputGroup>
+                                <FormControl type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message" />
+                                <InputGroup.Button>
+                                    <Button id= "chatSubmit" onClick={this.handleSubmit}>Enter!</Button>
+                                </InputGroup.Button>
+                            </InputGroup>
+                        </FormGroup>
+                    
+                       
+                        
                     </form>
                 </div>
             

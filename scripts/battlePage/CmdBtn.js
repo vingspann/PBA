@@ -1,6 +1,11 @@
 import * as React from 'react';
-
+import * as ReactBootstrap from 'react-bootstrap';
 import { Socket } from './Socket';
+import { Button } from 'react-bootstrap';
+import { InputGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+import { FormGroup } from 'react-bootstrap';
+import { ButtonToolbar } from 'react-bootstrap';
 
 export class CmdBtn extends React.Component {
     constructor(props){
@@ -69,10 +74,17 @@ export class CmdBtn extends React.Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <button id="move1" onClick={this.onClick1}>{m1}</button>
-                    <button id="move2" onClick={this.onClick2}>{m2}</button>
-                    <button id="move3" onClick={this.onClick3}>{m3}</button>
-                    <button id="move4" onClick={this.onClick4}>{m4}</button>
+                    <FormGroup>
+                            <InputGroup>
+                                <ButtonToolbar>
+                                    <Button id="move1" bsStyle="primary" onClick={this.onClick1}>{m1}</Button>
+                                    <Button id="move2" bsStyle="primary" onClick={this.onClick2}>{m2}</Button>
+                                    <Button id="move3" bsStyle="primary" onClick={this.onClick3}>{m3}</Button>
+                                    <Button id="move4" bsStyle="primary" onClick={this.onClick4}>{m4}</Button>
+                                </ButtonToolbar>
+                            </InputGroup>
+                        </FormGroup>
+                    
                 </form>
             </div>
         );

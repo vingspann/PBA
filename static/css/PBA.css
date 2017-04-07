@@ -85,7 +85,8 @@ body {
     font-weight: bold;
     flex: 1;
     word-wrap: normal;
-    height: 93%;
+    box-sizing: border-box;
+    height: 90%;
 }
 
 #HealthLog {
@@ -101,6 +102,7 @@ body {
 #chatInput{
     display: block;
     flex:1;
+    box-sizing: border-box;
 }
 
 input {
