@@ -26,7 +26,7 @@ export class CmdBtn extends React.Component {
     }
     
     onClick1(){
-        Socket.emit('battleLog', {'text' : 'Button 1 clicked.'});
+        Socket.emit('battleLog', {'text' : 'Button 1 clicke'});
         console.log('Button 1 clicked.')
     }
     
@@ -47,6 +47,7 @@ export class CmdBtn extends React.Component {
 
     componentDidMount(){
         
+        Socket.emit('updateMoves')
         // Allows moves to be dynamically updated.
         Socket.on('updateMoves', (data) =>{
             this.setState({
