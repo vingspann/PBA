@@ -22,7 +22,7 @@ Sean Carpenter - Team lead, battle algorithms, huge Pokemon nerd
 
 Brandon Avery - Page layout, logic flow, coast-based imbibing extraordinaire
 
-Will Czubiak - Backend development, sassy CSS eye-opener, master of potatoes
+Will Czubiak - Backend development, socket poking, master of potatoes
 
 Jason Fitzgerald - Chat log, Battle log, backend lumberjack (logs? heyo!)
 
