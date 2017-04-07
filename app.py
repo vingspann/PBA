@@ -10,6 +10,10 @@ socketio = flask_socketio.SocketIO(app)
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
+print(pokemon.move1)
+pokemon.move("potato", "","","")
+print(pokemon.move1)
+
 def updateMoves():
     socketio.emit('updateMoves', {
         'move1' : 'MOVEPLACEHOLDER',
