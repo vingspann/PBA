@@ -56,11 +56,13 @@ body {
     font-family: pokemon-font;
     display: flex;
     width: 45%;
-    justify-content: center;
+    justify-content: flex-start;
     margin: 10px;
     border-radius: 5px;
     border: inset black;
     overflow-y: scroll;
+    background: black;
+    color: green;
 }
 
 #chat {
