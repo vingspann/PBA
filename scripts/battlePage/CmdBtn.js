@@ -16,12 +16,14 @@ export class CmdBtn extends React.Component {
              'move3' : 'move3',
              'move4' : 'move4'
         };
-        
+        this.onClick1 = this.onClick1.bind(this);
+        this.onClick2 = this.onClick2.bind(this);
+        this.onClick3 = this.onClick3.bind(this);
+        this.onClick4 = this.onClick4.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
-    
     
     handleSubmit(event) {
         event.preventDefault();
@@ -29,25 +31,25 @@ export class CmdBtn extends React.Component {
         console.log('A move was clicked.')
 
     }
-    
+ 
     onClick1(){
-        Socket.emit('battleLog', {'text' : 'Button 1 clicke'});
+        Socket.emit('battleLog', {'text' : this.state.move1});
         console.log('Button 1 clicked.')
     }
     
     onClick2(){
         console.log('Button 2 clicked.')
-        Socket.emit('battleLog', {'text' : 'Button 2 clicked.'});
+        Socket.emit('battleLog', {'text' : this.state.move2});
     }
     
     onClick3(){
         console.log('Button 3 clicked.')
-        Socket.emit('battleLog', {'text' : 'Button 3 clicked.'});
+        Socket.emit('battleLog', {'text' : this.state.move3});
     }
     
     onClick4(){
         console.log('Button 4 clicked.')
-        Socket.emit('battleLog', {'text' : 'Button 4 clicked.'});
+        Socket.emit('battleLog', {'text' : this.state.move4});
     }
 
     componentDidMount(){
