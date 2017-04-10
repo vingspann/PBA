@@ -70,14 +70,15 @@ body {
     flex-direction: column;
     width: 25%;
     margin: 10px;
-    border-radius: 5px;
+   
     justify-content: space-between;
     box-sizing: border-box;
-    border: inset black;
+   
 }
 
 #chatLog {
     background-color: gray;
+    border-radius: 5px;
     opacity: 0.5;
     flex-direction:row;
     overflow-y: scroll;
@@ -87,6 +88,7 @@ body {
     word-wrap: normal;
     box-sizing: border-box;
     height: 90%;
+    border: inset black;
 }
 
 #HealthLog {

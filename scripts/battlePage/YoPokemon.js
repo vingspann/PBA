@@ -1,5 +1,7 @@
 import * as React from 'react';
+import * as ReactBootstrap from 'react-bootstrap';
 import { Socket } from './Socket';
+import { ProgressBar } from 'react-bootstrap';
 
 export class YoPokemon extends React.Component {
     constructor(props){
@@ -17,6 +19,7 @@ export class YoPokemon extends React.Component {
                 <div id="HealthLog">
                     {n.character} : {n.health}
                 </div>
+                <ProgressBar now={n.health*100} label={`${n.health*100}%`} />
             </li>
         );
         
