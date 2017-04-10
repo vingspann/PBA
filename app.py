@@ -30,6 +30,7 @@ def hello():
     
 @socketio.on('chatLogSubmit')
 def chatLogSubmit(data):
+    print data
     socketio.emit('chatLogEmit', {'name' : data['name'], 'text' : data['text']})
     allow, message = oak.check(data['text'])
     if allow:
