@@ -28,7 +28,7 @@ export class YoPokemon extends React.Component {
         
         return (
             <div>
-                <h2>Pokemon</h2>
+                <h2 id="pokemonInfoHeader">Pokemon</h2>
                 <div>
                     <ul> {pokemon} </ul>
                 </div>
