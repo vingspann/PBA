@@ -19,7 +19,10 @@ export class YoPokemon extends React.Component {
                 <div id="HealthLog">
                     {n.character} : {n.health}
                 </div>
-                <ProgressBar now={n.health*100} label={`${n.health*100}%`} />
+                <ProgressBar>
+                    <ProgressBar bsStyle="success" now={n.health*100} label={`${n.health*100}%`} key={1} />
+                    <ProgressBar bsStyle="danger" now={100 - (n.health*100)} key={2} />
+                </ProgressBar>
             </li>
         );
         

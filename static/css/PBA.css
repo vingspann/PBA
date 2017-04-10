@@ -9,15 +9,31 @@
   /* There is no SVG version of this font due to support being dropped in SVG 2 */
 }
 
+@font-face {
+    font-family: 'pokeDex';
+       src: url('../fonts/LMS PokeDex.ttf') format('truetype');
+         
+}
+
+
 body {
     font-family: Helvetica, sans-serif;
     background: red;
     height: 100%;
 }
 
-.content{
+
+#content{
     display: flex;
+    background-image: url("../img/pokemonStadium.jpg");
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: 100%;
     flex-direction: column;
+}
+
+#headingTitle {
+    font-family: pokeDex, Arial, sans-serif;
 }
 
 #info{
@@ -50,10 +66,12 @@ body {
     margin: 10px;
     border-radius: 5px;
     border: inset black;
+    opacity: 0.9;
+    background: gray;
 }
 
 #battleLog {
-    font-family: pokemon-font;
+    font-family: pokemon-font, Arial, sans-serif;
     display: flex;
     width: 45%;
     justify-content: flex-start;
@@ -70,7 +88,6 @@ body {
     flex-direction: column;
     width: 25%;
     margin: 10px;
-   
     justify-content: space-between;
     box-sizing: border-box;
    
@@ -79,7 +96,7 @@ body {
 #chatLog {
     background-color: gray;
     border-radius: 5px;
-    opacity: 0.5;
+    opacity: 0.75;
     flex-direction:row;
     overflow-y: scroll;
     color: black;
@@ -89,10 +106,11 @@ body {
     box-sizing: border-box;
     height: 90%;
     border: inset black;
+    font-family: 'PokeDex', Helvetica, sans-serif;;
 }
 
 #HealthLog {
-    height: 40%;
+    height: 20%;
     flex-grow: 1;
     justify-content: center;
     margin: 10px;
@@ -119,12 +137,4 @@ span {
 
 li{
     list-style: none;
-}
-
-.actionBtn{
-     border-radius: 5px;
-      background-color: #8c8e91;
-      margin-left: 10px;
-      margin-right: 10px;
-      padding: 5px;
 }
