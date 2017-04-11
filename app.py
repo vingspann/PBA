@@ -16,10 +16,10 @@ i = 0
 def updateMoves():
     socketio.emit('updateMoves', {
         'name'  : pokemon.name,
-        'move1' : pokemon.move1,
-        'move2' : pokemon.move2,
-        'move3' : pokemon.move3,
-        'move4' : pokemon.move4
+        'move1' : pokemon.move[0].name,
+        'move2' : pokemon.move[1].name,
+        'move3' : pokemon.move[2].name,
+        'move4' : pokemon.move[3].name
     })
     
 @socketio.on('switch')
@@ -28,11 +28,11 @@ def switch():
     # default pokemon pikachu
     def primaryChar():
         pokemon.nameSet('Pikachu')
-        pokemon.move('Thunderbolt','Tail Whip','Iron Tail','Play Nice')
+        pokemon.moves('Thunderbolt','Tail Whip','Iron Tail','Play Nice')
     # after switch button is clicked seconary pokemon charzard
     def secondaryChar():
         pokemon.nameSet('Charazard')
-        pokemon.move('Ember','Slash','Flamethrower','Hyper Beam')
+        pokemon.moves('Ember','Slash','Flamethrower','Hyper Beam')
     if(i%2 == 1):
         primaryChar()
     else:
@@ -41,10 +41,10 @@ def switch():
     print (i)
     socketio.emit('updateMoves', {
         'name'  : pokemon.name,
-        'move1' : pokemon.move1,
-        'move2' : pokemon.move2,
-        'move3' : pokemon.move3,
-        'move4' : pokemon.move4
+        'move1' : pokemon.move[0].name,
+        'move2' : pokemon.move[1].name,
+        'move3' : pokemon.move[2].name,
+        'move4' : pokemon.move[3].name
     })
 
 
