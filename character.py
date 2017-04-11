@@ -1,3 +1,4 @@
+
 class pokemon():
     
     name = "Pikachu"
@@ -7,6 +8,12 @@ class pokemon():
     move2 = "Tail Whip"
     move3 = "Thunder Shock"
     move4 = "Play Nice"
+    
+    def nameSet(self, name):
+        self.name = name
+        
+    def typeSet(self, type1):
+        self.type1 = type1
     
     def hp(self, numerator, denominator):
           self.numerator = numerator
@@ -38,3 +45,5 @@ class pokemon():
     accuracyMod = 85
     
     spriteLink = "https://cdn.iconverticons.com/files/png/1e2faeab4fac4558_128x128.png"
+    
+    
