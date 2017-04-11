@@ -5,11 +5,14 @@ import { BattleLog } from './BattleLog';
 import { YoPokemon } from './YoPokemon';
 import { ActnBtn } from './ActnBtn';
 import * as ReactBootstrap from 'react-bootstrap';
+import * as ReactRouter from 'react-router';
 import { Navbar } from 'react-bootstrap';
 import { NavItem } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { MenuItem } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
+import {  Route, RouteHandler, Link  } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export class Content extends React.Component{
     constructor(props){
@@ -30,14 +33,18 @@ export class Content extends React.Component{
                 <Navbar inverse collapseOnSelect>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <a href="#">Landing Page</a>
+                            <a href="#">About</a>
                         </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav>
-                            <NavItem eventKey={1} href="https://pokeapi.co/">API</NavItem>
-                            <NavItem eventKey={2} href="https://github.com/vingspann/PBA">GitHub</NavItem>
+                            <LinkContainer to={{ pathname: 'https://pokeapi.co/'}}>
+                                <NavItem eventKey={1}>API</NavItem>
+                            </LinkContainer>
+                            <LinkContainer to={{ pathname: 'https://github.com/vingspann/PBA'}}>
+                                <NavItem eventKey={2}>GitHub</NavItem>
+                            </LinkContainer>
                         </Nav>
                         <Nav pullRight>
                             <NavItem eventKey={2} href="#">FB Login Btn</NavItem>
