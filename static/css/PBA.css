@@ -156,11 +156,24 @@ body {
 }
 
 #HealthLog {
+    font-family: pokemon-font, Arial, sans-serif;
     height: 20%;
     flex-grow: 1;
     justify-content: center;
     margin: 10px;
     border-radius: 5px;
+    background: gray;
+    
+}
+#nameLog {
+    font-family: pokemon-font, Arial, sans-serif;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 1px;
+    border-radius: 5px;
+    border: inset black;
+    opacity: 0.9;
     background: gray;
     
 }

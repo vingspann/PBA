@@ -6,7 +6,7 @@ class pokemon():
     Type2 = None
     move1 = "Thunderbolt"
     move2 = "Tail Whip"
-    move3 = "Thunder Shock"
+    move3 = "Iron Tail"
     move4 = "Play Nice"
     
     def nameSet(self, name):
