@@ -31,6 +31,13 @@ export class ChatLog extends React.Component {
     handleChange(event) {
         this.setState({value: event.target.value});
     }
+    
+    handleKeyPress(target) {
+    if(target.charCode==13){
+            alert('Enter clicked!!!');    
+    }
+
+}
 
     
     handleSubmit(event){

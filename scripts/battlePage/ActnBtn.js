@@ -11,10 +11,7 @@ export class ActnBtn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-             'move1' : 'move1',
-             'move2' : 'move2',
-             'move3' : 'move3',
-             'move4' : 'move4'
+             
         };
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,6 +30,28 @@ export class ActnBtn extends React.Component {
     onClickSwitch(){
         Socket.emit('battleLog', {'text' : 'Switch button clicked'});
         console.log('Button 1 clicked.')
+        const modalInstance = (
+            <div className="static-modal">
+                <Modal.Dialog>
+                    <Modal.Header>
+                        <Modal.Title>Switch Pokemon</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        Temp pokemon switch message.
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button>Cancel</Button>
+                        <Button bsStyle="primary">Switch</Button>
+                    </Modal.Footer>
+
+                    </Modal.Dialog>
+            </div>
+        );
+
+        ReactDOM.render(modalInstance, mountNode);
+
     }
     
     onClickSurrender(){
