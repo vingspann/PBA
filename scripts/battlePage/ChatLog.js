@@ -16,6 +16,7 @@ export class ChatLog extends React.Component {
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleKeyPress = this.handleKeyPress(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -33,11 +34,19 @@ export class ChatLog extends React.Component {
     }
     
     handleKeyPress(target) {
-    if(target.charCode==13){
-            alert('Enter clicked!!!');    
-    }
+        if(target.charCode==13){
+                 target.preventDefault();
+        
+        // Prints to the chatlog without authentication
+        console.log(this.state.value);
+        Socket.emit('chatLogSubmit', {
+            'name' : 'test',
+            'text' : this.state.value
+        });        
+        this.setState({value:''});
+        }
 
-}
+    }
 
     
     handleSubmit(event){
@@ -75,7 +84,7 @@ export class ChatLog extends React.Component {
                     
                         <FormGroup>
                             <InputGroup>
-                                <FormControl type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message" />
+                                <FormControl type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleKeyPress} placeholder="Enter message" />
                                 <InputGroup.Button>
                                     <Button id= "chatSubmit" onClick={this.handleSubmit}>Enter!</Button>
                                 </InputGroup.Button>

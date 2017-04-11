@@ -78,6 +78,10 @@ body {
     font-family: metroregular, Arial, sans-serif;
 }
 
+#navBar {
+    font-family: pokemon-font, Arial, sans-serif;
+}
+
 #pokemonInfoHeader {
     font-family: pokemon_solidnormal, Arial, sans-serif;
 }
