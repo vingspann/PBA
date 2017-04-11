@@ -29,6 +29,7 @@ export class ActnBtn extends React.Component {
     
     onClickSwitch(){
         Socket.emit('battleLog', {'text' : 'Switch button clicked'});
+        Socket.emit('secondaryChar', {});
         Socket.emit('switch');
         console.log('Button 1 clicked.')
         const modalInstance = (

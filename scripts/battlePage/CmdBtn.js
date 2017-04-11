@@ -11,6 +11,7 @@ export class CmdBtn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+             'name' : 'name',
              'move1' : 'move1',
              'move2' : 'move2',
              'move3' : 'move3',
@@ -58,6 +59,7 @@ export class CmdBtn extends React.Component {
         // Allows moves to be dynamically updated.
         Socket.on('updateMoves', (data) =>{
             this.setState({
+                'name'  : data['name'],
                 'move1' : data['move1'],
                 'move2' : data['move2'],
                 'move3' : data['move3'],
@@ -68,6 +70,7 @@ export class CmdBtn extends React.Component {
 
 
     render() {
+        var name = this.state.name;
         var m1 = this.state.move1;
         var m2 = this.state.move2;
         var m3 = this.state.move3;
@@ -77,6 +80,9 @@ export class CmdBtn extends React.Component {
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup>
+                            <div id="nameLog">
+                            {name}
+                            </div>
                             <InputGroup>
                                 <ButtonToolbar>
                                     <Button id="move1" bsStyle="primary" onClick={this.onClick1}>{m1}</Button>
