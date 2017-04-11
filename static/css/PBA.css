@@ -60,14 +60,14 @@
 
 body {
     font-family: Helvetica, sans-serif;
-    background: red;
+    background: gray;
     height: 100%;
 }
 
 
 #content{
     display: flex;
-    background-image: url("../img/pokemonStadium.jpg");
+    background-image: url("../img/pokemonStadiumGrayScale.png");
     background-repeat: no-repeat;
     background-position: center; 
     background-size: 100%;
@@ -130,7 +130,7 @@ body {
     border: inset black;
     overflow-y: scroll;
     background: black;
-    color: green;
+    color: gray;
 }
 
 #chat {

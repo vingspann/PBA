@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { InputGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
+import { Input } from 'react-bootstrap';
 
 export class ChatLog extends React.Component {
     constructor(props){
@@ -16,7 +17,6 @@ export class ChatLog extends React.Component {
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleKeyPress = this.handleKeyPress(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -32,21 +32,7 @@ export class ChatLog extends React.Component {
     handleChange(event) {
         this.setState({value: event.target.value});
     }
-    
-    handleKeyPress(target) {
-        if(target.charCode==13){
-                 target.preventDefault();
-        
-        // Prints to the chatlog without authentication
-        console.log(this.state.value);
-        Socket.emit('chatLogSubmit', {
-            'name' : 'test',
-            'text' : this.state.value
-        });        
-        this.setState({value:''});
-        }
 
-    }
 
     
     handleSubmit(event){
@@ -80,11 +66,11 @@ export class ChatLog extends React.Component {
             
                 <div id="input-group">
                     
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                     
                         <FormGroup>
                             <InputGroup>
-                                <FormControl type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleKeyPress} placeholder="Enter message" />
+                                <FormControl type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter message" />
                                 <InputGroup.Button>
                                     <Button id= "chatSubmit" onClick={this.handleSubmit}>Enter!</Button>
                                 </InputGroup.Button>
