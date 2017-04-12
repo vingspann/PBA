@@ -1,13 +1,18 @@
+from move import attack
 
 class pokemon():
     
     name = "Pikachu"
     Type1 = "Electric"
     Type2 = None
-    move1 = "Thunderbolt"
-    move2 = "Tail Whip"
-    move3 = "Iron Tail"
-    move4 = "Play Nice"
+    move = []
+    for i in range(4):
+        move.append(attack())
+        
+    move[0].setName("Thunderbolt")
+    move[1].setName("Tail Whip")
+    move[2].setName("Iron Tail")
+    move[3].setName("Play Nice")
     
     def nameSet(self, name):
         self.name = name
@@ -19,11 +24,11 @@ class pokemon():
           self.numerator = numerator
           self.denominator = denominator
           
-    def move(self, move1,move2,move3,move4):
-          self.move1 = move1
-          self.move2 = move2
-          self.move3 = move3
-          self.move4 = move4
+    def moves(self, move1,move2,move3,move4):
+          self.move[0] = move1
+          self.move[1] = move2
+          self.move[2] = move3
+          self.move[3] = move4
     
     attack = 85
     sAttack = 90
