@@ -6,6 +6,7 @@ import { InputGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 export class ActnBtn extends React.Component {
     constructor(props){
@@ -52,7 +53,7 @@ export class ActnBtn extends React.Component {
             </div>
         );
 
-        ReactDOM.render(modalInstance, mountNode);
+        React.render(modalInstance, document.getElementById('content'));
 
     }
     

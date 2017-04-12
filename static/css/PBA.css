@@ -60,7 +60,7 @@
 
 body {
     font-family: Helvetica, sans-serif;
-    background: gray;
+    background: red;
     height: 100%;
 }
 
@@ -75,11 +75,23 @@ body {
 }
 
 #headingTitle {
-    font-family: metroregular, Arial, sans-serif;
+    font-family: pokemon_hollownormal, Arial, sans-serif;
+    font-weight: bold;
 }
 
 #navBar {
     font-family: pokemon-font, Arial, sans-serif;
+}
+
+#pageHeader {
+    width: 100%;
+    border: inset black;
+    border-width: 5px;
+}
+
+#innerNavBar {
+    border: inset black;
+    border-width: 5px;
 }
 
 #pokemonInfoHeader {
@@ -90,7 +102,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 80%;
+    height: 60%;
     margin: 15px;
     
 }

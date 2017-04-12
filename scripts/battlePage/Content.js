@@ -30,7 +30,7 @@ export class Content extends React.Component{
         return (
             <div>
                 <div id="navBar">
-                <Navbar inverse collapseOnSelect>
+                <Navbar id="innerNavBar">
                     <Navbar.Header>
                         <Navbar.Brand>
                             <a href="#">About</a>
