@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom'
 import * as ReactBootstrap from 'react-bootstrap';
 import { Socket } from './Socket';
 import { Button } from 'react-bootstrap';
@@ -33,28 +34,7 @@ export class ActnBtn extends React.Component {
         Socket.emit('secondaryChar', {});
         Socket.emit('switch');
         console.log('Button 1 clicked.')
-        const modalInstance = (
-            <div className="static-modal">
-                <Modal.Dialog>
-                    <Modal.Header>
-                        <Modal.Title>Switch Pokemon</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        Temp pokemon switch message.
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button>Cancel</Button>
-                        <Button bsStyle="primary">Switch</Button>
-                    </Modal.Footer>
-
-                    </Modal.Dialog>
-            </div>
-        );
-
-        React.render(modalInstance, document.getElementById('content'));
-
+       
     }
     
     onClickSurrender(){
