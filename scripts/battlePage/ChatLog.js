@@ -26,11 +26,17 @@ export class ChatLog extends React.Component {
         Socket.on('chatLogEmit', (data) =>{
         this.state.messages.push({'name': data['name'], 'text' : data['text']});
         this.forceUpdate();
+        this.updateScroll();
         });
     }
 
     handleChange(event) {
         this.setState({value: event.target.value});
+    }
+    
+     updateScroll(){
+        var element = document.getElementById("chatLog");
+        element.scrollTop = element.scrollHeight;
     }
 
 
