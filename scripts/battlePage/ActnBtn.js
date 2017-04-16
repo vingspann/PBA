@@ -8,6 +8,7 @@ import { FormControl } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import { SwitchBtn } from './SwitchBtn'
 
 export class ActnBtn extends React.Component {
     constructor(props){
@@ -55,7 +56,7 @@ export class ActnBtn extends React.Component {
                     <FormGroup>
                             <InputGroup>
                                 <ButtonToolbar>
-                                    <Button id="Switch" bsSize="large" onClick={this.onClickSwitch}>Switch</Button>
+                                    <SwitchBtn />
                                     <Button id="Surrender" bsSize="large" onClick={this.onClickSurrender}>Surrender</Button>
                                 </ButtonToolbar>
                             </InputGroup>
