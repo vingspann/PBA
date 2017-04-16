@@ -25,10 +25,10 @@ class pokemon():
           self.denominator = denominator
           
     def moves(self, move1,move2,move3,move4):
-          self.move[0] = move1
-          self.move[1] = move2
-          self.move[2] = move3
-          self.move[3] = move4
+          self.move[0].setName(move1)
+          self.move[1].setName(move2)
+          self.move[2].setName(move3)
+          self.move[3].setName(move4)
     
     attack = 85
     sAttack = 90

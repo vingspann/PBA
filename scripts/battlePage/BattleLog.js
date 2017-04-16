@@ -17,7 +17,13 @@ export class BattleLog extends React.Component{
         Socket.on('battleLogEmit', (data) =>{
            this.state.log.push({'text' : data['text']})
            this.forceUpdate();
+           this.updateScroll();
         });
+    }
+    
+    updateScroll(){
+        var element = document.getElementById("battleLog");
+        element.scrollTop = element.scrollHeight;
     }
 
     render(){
