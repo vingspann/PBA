@@ -76,12 +76,13 @@ body {
 }
 
 #headingTitle {
-    font-weight: bold;
+    
     display: block;
 }
 
 #PBAtext {
     font-family: pokemon_hollownormal, Arial, sans-serif;
+    font-weight: bold;
 }
 
 #StadiumText {
