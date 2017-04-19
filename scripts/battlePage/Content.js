@@ -4,16 +4,10 @@ import { CmdBtn } from './CmdBtn';
 import { BattleLog } from './BattleLog';
 import { YoPokemon } from './YoPokemon';
 import { ActnBtn } from './ActnBtn';
-import * as ReactBootstrap from 'react-bootstrap';
-import * as Router from 'react-router';
 import { Navbar } from 'react-bootstrap';
 import { NavItem } from 'react-bootstrap';
-import { NavDropdown } from 'react-bootstrap';
-import { MenuItem } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
-import {  Route, RouteHandler, Link  } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
-import {withRouter} from 'react-router';
+import { FBLogin } from './FBLogin';
 
 
 export class Content extends React.Component{
@@ -21,27 +15,7 @@ export class Content extends React.Component{
         super(props);
         
     };
-    
-    onFBclick() {
-        window.fbAsyncInit = function() {
-        FB.init({
-        appId      : '114204082461771',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v2.8'
-        });
-        FB.AppEvents.logPageView();   
-        };
 
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-    }
-    
     componentDidMount(){
       
 
@@ -69,7 +43,9 @@ export class Content extends React.Component{
                         </Nav>
                         
                         <Nav pullRight>
-                            <NavItem eventKey={2} href="#">FB Login Btn</NavItem>
+                            <NavItem eventKey={2} href="#">
+                                <FBLogin/>
+                            </NavItem>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
