@@ -36,10 +36,12 @@ def switch():
         def primaryChar():
             pokemon.nameSet('Pikachu')
             pokemon.moves('Thunderbolt','Slam','Iron Tail','Brick Break')
+            pokemon.sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png')
         # after switch button is clicked seconary pokemon charzard
         def secondaryChar():
             pokemon.nameSet('Charazard')
             pokemon.moves('Wing Attack','Slash','Flamethrower','Dragon Claw')
+            pokemon.sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png')
         if(i%2 == 1):
             primaryChar()
         else:
