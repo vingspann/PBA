@@ -8,7 +8,7 @@ pokemon = pokemon()
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 i = 0
-
+ii = 0
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
 
@@ -24,28 +24,55 @@ def updateMoves():
     
 @socketio.on('switch')
 def switch():
-    global i
-    # default pokemon pikachu
-    def primaryChar():
-        pokemon.nameSet('Pikachu')
-        pokemon.moves('Thunderbolt','Tail Whip','Iron Tail','Play Nice')
-    # after switch button is clicked seconary pokemon charzard
-    def secondaryChar():
-        pokemon.nameSet('Charazard')
-        pokemon.moves('Ember','Slash','Flamethrower','Hyper Beam')
-    if(i%2 == 1):
-        primaryChar()
+    ################################# hard coded to 1
+    user = 1
+    if(user == 1):
+        global i
+        # default pokemon pikachu
+        def primaryChar():
+            pokemon.nameSet('Pikachu')
+            pokemon.moves('Thunderbolt','Slam','Iron Tail','Brick Break')
+        # after switch button is clicked seconary pokemon charzard
+        def secondaryChar():
+            pokemon.nameSet('Charazard')
+            pokemon.moves('Wing Attack','Slash','Flamethrower','Dragon Claw')
+        if(i%2 == 1):
+            primaryChar()
+        else:
+            secondaryChar()
+        i=i+1
+        print (i)
+        socketio.emit('updateMoves', {
+            'name'  : pokemon.name,
+            'move1' : pokemon.move[0].name,
+            'move2' : pokemon.move[1].name,
+            'move3' : pokemon.move[2].name,
+            'move4' : pokemon.move[3].name
+        })
     else:
-        secondaryChar()
-    i=i+1
-    print (i)
-    socketio.emit('updateMoves', {
-        'name'  : pokemon.name,
-        'move1' : pokemon.move[0].name,
-        'move2' : pokemon.move[1].name,
-        'move3' : pokemon.move[2].name,
-        'move4' : pokemon.move[3].name
-    })
+        global ii 
+        # default pokemon pikachu
+        def primaryChar():
+            pokemon.nameSet('Dragonite')
+            pokemon.moves('Wing Attack','Drangon Claw','Fire Punch','Aqua Tail')
+        def secondaryChar():
+            pokemon.nameSet('Scyther')
+            pokemon.moves('Steel Wing','Night Slash','X-Scissor','Wing Attack')
+        if(ii%2 == 1):
+            primaryChar()
+        else:
+            secondaryChar()
+        ii=ii+1
+        print (ii)
+        socketio.emit('updateMoves', {
+            'name'  : pokemon.name,
+            'move1' : pokemon.move[0].name,
+            'move2' : pokemon.move[1].name,
+            'move3' : pokemon.move[2].name,
+            'move4' : pokemon.move[3].name
+        })
+        
+    
 
 
 
