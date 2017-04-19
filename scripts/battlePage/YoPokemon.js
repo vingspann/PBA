@@ -7,7 +7,8 @@ export class YoPokemon extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            'pokemon': [{ 'character' : 'Pikachu', 'health' : '0.90'},{ 'character' : 'Charazard', 'health' : '0.80'}]
+            'pokemon': [{ 'character' : 'Pikachu', 'health' : '0.90', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'}
+                       ,{ 'character' : 'Charazard', 'health' : '0.80', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png'}]
         };
     }
     componentDidMount(){
@@ -17,7 +18,8 @@ export class YoPokemon extends React.Component {
         let pokemon = this.state.pokemon.map((n, index) =>
             <li key={index}>
                 <div id="HealthLog">
-                    {n.character} : {n.health}
+                    <img className="images" src={n.spriteLink}/> 
+                  
                 </div>
                 <ProgressBar>
                     <ProgressBar bsStyle="success" now={n.health*100} label={`${n.health*100}%`} key={1} />
