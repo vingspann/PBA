@@ -1,15 +1,16 @@
-from character import pokemon
+from character import character
 
 
 class user():
     
     name = ''
-    monster = []
+    pokemon = []
     hasWon = False
-    currentMonster = 1
+    currentPokemon = 1
     recentMove = 1
+    ID = None
     for i in range(2):
-        monster.append(pokemon())
+        pokemon.append(character())
         
     # This updates the number of the most recent move
     def updateRecent(self, move):
