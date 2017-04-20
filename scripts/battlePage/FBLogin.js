@@ -9,7 +9,7 @@ import FacebookLogin from 'react-facebook-login';
     render() {
       return (
         <FacebookLogin
-          appId="1981325768753022"
+          appId='1981325768753022'
           autoLoad={false}
           fields="name,email,picture"
           scope="public_profile,euser_friends,user_actions.books"
