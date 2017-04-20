@@ -7,9 +7,10 @@ import { OverlayTrigger } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
 import { Tooltip } from 'react-bootstrap';
+import { ButtonToolbar } from 'react-bootstrap';
 
 
-export class SwitchBtn extends React.Component {
+export class SurrenderBtn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -19,17 +20,23 @@ export class SwitchBtn extends React.Component {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
+        this.onClickCancelSurrender = this.onClickCancelSurrender.bind(this);
+        this.onClickConfirmSurrender = this.onClickConfirmSurrender.bind(this);
 
-    }
-
-    onClickSwitch(){
-        Socket.emit('battleLog', {'text' : 'Switch button clicked'});
-        Socket.emit('secondaryChar', {});
-        Socket.emit('switch');
-        console.log('Button 1 clicked.');
-       
     }
     
+    onClickConfirmSurrender(){
+        console.log('Surrender Confirmed.');
+        Socket.emit('battleLog', {'text' : 'Surrender confirmed.'});
+         this.setState({ showModal: false });
+    }
+    
+    onClickCancelSurrender(){
+        console.log('Surrender Canceled')
+        Socket.emit('battleLog', {'text' : 'Surrender canceled.'});
+        this.setState({ showModal: false });
+    }
+
     close() {
         this.setState({ showModal: false });
     }
@@ -50,34 +57,26 @@ export class SwitchBtn extends React.Component {
             </Popover>
         );
         const tooltip = (
-            <Tooltip id="modal-tooltip" >
-                <img img src="../static/img/PBALogo.png" alt="PBA logo"/>
+            <Tooltip id="modal-tooltip">
+                wow.
             </Tooltip>
         );
         
         return (
-            <div id="switch">
+            <div id="surrender">
             
-                <Button bsSize="large" onClick={this.open}>Switch</Button>
+                <Button bsSize="large" onClick={this.open}>Surrender</Button>
 
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Switch Pokemon</Modal.Title>
+                        <Modal.Title>Confirm Surrender...</Modal.Title>
                     </Modal.Header>
                     
                     <Modal.Body>
-                    <div align = "center">
-                        <OverlayTrigger overlay={tooltip} placement="top"><div className="box"></div></OverlayTrigger>
-                        
-                        <div className="box box1"></div>
-                        <div className="box box2"></div>
-                        <div className="box box3"></div>
-                        <div className="box box4"></div>
-                        <div className="box box5"></div>
-                        <div className="box box6"></div>
-                        <div className="box box7"></div>
-                        <div className="box box8"></div>
-                    </div>
+                        <ButtonToolbar>
+                            <Button id="SurrenderConfirm" bsSize="large" onClick={this.onClickConfirmSurrender}>Confirm</Button>
+                            <Button id="SurrenderCancel" bsSize="large" onClick={this.onClickCancelSurrender}>Cancel</Button>
+                        </ButtonToolbar>
                     </Modal.Body>
                     
                     <Modal.Footer>

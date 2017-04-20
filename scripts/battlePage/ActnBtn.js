@@ -7,6 +7,8 @@ import { InputGroup } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
 import { SwitchBtn } from './SwitchBtn';
+import { SurrenderBtn } from './SurrenderBtn';
+import { ButtonGroup } from 'react-bootstrap';
 
 export class ActnBtn extends React.Component {
     constructor(props){
@@ -24,7 +26,7 @@ export class ActnBtn extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        console.log('An action was clicked.')
+        console.log('An action was clicked.');
 
     }
     
@@ -32,12 +34,12 @@ export class ActnBtn extends React.Component {
         Socket.emit('battleLog', {'text' : 'Switch button clicked'});
         Socket.emit('secondaryChar', {});
         Socket.emit('switch');
-        console.log('Button 1 clicked.')
+        console.log('Button 1 clicked.');
        
     }
     
     onClickSurrender(){
-        console.log('Button 2 clicked.')
+        console.log('Button 2 clicked.');
         Socket.emit('battleLog', {'text' : 'Surrender button clicked.'});
     }
 
@@ -54,8 +56,12 @@ export class ActnBtn extends React.Component {
                     <FormGroup>
                             <InputGroup>
                                 <ButtonToolbar>
-                                    <Button id="Switch" bsSize="large" onClick={this.onClickSwitch}>Switch</Button>
-                                    <Button id="Surrender" bsSize="large" onClick={this.onClickSurrender}>Surrender</Button>
+                                    <ButtonGroup>
+                                        <SwitchBtn/>
+                                    </ButtonGroup>
+                                    <ButtonGroup>
+                                        <SurrenderBtn/>
+                                    </ButtonGroup>
                                 </ButtonToolbar>
                             </InputGroup>
                         </FormGroup>
