@@ -1,26 +1,28 @@
-from character import pokemon
+from character import character
 
 
 class user():
     
-    name = ''
-    monster = []
-    hasWon = False
-    currentMonster = 1
-    recentMove = 1
-    for i in range(2):
-        monster.append(pokemon())
+    def __init__(self):
+        self.name = ''
+        self.pokemon = [character(), character()]
+        self.hasWon = False
+        self.currentPokemon = 0
+        self.recentMove = 0
+        self.ID = None
+    #for i in range(2):
+     #   pokemon.append(character())
         
     # This updates the number of the most recent move
     def updateRecent(self, move):
-        recentMove = move
-        
-    # This updates the number of the current pokemon
-    def updateCurrent(self, poke):
-        currentMonster = poke
+        self.recentMove = move
         
     # Sets the persons name for chat
     def nameSet(self, name):
-        self.name = name;
+        self.name = name
         
-    
+    def getCurrentPokemon():
+        return self.currentPokemon
+        
+    def __repr__(self):
+        return "Player" + str(self.pokemon)
