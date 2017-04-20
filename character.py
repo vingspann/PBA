@@ -56,6 +56,12 @@ class character():
     accuracy = 80
     accuracyMod = 85
     
+        
     spriteLink = "https://cdn.iconverticons.com/files/png/1e2faeab4fac4558_128x128.png"
+    
+    def sprite(self, spriteLink):
+        self.spriteLink = spriteLink
+        
+
     
     

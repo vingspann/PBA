@@ -29,7 +29,6 @@ def setPokemon():
     player[1].pokemon[1].nameSet('Scyther')
     player[1].pokemon[1].moves('Steel Wing','Night Slash','X-Scissor','Wing Attack')
     
-    
 # Helper function used by seperate socket Io calls
 def updatePokemon(ID):
     # p stands for player number for the array
@@ -45,8 +44,8 @@ def updatePokemon(ID):
         cp = player[1].currentPokemon
     else: 
         return
-        
-    # Updates the pokemon for the player that switched or called update info
+ 
+  # Updates the pokemon for the player that switched or called update info
     socketio.emit('updatePokemon', {
         'name'  : player[p].pokemon[cp].name,
         'move1' : player[p].pokemon[cp].move[0].name,
