@@ -6,7 +6,7 @@ class user():
     name = ''
     pokemon = []
     hasWon = False
-    currentPokemon = 1
+    currentPokemon = 0
     recentMove = 1
     ID = None
     for i in range(2):
