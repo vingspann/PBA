@@ -50,8 +50,8 @@ export class SwitchBtn extends React.Component {
             </Popover>
         );
         const tooltip = (
-            <Tooltip id="modal-tooltip">
-                wow.
+            <Tooltip id="modal-tooltip" >
+                <img img src="../static/img/PBALogo.png" alt="PBA logo"/>
             </Tooltip>
         );
         
@@ -66,15 +66,18 @@ export class SwitchBtn extends React.Component {
                     </Modal.Header>
                     
                     <Modal.Body>
-                        <div class="box"></div>
-                        <div class="box box1"></div>
-                        <div class="box box2"></div>
-                        <div class="box box3"></div>
-                        <div class="box box4"></div>
-                        <div class="box box5"></div>
-                        <div class="box box6"></div>
-                        <div class="box box7"></div>
-                        <div class="box box8"></div>
+                    <div align = "center">
+                        <OverlayTrigger overlay={tooltip} placement="top"><div className="box"></div></OverlayTrigger>
+                        
+                        <div className="box box1"></div>
+                        <div className="box box2"></div>
+                        <div className="box box3"></div>
+                        <div className="box box4"></div>
+                        <div className="box box5"></div>
+                        <div className="box box6"></div>
+                        <div className="box box7"></div>
+                        <div className="box box8"></div>
+                    </div>
                     </Modal.Body>
                     
                     <Modal.Footer>
