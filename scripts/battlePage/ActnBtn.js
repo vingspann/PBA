@@ -24,7 +24,7 @@ export class ActnBtn extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        console.log('An action was clicked.')
+        console.log('An action was clicked.');
 
     }
     
@@ -32,12 +32,12 @@ export class ActnBtn extends React.Component {
         Socket.emit('battleLog', {'text' : 'Switch button clicked'});
         Socket.emit('secondaryChar', {});
         Socket.emit('switch');
-        console.log('Button 1 clicked.')
+        console.log('Button 1 clicked.');
        
     }
     
     onClickSurrender(){
-        console.log('Button 2 clicked.')
+        console.log('Button 2 clicked.');
         Socket.emit('battleLog', {'text' : 'Surrender button clicked.'});
     }
 
