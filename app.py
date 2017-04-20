@@ -46,7 +46,7 @@ def updatePokemon(ID):
     else: 
         return
         
-
+    # Updates the pokemon for the player that switched or called update info
     socketio.emit('updatePokemon', {
         'name'  : player[p].pokemon[cp].name,
         'move1' : player[p].pokemon[cp].move[0].name,
@@ -58,6 +58,7 @@ def updatePokemon(ID):
         'link' : player[p].pokemon[cp].spriteLink
     }, room=player[p].ID)
     
+    # updates the opponents info of the updated info
     socketio.emit('updateOpPokemon', {
         'name' : player[p].pokemon[cp].name,
         'link' : player[p].pokemon[cp].spriteLink,
