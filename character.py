@@ -31,6 +31,10 @@ class character():
           self.move[1].setName(move2)
           self.move[2].setName(move3)
           self.move[3].setName(move4)
+          
+    # change this to the actual formula for the percentage of the health
+    def percentHealth(self):
+        return 0.5
     
     attack = 85
     sAttack = 90
