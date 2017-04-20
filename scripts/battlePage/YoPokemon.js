@@ -7,9 +7,12 @@ export class YoPokemon extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            'pokemon' : []
-            // 'pokemon': [{ 'character' : 'Pikachu', 'health' : '0.90', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'}
-            //           ,{ 'character' : 'Charazard', 'health' : '0.80', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png'}]
+            // 'pokemon' : []
+            'pokemon': [{ 'character' : 'Pikachu', 'health' : '0.90', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'}
+                      ,{ 'character' : 'Charazard', 'health' : '0.80', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png'}],
+            'opPokemon' :  [{ 'character' : 'Dragonite', 'health' : '0.69', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png'}
+                      ,{ 'character' : 'Scyther', 'health' : '0.71', 'spriteLink' : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/123.png'}]
+                     
         };
     }
     componentDidMount(){
@@ -47,12 +50,24 @@ export class YoPokemon extends React.Component {
                 </ProgressBar>
             </li>
         );
+        let opPokemon = this.state.opPokemon.map((n, index) =>
+            <li key={index}>
+                
+                <div id="opHealthLog">
+                    <p id="pokemonInfoHeader">{n.character} : {n.health}</p>
+                </div>
+            </li>
+            
+        );
         
         return (
             <div>
                 <h2 id="pokemonInfoHeader">Pokemon</h2>
                 <div>
                     <ul> {pokemon} </ul>
+                    <h4 id="pokemonInfoHeader">Opponent Pokemon</h4>
+                    <ul> {opPokemon} </ul>
+                    
                 </div>
             </div>
         );
