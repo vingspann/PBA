@@ -1,11 +1,13 @@
 from move import attack
 
-class pokemon():
+class character():
     
     name = "Pikachu"
     Type1 = "Electric"
     Type2 = None
     move = []
+    maxHp = 35
+    currentHp = maxHp
     for i in range(4):
         move.append(attack())
         
