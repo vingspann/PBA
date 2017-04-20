@@ -2,19 +2,20 @@ from move import attack
 
 class character():
     
-    name = "Pikachu"
-    Type1 = "Electric"
-    Type2 = None
-    move = []
-    maxHp = 35
-    currentHp = maxHp
-    for i in range(4):
-        move.append(attack())
+    def __init__(self):
+        self.name = "Pikachu"
+        self.Type1 = "Electric"
+        self.Type2 = None
+        self.move = []
+        self.maxHp = 35
+        self.currentHp = self.maxHp
+        for i in range(4):
+            self.move.append(attack())
         
-    move[0].setName("Thunderbolt")
-    move[1].setName("Tail Whip")
-    move[2].setName("Iron Tail")
-    move[3].setName("Play Nice")
+        self.move[0].setName("Thunderbolt")
+        self.move[1].setName("Tail Whip")
+        self.move[2].setName("Iron Tail")
+        self.move[3].setName("Play Nice")
     
     def nameSet(self, name):
         self.name = name
