@@ -50120,7 +50120,7 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(_reactFacebookLogin2.default, {
-	        appId: '1981325768753022',
+	        appId: '1378809085491759',
 	        autoLoad: false,
 	        fields: 'name,email,picture',
 	        scope: 'public_profile,euser_friends,user_actions.books',
