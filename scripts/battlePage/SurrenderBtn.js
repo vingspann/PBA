@@ -67,21 +67,18 @@ export class SurrenderBtn extends React.Component {
             
                 <Button bsSize="large" onClick={this.open}>Surrender</Button>
 
-                <Modal show={this.state.showModal} onHide={this.close}>
+                <Modal show={this.state.showModal} onHide={this.close} bsSize="small">
                     <Modal.Header closeButton>
                         <Modal.Title>Confirm Surrender...</Modal.Title>
                     </Modal.Header>
                     
                     <Modal.Body>
                         <ButtonToolbar>
-                            <Button id="SurrenderConfirm" bsSize="large" onClick={this.onClickConfirmSurrender}>Confirm</Button>
-                            <Button id="SurrenderCancel" bsSize="large" onClick={this.onClickCancelSurrender}>Cancel</Button>
+                            <Button id="SurrenderConfirm" bsSize="large" bsStyle="primary" onClick={this.onClickConfirmSurrender}>Confirm</Button>
+                            <Button id="SurrenderCancel" bsSize="large" bsStyle="primary" onClick={this.onClickCancelSurrender}>Cancel</Button>
                         </ButtonToolbar>
                     </Modal.Body>
                     
-                    <Modal.Footer>
-                        <Button onClick={this.close}>Close</Button>
-                    </Modal.Footer>
                 </Modal>
             </div>
         );

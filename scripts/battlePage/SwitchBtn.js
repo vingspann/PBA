@@ -13,21 +13,81 @@ export class SwitchBtn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-             'showModal': false
+             'showModal': false,
+             'firstPokeball': "box",
+             'secondPokeball': "box box2"
         };
         
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.onClickSwitchOne = this.onClickSwitchOne.bind(this);
+        this.onClickSwitchTwo = this.onClickSwitchTwo.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
+        this.getRandomInt = this.getRandomInt.bind(this);
+        this.randomPokeball = this.randomPokeball.bind(this);
 
     }
 
-    onClickSwitch(){
-        Socket.emit('battleLog', {'text' : 'Switch button clicked'});
+    onClickSwitchOne(){
+        Socket.emit('battleLog', {'text' : 'Pokemon 1 selected for switch.'});
         Socket.emit('secondaryChar', {});
         Socket.emit('switch');
-        console.log('Button 1 clicked.');
+        console.log('Pokemon 1 selected.');
+        this.setState({ showModal: false });
        
+    }
+    
+     onClickSwitchTwo(){
+        Socket.emit('battleLog', {'text' : 'Pokemon 2 selected for switch.'});
+        Socket.emit('secondaryChar', {});
+        Socket.emit('switch');
+        console.log('Pokemon 2 selected.');
+        this.setState({ showModal: false });
+    }
+    
+    getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    randomPokeball(){
+        var ballOne = this.getRandomInt(1,4);
+        var ballTwo = this.getRandomInt(1,4);
+        
+        if(ballOne == 1)
+        {
+            this.setState({firstPokeball: "box"});
+        }
+        else if(ballOne == 2)
+        {
+            this.setState({firstPokeball: "box box2"});
+        }
+        else if(ballOne == 3)
+        {
+            this.setState({firstPokeball: "box box3"});
+        }
+        else if(ballOne == 4)
+        {
+            this.setState({firstPokeball: "box box4"});
+        }
+        
+        if(ballTwo == 1)
+        {
+            this.setState({secondPokeball: "box"});
+        }
+        else if(ballTwo == 2)
+        {
+            this.setState({firstPokeball: "box box2"});
+        }
+        else if(ballTwo == 3)
+        {
+            this.setState({secondPokeball: "box box3"});
+        }
+        else if(ballTwo == 4)
+        {
+            this.setState({secondPokeball: "box box4"});
+        }
+        
+        this.setState({ showModal: true });
     }
     
     close() {
@@ -51,14 +111,14 @@ export class SwitchBtn extends React.Component {
         );
         const tooltip = (
             <Tooltip id="modal-tooltip" >
-                <img img src="../static/img/PBALogo.png" alt="PBA logo"/>
+                <img src="../static/img/PBALogo.png" alt="PBA logo" />
             </Tooltip>
         );
         
         return (
             <div id="switch">
             
-                <Button bsSize="large" onClick={this.open}>Switch</Button>
+                <Button bsSize="large" onClick={this.randomPokeball}>Switch</Button>
 
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>
@@ -66,22 +126,14 @@ export class SwitchBtn extends React.Component {
                     </Modal.Header>
                     
                     <Modal.Body>
-                    <div align = "center">
-                        <OverlayTrigger overlay={tooltip} placement="top"><div className="box"></div></OverlayTrigger>
-                        
-                        <div className="box box1"></div>
-                        <div className="box box2"></div>
-                        <div className="box box3"></div>
-                        <div className="box box4"></div>
-                        <div className="box box5"></div>
-                        <div className="box box6"></div>
-                        <div className="box box7"></div>
-                        <div className="box box8"></div>
+                    <div>
+                        <OverlayTrigger overlay={tooltip} placement="top"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip} placement="top"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
                     </div>
                     </Modal.Body>
                     
                     <Modal.Footer>
-                        <Button onClick={this.close}>Close</Button>
+                        <Button onClick={this.close}>Cancel</Button>
                     </Modal.Footer>
                 </Modal>
             </div>
