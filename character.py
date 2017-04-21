@@ -7,7 +7,7 @@ class character():
         self.Type1 = "Electric"
         self.Type2 = None
         self.move = []
-        self.maxHp = 35
+        self.maxHp = .80
         self.currentHp = self.maxHp
         for i in range(4):
             self.move.append(attack())
@@ -16,6 +16,8 @@ class character():
         self.move[1].setName("Tail Whip")
         self.move[2].setName("Iron Tail")
         self.move[3].setName("Play Nice")
+        
+        self.spriteLink = "https://cdn.iconverticons.com/files/png/1e2faeab4fac4558_128x128.png"
     
     def nameSet(self, name):
         self.name = name
@@ -36,6 +38,8 @@ class character():
     # change this to the actual formula for the percentage of the health
     def percentHealth(self):
         return 0.5
+    def healthSet(self, maxHp):
+        self.maxHp = maxHp
     
     attack = 85
     sAttack = 90
@@ -57,7 +61,7 @@ class character():
     accuracyMod = 85
     
         
-    spriteLink = "https://cdn.iconverticons.com/files/png/1e2faeab4fac4558_128x128.png"
+    
     
     def sprite(self, spriteLink):
         self.spriteLink = spriteLink
