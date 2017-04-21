@@ -92,7 +92,7 @@ def switch():
 
 @app.route('/')
 def hello():
-    return flask.render_template('index.html')
+    return flask.render_template('index.html', facebook_key = os.environ['FBKEY'])
     
 @socketio.on('chatLogSubmit')
 def chatLogSubmit(data):
