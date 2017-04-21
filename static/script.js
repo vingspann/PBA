@@ -21530,7 +21530,7 @@
 
 	var _reactBootstrap = __webpack_require__(180);
 
-	var _FBLogin = __webpack_require__(519);
+	var _FBLogin = __webpack_require__(492);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -49492,9 +49492,9 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            _Socket.Socket.emit('updateMoves');
+	            _Socket.Socket.emit('updateInfo');
 	            // Allows moves to be dynamically updated.
-	            _Socket.Socket.on('updateMoves', function (data) {
+	            _Socket.Socket.on('updatePokemon', function (data) {
 	                _this2.setState({
 	                    'name': data['name'],
 	                    'move1': data['move1'],
@@ -49830,7 +49830,9 @@
 
 	var _Socket = __webpack_require__(433);
 
-	var _SwitchBtn = __webpack_require__(518);
+	var _SwitchBtn = __webpack_require__(490);
+
+	var _SurrenderBtn = __webpack_require__(491);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49902,14 +49904,14 @@
 	                                _reactBootstrap.ButtonToolbar,
 	                                null,
 	                                React.createElement(
-	                                    _reactBootstrap.Button,
-	                                    { id: 'Switch', bsSize: 'large', onClick: this.onClickSwitch },
-	                                    'Switch'
+	                                    _reactBootstrap.ButtonGroup,
+	                                    null,
+	                                    React.createElement(_SwitchBtn.SwitchBtn, null)
 	                                ),
 	                                React.createElement(
-	                                    _reactBootstrap.Button,
-	                                    { id: 'Surrender', bsSize: 'large', onClick: this.onClickSurrender },
-	                                    'Surrender'
+	                                    _reactBootstrap.ButtonGroup,
+	                                    null,
+	                                    React.createElement(_SurrenderBtn.SurrenderBtn, null)
 	                                )
 	                            )
 	                        )
@@ -49923,35 +49925,7 @@
 	}(React.Component);
 
 /***/ },
-/* 490 */,
-/* 491 */,
-/* 492 */,
-/* 493 */,
-/* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */,
-/* 506 */,
-/* 507 */,
-/* 508 */,
-/* 509 */,
-/* 510 */,
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */
+/* 490 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49959,7 +49933,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ActnBtn = undefined;
+	exports.SwitchBtn = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -49987,25 +49961,26 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ActnBtn = exports.ActnBtn = function (_React$Component) {
-	    _inherits(ActnBtn, _React$Component);
+	var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
+	    _inherits(SwitchBtn, _React$Component);
 
-	    function ActnBtn(props) {
-	        _classCallCheck(this, ActnBtn);
+	    function SwitchBtn(props) {
+	        _classCallCheck(this, SwitchBtn);
 
-	        var _this = _possibleConstructorReturn(this, (ActnBtn.__proto__ || Object.getPrototypeOf(ActnBtn)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (SwitchBtn.__proto__ || Object.getPrototypeOf(SwitchBtn)).call(this, props));
 
 	        _this.state = {
 	            'showModal': false
 	        };
 
-	        _this.handleSubmit = _this.handleSubmit.bind(_this);
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
 
 	        return _this;
 	    }
 
-	    _createClass(ActnBtn, [{
+	    _createClass(SwitchBtn, [{
 	        key: 'onClickSwitch',
 	        value: function onClickSwitch() {
 	            _Socket.Socket.emit('battleLog', { 'text': 'Switch button clicked' });
@@ -50014,10 +49989,161 @@
 	            console.log('Button 1 clicked.');
 	        }
 	    }, {
-	        key: 'onClickSurrender',
-	        value: function onClickSurrender() {
-	            console.log('Button 2 clicked.');
-	            _Socket.Socket.emit('battleLog', { 'text': 'Surrender button clicked.' });
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ showModal: false });
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            this.setState({ showModal: true });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var popover = React.createElement(
+	                _reactBootstrap.Popover,
+	                { id: 'modal-popover', title: 'popover' },
+	                'very popover. such engagement'
+	            );
+	            var tooltip = React.createElement(
+	                _reactBootstrap.Tooltip,
+	                { id: 'modal-tooltip' },
+	                React.createElement('img', { img: true, src: '../static/img/PBALogo.png', alt: 'PBA logo' })
+	            );
+
+	            return React.createElement(
+	                'div',
+	                { id: 'switch' },
+	                React.createElement(
+	                    _reactBootstrap.Button,
+	                    { bsSize: 'large', onClick: this.open },
+	                    'Switch'
+	                ),
+	                React.createElement(
+	                    _reactBootstrap.Modal,
+	                    { show: this.state.showModal, onHide: this.close },
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Header,
+	                        { closeButton: true },
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Title,
+	                            null,
+	                            'Switch Pokemon'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Body,
+	                        null,
+	                        React.createElement(
+	                            'div',
+	                            { align: 'center' },
+	                            React.createElement(
+	                                _reactBootstrap.OverlayTrigger,
+	                                { overlay: tooltip, placement: 'top' },
+	                                React.createElement('div', { className: 'box' })
+	                            ),
+	                            React.createElement('div', { className: 'box box1' }),
+	                            React.createElement('div', { className: 'box box2' }),
+	                            React.createElement('div', { className: 'box box3' }),
+	                            React.createElement('div', { className: 'box box4' }),
+	                            React.createElement('div', { className: 'box box5' }),
+	                            React.createElement('div', { className: 'box box6' }),
+	                            React.createElement('div', { className: 'box box7' }),
+	                            React.createElement('div', { className: 'box box8' })
+	                        )
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Footer,
+	                        null,
+	                        React.createElement(
+	                            _reactBootstrap.Button,
+	                            { onClick: this.close },
+	                            'Close'
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SwitchBtn;
+	}(React.Component);
+
+/***/ },
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.SurrenderBtn = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var React = _interopRequireWildcard(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var ReactBootstrap = _interopRequireWildcard(_reactBootstrap);
+
+	var _Socket = __webpack_require__(433);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SurrenderBtn = exports.SurrenderBtn = function (_React$Component) {
+	    _inherits(SurrenderBtn, _React$Component);
+
+	    function SurrenderBtn(props) {
+	        _classCallCheck(this, SurrenderBtn);
+
+	        var _this = _possibleConstructorReturn(this, (SurrenderBtn.__proto__ || Object.getPrototypeOf(SurrenderBtn)).call(this, props));
+
+	        _this.state = {
+	            'showModal': false
+	        };
+
+	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
+	        _this.onClickCancelSurrender = _this.onClickCancelSurrender.bind(_this);
+	        _this.onClickConfirmSurrender = _this.onClickConfirmSurrender.bind(_this);
+
+	        return _this;
+	    }
+
+	    _createClass(SurrenderBtn, [{
+	        key: 'onClickConfirmSurrender',
+	        value: function onClickConfirmSurrender() {
+	            console.log('Surrender Confirmed.');
+	            _Socket.Socket.emit('battleLog', { 'text': 'Surrender confirmed.' });
+	            this.setState({ showModal: false });
+	        }
+	    }, {
+	        key: 'onClickCancelSurrender',
+	        value: function onClickCancelSurrender() {
+	            console.log('Surrender Canceled');
+	            _Socket.Socket.emit('battleLog', { 'text': 'Surrender canceled.' });
+	            this.setState({ showModal: false });
 	        }
 	    }, {
 	        key: 'close',
@@ -50048,16 +50174,11 @@
 
 	            return React.createElement(
 	                'div',
-	                { id: 'switch' },
-	                React.createElement(
-	                    'p',
-	                    null,
-	                    'Click to get the full Modal experience!'
-	                ),
+	                { id: 'surrender' },
 	                React.createElement(
 	                    _reactBootstrap.Button,
 	                    { bsSize: 'large', onClick: this.open },
-	                    'Switch'
+	                    'Surrender'
 	                ),
 	                React.createElement(
 	                    _reactBootstrap.Modal,
@@ -50068,112 +50189,25 @@
 	                        React.createElement(
 	                            _reactBootstrap.Modal.Title,
 	                            null,
-	                            'Modal heading'
+	                            'Confirm Surrender...'
 	                        )
 	                    ),
 	                    React.createElement(
 	                        _reactBootstrap.Modal.Body,
 	                        null,
 	                        React.createElement(
-	                            'h4',
+	                            _reactBootstrap.ButtonToolbar,
 	                            null,
-	                            'Text in a modal'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Duis mollis, est non commodo luctus, nisi erat porttitor ligula.'
-	                        ),
-	                        React.createElement(
-	                            'h4',
-	                            null,
-	                            'Popover in a modal'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'there is a ',
 	                            React.createElement(
-	                                OverlayTrigger,
-	                                { overlay: popover },
-	                                React.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    'popover'
-	                                )
+	                                _reactBootstrap.Button,
+	                                { id: 'SurrenderConfirm', bsSize: 'large', onClick: this.onClickConfirmSurrender },
+	                                'Confirm'
 	                            ),
-	                            ' here'
-	                        ),
-	                        React.createElement(
-	                            'h4',
-	                            null,
-	                            'Tooltips in a modal'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'there is a ',
 	                            React.createElement(
-	                                OverlayTrigger,
-	                                { overlay: tooltip },
-	                                React.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    'tooltip'
-	                                )
-	                            ),
-	                            ' here'
-	                        ),
-	                        React.createElement('hr', null),
-	                        React.createElement(
-	                            'h4',
-	                            null,
-	                            'Overflowing text to show scroll behavior'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'
-	                        ),
-	                        React.createElement(
-	                            'p',
-	                            null,
-	                            'Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.'
+	                                _reactBootstrap.Button,
+	                                { id: 'SurrenderCancel', bsSize: 'large', onClick: this.onClickCancelSurrender },
+	                                'Cancel'
+	                            )
 	                        )
 	                    ),
 	                    React.createElement(
@@ -50190,11 +50224,11 @@
 	        }
 	    }]);
 
-	    return ActnBtn;
+	    return SurrenderBtn;
 	}(React.Component);
 
 /***/ },
-/* 519 */
+/* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50210,7 +50244,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFacebookLogin = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-facebook-login\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _reactFacebookLogin = __webpack_require__(493);
 
 	var _reactFacebookLogin2 = _interopRequireDefault(_reactFacebookLogin);
 
@@ -50240,8 +50274,8 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(_reactFacebookLogin2.default, {
-	        appId: '1981325768753022',
-	        autoLoad: true,
+	        appId: '{{ facebook_key }}',
+	        autoLoad: false,
 	        fields: 'name,email,picture',
 	        scope: 'public_profile,euser_friends,user_actions.books',
 	        callback: this.responseFacebook,
@@ -50252,6 +50286,12 @@
 
 	  return FBLogin;
 	}(_react2.default.Component);
+
+/***/ },
+/* 493 */
+/***/ function(module, exports, __webpack_require__) {
+
+	!function(e,t){ true?module.exports=t(__webpack_require__(1)):"function"==typeof define&&define.amd?define(["react"],t):"object"==typeof exports?exports.FacebookLogin=t(require("react")):e.FacebookLogin=t(e.react)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={exports:{},id:n,loaded:!1};return e[n].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var o={};return t.m=e,t.c=o,t.p="",t(0)}([function(e,t,o){e.exports=o(2)},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function r(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var o=arguments[t];for(var n in o)Object.prototype.hasOwnProperty.call(o,n)&&(e[n]=o[n])}return e},c=function(){function e(e,t){for(var o=0;o<t.length;o++){var n=t[o];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,o,n){return o&&e(t.prototype,o),n&&e(t,n),t}}(),l=o(6),p=n(l),u=o(4),f=n(u),d=o(3),y=n(d),b=function(){var e=!1;try{e=window.navigator&&window.navigator.standalone||navigator.userAgent.match("CriOS")||navigator.userAgent.match(/mobile/i)}catch(t){}return e},h=function(e){function t(){var e,o,n,s;i(this,t);for(var c=arguments.length,l=Array(c),p=0;p<c;p++)l[p]=arguments[p];return o=n=r(this,(e=t.__proto__||Object.getPrototypeOf(t)).call.apply(e,[this].concat(l))),n.state={isSdkLoaded:!1,isProcessing:!1},n.responseApi=function(e){window.FB.api("/me",{fields:n.props.fields},function(t){a(t,e),n.props.callback(t)})},n.checkLoginState=function(e){n.setStateIfMounted({isProcessing:!1}),e.authResponse?n.responseApi(e.authResponse):n.props.callback&&n.props.callback({status:e.status})},n.checkLoginAfterRefresh=function(e){"connected"===e.status?n.checkLoginState(e):window.FB.login(function(e){return n.checkLoginState(e)},!0)},n.click=function(){if(n.state.isSdkLoaded&&!n.state.isProcessing&&!n.props.isDisabled){n.setState({isProcessing:!0});var e=n.props,t=e.scope,o=e.appId,i=e.onClick,r=e.reAuthenticate,s=e.redirectUri,a=e.disableMobileRedirect;"function"==typeof i&&i();var c={client_id:o,redirect_uri:s,state:"facebookdirect",scope:t};r&&(c.auth_type="reauthenticate"),n.props.isMobile&&!a?window.location.href="//www.facebook.com/dialog/oauth?"+(0,y["default"])(c):window.FB.login(n.checkLoginState,{scope:t,auth_type:c.auth_type})}},s=o,r(n,s)}return s(t,e),c(t,[{key:"componentDidMount",value:function(){if(document.getElementById("facebook-jssdk"))return void this.sdkLoaded();this.setFbAsyncInit(),this.loadSdkAsynchronously();var e=document.getElementById("fb-root");e||(e=document.createElement("div"),e.id="fb-root",document.body.appendChild(e)),this._isMounted=!0}},{key:"componentWillUnmount",value:function(){this._isMounted=!1}},{key:"setStateIfMounted",value:function(e){this._isMounted&&this.setState(e)}},{key:"setFbAsyncInit",value:function(){var e=this,t=this.props,o=t.appId,n=t.xfbml,i=t.cookie,r=t.version,s=t.autoLoad;window.fbAsyncInit=function(){window.FB.init({version:"v"+r,appId:o,xfbml:n,cookie:i}),e.setStateIfMounted({isSdkLoaded:!0}),(s||window.location.search.includes("facebookdirect"))&&window.FB.getLoginStatus(e.checkLoginAfterRefresh)}}},{key:"sdkLoaded",value:function(){this.setState({isSdkLoaded:!0})}},{key:"loadSdkAsynchronously",value:function(){var e=this.props.language;!function(t,o,n){var i=t.getElementsByTagName(o)[0],r=i,s=i;t.getElementById(n)||(s=t.createElement(o),s.id=n,s.src="//connect.facebook.net/"+e+"/all.js",r.parentNode.insertBefore(s,r))}(document,"script","facebook-jssdk")}},{key:"style",value:function(){var e=this.constructor.defaultProps.cssClass;return this.props.cssClass===e&&p["default"].createElement("style",{dangerouslySetInnerHTML:{__html:f["default"]}})}},{key:"containerStyle",value:function(){var e={transition:"opacity 0.5s"};return(this.state.isProcessing||!this.state.isSdkLoaded||this.props.isDisabled)&&(e.opacity=.6),a(e,this.props.containerStyle)}},{key:"render",value:function(){var e=this.props,t=e.cssClass,o=e.size,n=e.icon,i=e.textButton,r=e.typeButton,s=e.buttonStyle,a="string"==typeof n;return p["default"].createElement("span",{style:this.containerStyle()},a&&p["default"].createElement("link",{rel:"stylesheet",href:"//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"}),p["default"].createElement(this.props.tag,{type:r,className:t+" "+o,style:s,onClick:this.click},n&&a&&p["default"].createElement("i",{className:"fa "+n}),n&&!a&&n,i),this.style())}}]),t}(p["default"].Component);h.propTypes={isDisabled:l.PropTypes.bool,callback:l.PropTypes.func.isRequired,appId:l.PropTypes.string.isRequired,xfbml:l.PropTypes.bool,cookie:l.PropTypes.bool,reAuthenticate:l.PropTypes.bool,scope:l.PropTypes.string,redirectUri:l.PropTypes.string,textButton:l.PropTypes.string,typeButton:l.PropTypes.string,autoLoad:l.PropTypes.bool,disableMobileRedirect:l.PropTypes.bool,isMobile:l.PropTypes.bool,size:l.PropTypes.string,fields:l.PropTypes.string,cssClass:l.PropTypes.string,version:l.PropTypes.string,icon:l.PropTypes.any,language:l.PropTypes.string,onClick:l.PropTypes.func,containerStyle:l.PropTypes.object,buttonStyle:l.PropTypes.object,tag:l.PropTypes.oneOfType([l.PropTypes.node,l.PropTypes.func])},h.defaultProps={textButton:"Login with Facebook",typeButton:"button",redirectUri:"undefined"!=typeof window?window.location.href:"/",scope:"public_profile,email",xfbml:!1,cookie:!1,reAuthenticate:!1,size:"metro",fields:"name",cssClass:"kep-login-facebook",version:"2.3",language:"en_US",disableMobileRedirect:!1,isMobile:b(),tag:"button"},t["default"]=h},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=void 0;var i=o(1),r=n(i);t["default"]=r["default"]},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=function(e){var t="";for(var o in e)""!==t&&(t+="&"),t+=o+"="+encodeURIComponent(e[o]);return t}},function(e,t,o){t=e.exports=o(5)(),t.push([e.id,".kep-login-facebook{font-family:Helvetica,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;color:#fff;cursor:pointer;display:inline-block;font-size:calc(.27548vw + 12.71074px);text-decoration:none;text-transform:uppercase;transition:background-color .3s,border-color .3s;background-color:#4c69ba;border:calc(.06887vw + .67769px) solid #4c69ba;padding:calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px)}.kep-login-facebook.small{padding:calc(.34435vw + 3.38843px) calc(.34435vw + 8.38843px)}.kep-login-facebook.medium{padding:calc(.34435vw + 8.38843px) calc(.34435vw + 13.38843px)}.kep-login-facebook.metro{border-radius:0}.kep-login-facebook .fa{margin-right:calc(.34435vw + 3.38843px)}",""]),t.locals={"kep-login-facebook":"kep-login-facebook",small:"small",medium:"medium",metro:"metro",fa:"fa"}},function(e,t){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var o=this[t];o[2]?e.push("@media "+o[2]+"{"+o[1]+"}"):e.push(o[1])}return e.join("")},e.i=function(t,o){"string"==typeof t&&(t=[[null,t,""]]);for(var n={},i=0;i<this.length;i++){var r=this[i][0];"number"==typeof r&&(n[r]=!0)}for(i=0;i<t.length;i++){var s=t[i];"number"==typeof s[0]&&n[s[0]]||(o&&!s[2]?s[2]=o:o&&(s[2]="("+s[2]+") and ("+o+")"),e.push(s))}},e}},function(t,o){t.exports=e}])});
 
 /***/ }
 /******/ ]);
