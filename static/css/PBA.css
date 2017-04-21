@@ -194,6 +194,14 @@ body {
     background: gray;
     
 }
+#opHealthLog {
+    font-family: pokemon-font, Arial, sans-serif;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 10px;
+    border-radius: 5px;
+    background: gray;
+}
 #nameLog {
     font-family: pokemon-font, Arial, sans-serif;
     display: flex;

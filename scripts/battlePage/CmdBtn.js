@@ -55,9 +55,9 @@ export class CmdBtn extends React.Component {
 
     componentDidMount(){
         
-        Socket.emit('updateMoves')
+        Socket.emit('updateInfo')
         // Allows moves to be dynamically updated.
-        Socket.on('updateMoves', (data) =>{
+        Socket.on('updatePokemon', (data) =>{
             this.setState({
                 'name'  : data['name'],
                 'move1' : data['move1'],
@@ -65,7 +65,7 @@ export class CmdBtn extends React.Component {
                 'move3' : data['move3'],
                 'move4' : data['move4']
             })
-        })
+        });
     }
 
 
