@@ -7,14 +7,8 @@ oak = bot()
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
-player = []
-player.append(user())
-player.append(user())
-global usersConnected
-usersConnected= 0
+player = [user(), user()]
 
-
-ii = 0
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
 
@@ -113,20 +107,16 @@ def on_connect():
     clientId = flask.request.sid
     # This makes it so when we do calls later we use this user number to update
     # the correct users page
-    if usersConnected == 0:
+    if player[0].ID == None:
         print "user 1 sid: " + clientId
         socketio.emit('connection', {'user' : 1}, room=clientId)
         player[0].ID = clientId
-        global usersConnected
-        usersConnected = 1
         
-        
-    elif usersConnected == 1:
+    elif player[1].ID == None:
         socketio.emit('connection', {'user' : 2}, room=clientId)
         print "user 2 sid: " + clientId
         player[1].ID = clientId
-        global usersConnected
-        usersConnected = 2
+
     else: 
         socketio.emit('connection', {'user' : 3})
     
