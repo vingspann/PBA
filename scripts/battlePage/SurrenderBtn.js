@@ -14,7 +14,8 @@ export class SurrenderBtn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-             'showModal': false
+             'showModal': false,
+             'user' : 3
         };
         
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -47,10 +48,17 @@ export class SurrenderBtn extends React.Component {
 
     componentDidMount(){
         
+        Socket.on('connection', (data) => {
+            this.setState({
+                'user' : data['user']
+            })
+        });
     }
 
 
     render() {
+        
+               
         const popover = (
             <Popover id="modal-popover" title="popover">
             very popover. such engagement
@@ -62,24 +70,34 @@ export class SurrenderBtn extends React.Component {
             </Tooltip>
         );
         
-        return (
-            <div id="surrender">
+        let sButton = null; 
+        
+        var user = this.state.user;
+        if (user == 1 || user == 2){
             
+            sButton = 
+            <div id="surrender">
                 <Button bsSize="large" onClick={this.open}>Surrender</Button>
-
                 <Modal show={this.state.showModal} onHide={this.close} bsSize="small">
                     <Modal.Header closeButton>
                         <Modal.Title>Confirm Surrender...</Modal.Title>
                     </Modal.Header>
-                    
                     <Modal.Body>
                         <ButtonToolbar>
                             <Button id="SurrenderConfirm" bsSize="large" bsStyle="primary" onClick={this.onClickConfirmSurrender}>Confirm</Button>
                             <Button id="SurrenderCancel" bsSize="large" bsStyle="primary" onClick={this.onClickCancelSurrender}>Cancel</Button>
                         </ButtonToolbar>
                     </Modal.Body>
-                    
                 </Modal>
+            </div>;
+            
+        } else if (user == 3){
+            sButton = '';
+        };
+        
+        return (
+            <div>
+                {sButton}
             </div>
         );
     }
