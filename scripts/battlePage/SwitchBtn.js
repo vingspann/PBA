@@ -15,7 +15,8 @@ export class SwitchBtn extends React.Component {
         this.state = {
              'showModal': false,
              'firstPokeball': "box",
-             'secondPokeball': "box box2"
+             'secondPokeball': "box box2",
+             'user' : 3
         };
         
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -99,7 +100,11 @@ export class SwitchBtn extends React.Component {
     }
 
     componentDidMount(){
-        
+        Socket.on('connection', (data) => {
+            this.setState({
+                'user' : data['user']
+            })
+        });
     }
 
 
@@ -114,8 +119,10 @@ export class SwitchBtn extends React.Component {
                 <img src="../static/img/PBALogo.png" alt="PBA logo" />
             </Tooltip>
         );
-        
-        return (
+        let switchButton = null;
+        var user = this.state.user;
+        if (user == 1 || user == 2){
+            switchButton = 
             <div id="switch">
             
                 <Button bsSize="large" onClick={this.randomPokeball}>Switch</Button>
@@ -136,6 +143,13 @@ export class SwitchBtn extends React.Component {
                         <Button onClick={this.close}>Cancel</Button>
                     </Modal.Footer>
                 </Modal>
+            </div>;    
+        } else if (user == 3){
+            switchButton = '';
+        };
+        return (
+            <div>
+                {switchButton}
             </div>
         );
     }
