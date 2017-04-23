@@ -21,7 +21,7 @@ class user():
     def nameSet(self, name):
         self.name = name
         
-    def getCurrentPokemon():
+    def getCurrentPokemon(self):
         return self.currentPokemon
         
     def __repr__(self):

@@ -7,14 +7,8 @@ oak = bot()
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
-player = []
-player.append(user())
-player.append(user())
-global usersConnected
-usersConnected= 0
+player = [user(), user()]
 
-
-ii = 0
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
 
@@ -22,12 +16,20 @@ ii = 0
 def setPokemon():
     player[0].pokemon[0].nameSet('Pikachu')
     player[0].pokemon[0].moves('Thunderbolt','Slam','Iron Tail','Brick Break')
+    player[0].pokemon[0].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png')
+    player[0].pokemon[0].healthSet(.80)
     player[0].pokemon[1].nameSet('Charazard')
     player[0].pokemon[1].moves('Wing Attack','Slash','Flamethrower','Dragon Claw')
+    player[0].pokemon[1].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png')
+    player[0].pokemon[1].healthSet(.60)
     player[1].pokemon[0].nameSet('Dragonite')
     player[1].pokemon[0].moves('Wing Attack','Drangon Claw','Fire Punch','Aqua Tail')
+    player[1].pokemon[0].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png')
+    player[1].pokemon[0].healthSet(.84)
     player[1].pokemon[1].nameSet('Scyther')
     player[1].pokemon[1].moves('Steel Wing','Night Slash','X-Scissor','Wing Attack')
+    player[1].pokemon[1].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/123.png')
+    player[1].pokemon[1].healthSet(.73)
     
 # Helper function used by seperate socket Io calls
 def updatePokemon(ID):
@@ -63,11 +65,43 @@ def updatePokemon(ID):
         'link' : player[p].pokemon[cp].spriteLink,
         'health' : player[p].pokemon[cp].percentHealth()
     }, room=player[op].ID)
-
+    
+def getBothPokemon(ID):
+    setPokemon()
+    # p stands for player number for the array
+    # cp stands for current Pokemon. Saves a lot of typing
+    # op stands for other player
+    if ID == player[0].ID:
+        p = 0
+        op = 1
+    elif ID == player[1].ID:
+        p = 1
+        op = 0
+    else: 
+        return
+ 
+  # pushes both pokemon
+    socketio.emit('getBothPokemon', {
+        'curHealth0' : player[p].pokemon[0].currentHp,
+        'maxHealth0' : player[p].pokemon[0].maxHp,
+        'link0' : player[p].pokemon[0].spriteLink,
+        'curHealth1' : player[p].pokemon[1].currentHp,
+        'maxHealth1' : player[p].pokemon[1].maxHp,
+        'link1' : player[p].pokemon[1].spriteLink
+    }, room=player[p].ID)
+    
+    # pushes both op pokemon
+    socketio.emit('getBothOpPokemon', {
+        'name0' : player[p].pokemon[0].name,
+        'health0' : player[p].pokemon[0].maxHp,
+        'name1' : player[p].pokemon[1].name,
+        'health1' : player[p].pokemon[1].maxHp
+    }, room=player[op].ID)
 @socketio.on('updateInfo')
 def updateInfo():
     ID = flask.request.sid
     updatePokemon(ID)
+    getBothPokemon(ID)
     
     
 @socketio.on('switch')
@@ -86,10 +120,11 @@ def switch(data):
     player[p].currentPokemon = data['currentPokemon'] - 1
         
     updatePokemon(ID)
+    
 
 @app.route('/')
 def hello():
-    return flask.render_template('index.html')
+    return flask.render_template('index.html', facebook_key = os.environ['FBKEY'])
     
 @socketio.on('chatLogSubmit')
 def chatLogSubmit(data):
@@ -110,20 +145,16 @@ def on_connect():
     clientId = flask.request.sid
     # This makes it so when we do calls later we use this user number to update
     # the correct users page
-    if usersConnected == 0:
+    if player[0].ID == None:
         print "user 1 sid: " + clientId
         socketio.emit('connection', {'user' : 1}, room=clientId)
         player[0].ID = clientId
-        global usersConnected
-        usersConnected = 1
         
-        
-    elif usersConnected == 1:
+    elif player[1].ID == None:
         socketio.emit('connection', {'user' : 2}, room=clientId)
         print "user 2 sid: " + clientId
         player[1].ID = clientId
-        global usersConnected
-        usersConnected = 2
+
     else: 
         socketio.emit('connection', {'user' : 3})
     
