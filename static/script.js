@@ -49444,7 +49444,8 @@
 	            'move1': 'move1',
 	            'move2': 'move2',
 	            'move3': 'move3',
-	            'move4': 'move4'
+	            'move4': 'move4',
+	            'user': 3
 	        };
 	        _this.onClick1 = _this.onClick1.bind(_this);
 	        _this.onClick2 = _this.onClick2.bind(_this);
@@ -49503,6 +49504,12 @@
 	                    'move4': data['move4']
 	                });
 	            });
+
+	            _Socket.Socket.on('connection', function (data) {
+	                _this2.setState({
+	                    'user': data['user']
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -49513,10 +49520,10 @@
 	            var m3 = this.state.move3;
 	            var m4 = this.state.move4;
 
-	            return React.createElement(
-	                'div',
-	                null,
-	                React.createElement(
+	            var moveArea = null;
+	            var user = this.state.user;
+	            if (user == 1 || user == 2) {
+	                moveArea = React.createElement(
 	                    'form',
 	                    { onSubmit: this.handleSubmit },
 	                    React.createElement(
@@ -49556,7 +49563,16 @@
 	                            )
 	                        )
 	                    )
-	                )
+	                );
+	            } else if (user == 3) {
+	                // Just add in html elements like the above. Don't forget a semi colon.
+	                moveArea = 'You are spectating';
+	            };
+
+	            return React.createElement(
+	                'div',
+	                null,
+	                moveArea
 	            );
 	        }
 	    }]);
@@ -49693,11 +49709,18 @@
 	        var _this = _possibleConstructorReturn(this, (YoPokemon.__proto__ || Object.getPrototypeOf(YoPokemon)).call(this, props));
 
 	        _this.state = {
-	            // 'pokemon' : []
-	            'pokemon': [{ 'character': 'Pikachu', 'health': '0.90', 'spriteLink': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png' }, { 'character': 'Charazard', 'health': '0.80', 'spriteLink': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png' }],
-	            'opPokemon': [{ 'character': 'Dragonite', 'health': '0.69', 'spriteLink': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png' }, { 'character': 'Scyther', 'health': '0.71', 'spriteLink': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/123.png' }]
 
+	            'maxHealth0': 'maxHealth0',
+	            'link0': 'link0',
+	            'maxHealth1': 'maxHealth1',
+	            'link1': 'link1',
+	            'opCharacter0': 'opCharacter0',
+	            'ophealth0': 'ophealth0',
+	            'opCharacter1': 'opCharacter1',
+	            'ophealth1': 'ophealth1'
 	        };
+	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+
 	        return _this;
 	    }
 
@@ -49706,23 +49729,26 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
+	            _Socket.Socket.emit('updateInfo');
 	            // Allows moves to be dynamically updated.
-	            _Socket.Socket.on('updatePokemon', function (data) {
+	            _Socket.Socket.on('getBothPokemon', function (data) {
 	                _this2.setState({
-	                    'name': data['name'],
-	                    'link': data['link'],
-	                    'maxHealth': data['maxHealth'],
-	                    'curHealth': data['curHealth']
-
+	                    'curHealth0': data['curHealth0'],
+	                    'maxHealth0': data['maxHealth0'],
+	                    'link0': data['link0'],
+	                    'curHealth1': data['curHealth1'],
+	                    'maxHealth1': data['maxHealth1'],
+	                    'link1': data['link1']
 	                });
 	            });
 
 	            // Allows moves to be dynamically updated.
-	            _Socket.Socket.on('updateOpPokemon', function (data) {
+	            _Socket.Socket.on('getBothOpPokemon', function (data) {
 	                _this2.setState({
-	                    'name': data['name'],
-	                    'link': data['link'],
-	                    'health': data['health']
+	                    'opCharacter0': data['name0'],
+	                    'health0': data['health0'],
+	                    'opCharacter1': data['name1'],
+	                    'health1': data['health1']
 
 	                });
 	            });
@@ -49730,70 +49756,66 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var pokemon = this.state.pokemon.map(function (n, index) {
-	                return React.createElement(
-	                    'li',
-	                    { key: index },
-	                    React.createElement(
-	                        'div',
-	                        { id: 'HealthLog' },
-	                        React.createElement('img', { className: 'images', src: n.spriteLink })
-	                    ),
-	                    React.createElement(
-	                        _reactBootstrap.ProgressBar,
-	                        null,
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: n.health * 100, label: n.health * 100 + '%', key: 1 }),
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - n.health * 100, key: 2 })
-	                    )
-	                );
-	            });
-	            var opPokemon = this.state.opPokemon.map(function (n, index) {
-	                return React.createElement(
-	                    'li',
-	                    { key: index },
-	                    React.createElement(
-	                        'div',
-	                        { id: 'opHealthLog' },
-	                        React.createElement(
-	                            'p',
-	                            { id: 'pokemonInfoHeader' },
-	                            n.character,
-	                            ' : ',
-	                            n.health
-	                        )
-	                    )
-	                );
-	            });
+	            var link0 = this.state.link0;
+	            var maxHealth0 = this.state.maxHealth0;
+	            var link1 = this.state.link1;
+	            var maxHealth1 = this.state.maxHealth1;
 
+	            var opCharacter0 = this.state.opCharacter0;
+	            var health0 = this.state.health0;
+	            var opCharacter1 = this.state.opCharacter1;
+	            var health1 = this.state.health1;
+	            console.log(link0);
+
+	            // sorry i hard coded the indexes and passed both individually.
+	            // Its a little wierd with the opp charaters until both users are online. 
 	            return React.createElement(
 	                'div',
 	                null,
 	                React.createElement(
-	                    'h2',
+	                    'h3',
 	                    { id: 'pokemonInfoHeader' },
 	                    'Pokemon'
 	                ),
 	                React.createElement(
 	                    'div',
 	                    null,
+	                    React.createElement('img', { className: 'images', src: link0 }),
 	                    React.createElement(
-	                        'ul',
+	                        _reactBootstrap.ProgressBar,
 	                        null,
-	                        ' ',
-	                        pokemon,
-	                        ' '
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: maxHealth0 * 100, label: maxHealth0 * 100 + '%', key: 1 }),
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - maxHealth0 * 100, key: 2 })
 	                    ),
+	                    React.createElement('img', { className: 'images', src: link1 }),
 	                    React.createElement(
-	                        'h4',
+	                        _reactBootstrap.ProgressBar,
+	                        null,
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: maxHealth1 * 100, label: maxHealth1 * 100 + '%', key: 1 }),
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - maxHealth1 * 100, key: 2 })
+	                    )
+	                ),
+	                React.createElement(
+	                    'h3',
+	                    { id: 'pokemonInfoHeader' },
+	                    'Opponent Pokemon'
+	                ),
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    React.createElement(
+	                        'p',
 	                        { id: 'pokemonInfoHeader' },
-	                        'Opponent Pokemon'
+	                        opCharacter0,
+	                        ' : ',
+	                        health0
 	                    ),
 	                    React.createElement(
-	                        'ul',
-	                        null,
-	                        ' ',
-	                        opPokemon,
-	                        ' '
+	                        'p',
+	                        { id: 'pokemonInfoHeader' },
+	                        opCharacter1,
+	                        ' : ',
+	                        health1
 	                    )
 	                )
 	            );
@@ -49830,7 +49852,7 @@
 
 	var _Socket = __webpack_require__(433);
 
-	var _SwitchBtn = __webpack_require__(490);
+	var _SwitchBtn = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./SwitchBtn\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _SurrenderBtn = __webpack_require__(491);
 
@@ -49925,155 +49947,7 @@
 	}(React.Component);
 
 /***/ },
-/* 490 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.SwitchBtn = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var React = _interopRequireWildcard(_react);
-
-	var _reactDom = __webpack_require__(32);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var ReactBootstrap = _interopRequireWildcard(_reactBootstrap);
-
-	var _Socket = __webpack_require__(433);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
-	    _inherits(SwitchBtn, _React$Component);
-
-	    function SwitchBtn(props) {
-	        _classCallCheck(this, SwitchBtn);
-
-	        var _this = _possibleConstructorReturn(this, (SwitchBtn.__proto__ || Object.getPrototypeOf(SwitchBtn)).call(this, props));
-
-	        _this.state = {
-	            'showModal': false
-	        };
-
-	        _this.componentDidMount = _this.componentDidMount.bind(_this);
-	        _this.open = _this.open.bind(_this);
-	        _this.close = _this.close.bind(_this);
-
-	        return _this;
-	    }
-
-	    _createClass(SwitchBtn, [{
-	        key: 'onClickSwitch',
-	        value: function onClickSwitch() {
-	            _Socket.Socket.emit('battleLog', { 'text': 'Switch button clicked' });
-	            _Socket.Socket.emit('secondaryChar', {});
-	            _Socket.Socket.emit('switch');
-	            console.log('Button 1 clicked.');
-	        }
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            this.setState({ showModal: false });
-	        }
-	    }, {
-	        key: 'open',
-	        value: function open() {
-	            this.setState({ showModal: true });
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var popover = React.createElement(
-	                _reactBootstrap.Popover,
-	                { id: 'modal-popover', title: 'popover' },
-	                'very popover. such engagement'
-	            );
-	            var tooltip = React.createElement(
-	                _reactBootstrap.Tooltip,
-	                { id: 'modal-tooltip' },
-	                React.createElement('img', { img: true, src: '../static/img/PBALogo.png', alt: 'PBA logo' })
-	            );
-
-	            return React.createElement(
-	                'div',
-	                { id: 'switch' },
-	                React.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsSize: 'large', onClick: this.open },
-	                    'Switch'
-	                ),
-	                React.createElement(
-	                    _reactBootstrap.Modal,
-	                    { show: this.state.showModal, onHide: this.close },
-	                    React.createElement(
-	                        _reactBootstrap.Modal.Header,
-	                        { closeButton: true },
-	                        React.createElement(
-	                            _reactBootstrap.Modal.Title,
-	                            null,
-	                            'Switch Pokemon'
-	                        )
-	                    ),
-	                    React.createElement(
-	                        _reactBootstrap.Modal.Body,
-	                        null,
-	                        React.createElement(
-	                            'div',
-	                            { align: 'center' },
-	                            React.createElement(
-	                                _reactBootstrap.OverlayTrigger,
-	                                { overlay: tooltip, placement: 'top' },
-	                                React.createElement('div', { className: 'box' })
-	                            ),
-	                            React.createElement('div', { className: 'box box1' }),
-	                            React.createElement('div', { className: 'box box2' }),
-	                            React.createElement('div', { className: 'box box3' }),
-	                            React.createElement('div', { className: 'box box4' }),
-	                            React.createElement('div', { className: 'box box5' }),
-	                            React.createElement('div', { className: 'box box6' }),
-	                            React.createElement('div', { className: 'box box7' }),
-	                            React.createElement('div', { className: 'box box8' })
-	                        )
-	                    ),
-	                    React.createElement(
-	                        _reactBootstrap.Modal.Footer,
-	                        null,
-	                        React.createElement(
-	                            _reactBootstrap.Button,
-	                            { onClick: this.close },
-	                            'Close'
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return SwitchBtn;
-	}(React.Component);
-
-/***/ },
+/* 490 */,
 /* 491 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -50119,7 +49993,8 @@
 	        var _this = _possibleConstructorReturn(this, (SurrenderBtn.__proto__ || Object.getPrototypeOf(SurrenderBtn)).call(this, props));
 
 	        _this.state = {
-	            'showModal': false
+	            'showModal': false,
+	            'user': 3
 	        };
 
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
@@ -50157,10 +50032,19 @@
 	        }
 	    }, {
 	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            _Socket.Socket.on('connection', function (data) {
+	                _this2.setState({
+	                    'user': data['user']
+	                });
+	            });
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+
 	            var popover = React.createElement(
 	                _reactBootstrap.Popover,
 	                { id: 'modal-popover', title: 'popover' },
@@ -50172,54 +50056,59 @@
 	                'wow.'
 	            );
 
-	            return React.createElement(
-	                'div',
-	                { id: 'surrender' },
-	                React.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsSize: 'large', onClick: this.open },
-	                    'Surrender'
-	                ),
-	                React.createElement(
-	                    _reactBootstrap.Modal,
-	                    { show: this.state.showModal, onHide: this.close },
+	            var sButton = null;
+
+	            var user = this.state.user;
+	            if (user == 1 || user == 2) {
+
+	                sButton = React.createElement(
+	                    'div',
+	                    { id: 'surrender' },
 	                    React.createElement(
-	                        _reactBootstrap.Modal.Header,
-	                        { closeButton: true },
-	                        React.createElement(
-	                            _reactBootstrap.Modal.Title,
-	                            null,
-	                            'Confirm Surrender...'
-	                        )
+	                        _reactBootstrap.Button,
+	                        { bsSize: 'large', onClick: this.open },
+	                        'Surrender'
 	                    ),
 	                    React.createElement(
-	                        _reactBootstrap.Modal.Body,
-	                        null,
+	                        _reactBootstrap.Modal,
+	                        { show: this.state.showModal, onHide: this.close, bsSize: 'small' },
 	                        React.createElement(
-	                            _reactBootstrap.ButtonToolbar,
+	                            _reactBootstrap.Modal.Header,
+	                            { closeButton: true },
+	                            React.createElement(
+	                                _reactBootstrap.Modal.Title,
+	                                null,
+	                                'Confirm Surrender...'
+	                            )
+	                        ),
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Body,
 	                            null,
 	                            React.createElement(
-	                                _reactBootstrap.Button,
-	                                { id: 'SurrenderConfirm', bsSize: 'large', onClick: this.onClickConfirmSurrender },
-	                                'Confirm'
-	                            ),
-	                            React.createElement(
-	                                _reactBootstrap.Button,
-	                                { id: 'SurrenderCancel', bsSize: 'large', onClick: this.onClickCancelSurrender },
-	                                'Cancel'
+	                                _reactBootstrap.ButtonToolbar,
+	                                null,
+	                                React.createElement(
+	                                    _reactBootstrap.Button,
+	                                    { id: 'SurrenderConfirm', bsSize: 'large', bsStyle: 'primary', onClick: this.onClickConfirmSurrender },
+	                                    'Confirm'
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Button,
+	                                    { id: 'SurrenderCancel', bsSize: 'large', bsStyle: 'primary', onClick: this.onClickCancelSurrender },
+	                                    'Cancel'
+	                                )
 	                            )
 	                        )
-	                    ),
-	                    React.createElement(
-	                        _reactBootstrap.Modal.Footer,
-	                        null,
-	                        React.createElement(
-	                            _reactBootstrap.Button,
-	                            { onClick: this.close },
-	                            'Close'
-	                        )
 	                    )
-	                )
+	                );
+	            } else if (user == 3) {
+	                sButton = '';
+	            };
+
+	            return React.createElement(
+	                'div',
+	                null,
+	                sButton
 	            );
 	        }
 	    }]);
