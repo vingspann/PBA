@@ -16,11 +16,8 @@ export class SwitchBtn extends React.Component {
              'showModal': false,
              'firstPokeball': "box",
              'secondPokeball': "box box2",
-<<<<<<< HEAD
-             'currentPokemon' : 1
-=======
+             'currentPokemon' : 1,
              'user' : 3
->>>>>>> master
         };
         
         this.componentDidMount = this.componentDidMount.bind(this);
