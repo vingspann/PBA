@@ -106,14 +106,18 @@ def updateInfo():
     
 @socketio.on('switch')
 def switch():
+# def switch(data):
+    # print data
     ID = flask.request.sid
     
     if ID == player[0].ID:
         p = 0
         cp = player[0].currentPokemon
+        # cp = data['cp']
     elif ID == player[1].ID:
         p = 1
         cp = player[1].currentPokemon
+        # cp = data['cp']
     else: 
         return
         
