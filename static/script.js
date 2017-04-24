@@ -49893,6 +49893,17 @@
 
 	                });
 	            });
+
+	            _Socket.Socket.on('updateSpectator', function (data) {
+	                _this2.setState({
+	                    'health': data['healthP1'],
+	                    'opHealth': data['healthP2'],
+	                    'character': data['nameP1'],
+	                    'opCharacter': data['nameP2'],
+	                    'link': data['linkP1'],
+	                    'opLink': data['linkP2']
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'render',
