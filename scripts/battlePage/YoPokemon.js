@@ -41,6 +41,14 @@ export class YoPokemon extends React.Component {
                 
             })
         })
+        
+        Socket.on('battleUpdate', (data) =>{
+            this.setState({
+                'health' : data['curHealth'],
+                'opHealth' : data['opHealth']
+            });
+            this.forceUpdate();
+        })
     }
     render() {
         let character = this.state.character;

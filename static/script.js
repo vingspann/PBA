@@ -49893,6 +49893,14 @@
 
 	                });
 	            });
+
+	            _Socket.Socket.on('battleUpdate', function (data) {
+	                _this2.setState({
+	                    'health': data['curHealth'],
+	                    'opHealth': data['opHealth']
+	                });
+	                _this2.forceUpdate();
+	            });
 	        }
 	    }, {
 	        key: 'render',
