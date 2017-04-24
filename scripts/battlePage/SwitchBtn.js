@@ -16,6 +16,10 @@ export class SwitchBtn extends React.Component {
              'showModal': false,
              'firstPokeball': "box",
              'secondPokeball': "box box2",
+             'maxHealth0' : 'maxHealth0',
+             'link0' : 'link0',
+             'maxHealth1' : 'maxHealth1',
+             'link1' : 'link1',
              'currentPokemon' : 1,
              'user' : 3
         };
@@ -31,6 +35,7 @@ export class SwitchBtn extends React.Component {
     }
 
     onClickSwitchOne(){
+
         
         if (this.state.currentPokemon == 1){
             console.log("Already active pokemon")
@@ -43,10 +48,12 @@ export class SwitchBtn extends React.Component {
             this.setState({ showModal: false });
         }
         
+
        
     }
     
      onClickSwitchTwo(){
+
         
         if (this.state.currentPokemon == 2){
             console.log("Already currentPokemon")
@@ -59,6 +66,7 @@ export class SwitchBtn extends React.Component {
             this.setState({ showModal: false });
         }
         
+
     }
     
     getRandomInt(min, max) {
@@ -120,18 +128,39 @@ export class SwitchBtn extends React.Component {
                 'user' : data['user']
             })
         });
+        Socket.emit('updateInfo')
+        // Allows moves to be dynamically updated.
+        Socket.on('getBothPokemon', (data) =>{
+            this.setState({
+                'maxHealth0': data['maxHealth0'],
+                'link0'  : data['link0'],
+                'maxHealth1': data['maxHealth1'],
+                'link1'  : data['link1'],
+            })
+        })
     }
 
 
     render() {
+        let link0 = this.state.link0;
+        let maxHealth0 = this.state.maxHealth0;
+        let link1 = this.state.link1;
+        let maxHealth1 = this.state.maxHealth1;
         const popover = (
             <Popover id="modal-popover" title="popover">
             very popover. such engagement
             </Popover>
         );
-        const tooltip = (
+        const tooltip0 = (
             <Tooltip id="modal-tooltip" >
-                <img src="../static/img/PBALogo.png" alt="PBA logo" />
+                <img src={link0} alt="Pokemon1" />
+                {maxHealth0}
+            </Tooltip>
+        );
+        const tooltip1 = (
+            <Tooltip id="modal-tooltip" >
+                <img src={link1} alt="Pokemon1" />
+                {maxHealth1}
             </Tooltip>
         );
         let switchButton = null;
@@ -149,8 +178,8 @@ export class SwitchBtn extends React.Component {
                     
                     <Modal.Body>
                     <div>
-                        <OverlayTrigger overlay={tooltip} placement="top"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip} placement="top"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip0} placement="top"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip1} placement="top"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
                     </div>
                     </Modal.Body>
                     
