@@ -9,6 +9,17 @@ socketio = flask_socketio.SocketIO(app)
 
 player = [user(), user()]
 
+# this is where the battle and turns will happen
+def battle():
+    
+    
+    
+    
+    socketio.emit('battleLogEmit', {})
+    
+
+
+
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
 
@@ -97,6 +108,20 @@ def getBothPokemon(ID):
         'name1' : player[p].pokemon[1].name,
         'health1' : player[p].pokemon[1].maxHp
     }, room=player[op].ID)
+    
+@socketio.on('CM')
+def updateCurrentMove(data):
+    ID = flask.request.sid
+    
+    if ID == player[0].ID:
+        p = 0
+    elif ID == player[1].ID:
+        p = 1
+    else: 
+        return
+    
+    player[p].recentMove = data['CM'];
+
 @socketio.on('updateInfo')
 def updateInfo():
     ID = flask.request.sid
