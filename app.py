@@ -23,8 +23,10 @@ def battle():
     m1 = player[0].recentMove
     m2 = player[1].recentMove
     fText = ''
+    fText2 = ''
     sText = ''
-    
+    sText2 = ''
+    feint = False
     #fast pokemon and slow pokemon
     fPoke = None
     sPoke = None
@@ -67,7 +69,8 @@ def battle():
     damage = int(damage)
     
     # text for the fast pokemon's emit
-    fText = player[f].pokemon[fPoke].name + " dealt " + str(damage) + " damage to " + player[s].pokemon[sPoke].name + "."
+    fText = player[f].pokemon[fPoke].name + " used " + player[f].pokemon[fPoke].move[fm].name + "."
+    fText2 = player[s].pokemon[sPoke].name + " took " + str(damage) + " damage."
     
     player[s].pokemon[sPoke].dealDamage(damage)
     # Checks to see if the pokemon has feinted or not. If not it does a normal move,
@@ -93,13 +96,15 @@ def battle():
         damage = int(damage)
         
         # text for the fast pokemon's emit
-        sText = player[s].pokemon[sPoke].name + " dealt " + str(damage) + " damage to " + player[f].pokemon[fPoke].name + "."
+        sText = player[s].pokemon[sPoke].name + " used " + player[s].pokemon[sPoke].move[sm].name + "."
+        sText2 = player[f].pokemon[fPoke].name + " took " + str(damage) + "damage."
         
         player[f].pokemon[fPoke].dealDamage(damage)
     else:
         sText = player[s].pokemon[sPoke].name + " has feinted."
         battleSwitch(s, sPoke)
         player[s].pokemonLeft = player[s].pokemonLeft - 1
+        feint = True
     
     # This will be used to update YoPokemon to display health properly
     socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
@@ -111,7 +116,11 @@ def battle():
     
     
     socketio.emit('battleLogEmit', {'text' : fText})
+    socketio.emit('battleLogEmit', {'text' : fText2})
     socketio.emit('battleLogEmit', {'text' : sText})
+    # this stops an empty emit from happening if the slow pokemon feints
+    if not feint:
+        socketio.emit('battleLogEmit', {'text' : sText2})
     
     if (player[f].pokemon[fPoke].currentHp == 0):
         fText = player[f].pokemon[fPoke].name + " has feinted."
@@ -294,7 +303,7 @@ def chatLogSubmit(data):
                 types = types + " and " + player[0].pokemon[cp1].type2
             else:
                 types = types + player[0].pokemon[cp1].type1
-            types = types + "type."
+            types = types + " type."
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
             
             types = player[1].pokemon[cp2].name + " is "
@@ -304,7 +313,7 @@ def chatLogSubmit(data):
                 types = types + " and " + player[1].pokemon[cp2].type2
             else:
                 types = types + player[1].pokemon[cp2].type1
-            types = types + "type."
+            types = types + " type."
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
             
         else:
