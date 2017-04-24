@@ -26,7 +26,7 @@ export class YoPokemon extends React.Component {
         Socket.on('updatePokemon', (data) =>{
             this.setState({
                 'character'  : data['name'],
-                'health': data['maxHealth'],
+                'health': data['health'],
                 'link' : data['link'],
                 'opCharacter'  : data['opName'],
                 'opHealth': data['opHealth'],
