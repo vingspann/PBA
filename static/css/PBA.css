@@ -342,3 +342,8 @@ li{
 	0%,100%{ -moz-transform:rotate(-10deg);}
 	50%{-moz-transform:rotate(10deg);}
 }
+
+.custom-modal{
+    width: auto;
+    height: 100%;
+}

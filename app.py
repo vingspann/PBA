@@ -1,4 +1,5 @@
-import os, flask, flask_socketio
+import os, flask, flask_socketio, time
+from threading import Timer
 from chatBot import bot
 from user import user
 oak = bot()
@@ -8,6 +9,21 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 player = [user(), user()]
+
+# this is where the battle and turns will happen
+def battle():
+    
+    
+    # Put all the battle stuff you need inside this function. 
+    # I would suggest having two socket emits, for the different players moves
+    
+    socketio.emit('battleLogEmit', {'text' : 'timer updated'})
+    
+    # Leave this at the bottom, but you might want to add an if statement
+    # so that when the game finishes, these two lines don't keep getting called.
+    t = Timer( 20, battle)
+    t.start()
+
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
@@ -25,7 +41,7 @@ def setPokemon():
     player[0].pokemon[1].statSet()
     player[0].pokemon[1].percentHealth()
     player[1].pokemon[0].nameSet('Dragonite')
-    player[1].pokemon[0].moves('Wing Attack','Drangon Claw','Fire Punch','Aqua Tail')
+    player[1].pokemon[0].moves('Wing Attack','Dragon Claw','Fire Punch','Aqua Tail')
     player[1].pokemon[0].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png')
     player[1].pokemon[0].statSet()
     player[1].pokemon[0].percentHealth()
@@ -77,29 +93,36 @@ def getBothPokemon(ID):
     if ID == player[0].ID:
         p = 0
         op = 1
+        cp = player[0].currentPokemon
     elif ID == player[1].ID:
         p = 1
         op = 0
+        cp = player[1].currentPokemon
     else: 
         return
  
   # pushes both pokemon
     socketio.emit('getBothPokemon', {
-        'curHealth0' : player[p].pokemon[0].currentHp,
-        'maxHealth0' : player[p].pokemon[0].maxHp,
+        'health0' : player[p].pokemon[0].maxHp,
         'link0' : player[p].pokemon[0].spriteLink,
-        'curHealth1' : player[p].pokemon[1].currentHp,
-        'maxHealth1' : player[p].pokemon[1].maxHp,
+        'health1' : player[p].pokemon[1].maxHp,
         'link1' : player[p].pokemon[1].spriteLink
     }, room=player[p].ID)
+   
+@socketio.on('CM')
+def updateCurrentMove(data):
+    ID = flask.request.sid
     
-    # pushes both op pokemon
-    socketio.emit('getBothOpPokemon', {
-        'name0' : player[p].pokemon[0].name,
-        'health0' : player[p].pokemon[0].maxHp,
-        'name1' : player[p].pokemon[1].name,
-        'health1' : player[p].pokemon[1].maxHp
-    }, room=player[op].ID)
+    if ID == player[0].ID:
+        p = 0
+    elif ID == player[1].ID:
+        p = 1
+    else: 
+        return
+    
+    player[p].recentMove = data['CM'];
+
+
 @socketio.on('updateInfo')
 def updateInfo():
     ID = flask.request.sid
@@ -157,7 +180,7 @@ def on_connect():
         socketio.emit('connection', {'user' : 2}, room=clientId)
         print "user 2 sid: " + clientId
         player[1].ID = clientId
-
+        battle()
     else: 
         socketio.emit('connection', {'user' : 3})
     
@@ -165,7 +188,6 @@ def on_connect():
 if __name__ == '__main__':
     
     setPokemon()
-    
     socketio.run(
             app,
             host=os.getenv('IP', '0.0.0.0'),

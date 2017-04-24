@@ -7,7 +7,7 @@ import { OverlayTrigger } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
 import { Tooltip } from 'react-bootstrap';
-
+import { ProgressBar } from 'react-bootstrap';
 
 export class SwitchBtn extends React.Component {
     constructor(props){
@@ -16,9 +16,9 @@ export class SwitchBtn extends React.Component {
              'showModal': false,
              'firstPokeball': "box",
              'secondPokeball': "box box2",
-             'maxHealth0' : 'maxHealth0',
+             'health0' : 'health0',
              'link0' : 'link0',
-             'maxHealth1' : 'maxHealth1',
+             'health1' : 'health1',
              'link1' : 'link1',
              'currentPokemon' : 1,
              'user' : 3
@@ -29,8 +29,6 @@ export class SwitchBtn extends React.Component {
         this.onClickSwitchTwo = this.onClickSwitchTwo.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
-        this.getRandomInt = this.getRandomInt.bind(this);
-        this.randomPokeball = this.randomPokeball.bind(this);
 
     }
 
@@ -69,50 +67,7 @@ export class SwitchBtn extends React.Component {
 
     }
     
-    getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    
-    randomPokeball(){
-        var ballOne = this.getRandomInt(1,4);
-        var ballTwo = this.getRandomInt(1,4);
-        
-        if(ballOne == 1)
-        {
-            this.setState({firstPokeball: "box"});
-        }
-        else if(ballOne == 2)
-        {
-            this.setState({firstPokeball: "box box2"});
-        }
-        else if(ballOne == 3)
-        {
-            this.setState({firstPokeball: "box box3"});
-        }
-        else if(ballOne == 4)
-        {
-            this.setState({firstPokeball: "box box4"});
-        }
-        
-        if(ballTwo == 1)
-        {
-            this.setState({secondPokeball: "box"});
-        }
-        else if(ballTwo == 2)
-        {
-            this.setState({firstPokeball: "box box2"});
-        }
-        else if(ballTwo == 3)
-        {
-            this.setState({secondPokeball: "box box3"});
-        }
-        else if(ballTwo == 4)
-        {
-            this.setState({secondPokeball: "box box4"});
-        }
-        
-        this.setState({ showModal: true });
-    }
+  
     
     close() {
         this.setState({ showModal: false });
@@ -132,9 +87,9 @@ export class SwitchBtn extends React.Component {
         // Allows moves to be dynamically updated.
         Socket.on('getBothPokemon', (data) =>{
             this.setState({
-                'maxHealth0': data['maxHealth0'],
+                'health0': data['health0'],
                 'link0'  : data['link0'],
-                'maxHealth1': data['maxHealth1'],
+                'health1': data['health1'],
                 'link1'  : data['link1'],
             })
         })
@@ -143,9 +98,9 @@ export class SwitchBtn extends React.Component {
 
     render() {
         let link0 = this.state.link0;
-        let maxHealth0 = this.state.maxHealth0;
+        let health0 = this.state.health0;
         let link1 = this.state.link1;
-        let maxHealth1 = this.state.maxHealth1;
+        let health1 = this.state.health1;
         const popover = (
             <Popover id="modal-popover" title="popover">
             very popover. such engagement
@@ -154,13 +109,19 @@ export class SwitchBtn extends React.Component {
         const tooltip0 = (
             <Tooltip id="modal-tooltip" >
                 <img src={link0} alt="Pokemon1" />
-                {maxHealth0}
+                <ProgressBar>
+                        <ProgressBar bsStyle="success" now={health0*100} label={`${health0*100}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (health0*100)} key={2} />
+                </ProgressBar>
             </Tooltip>
         );
         const tooltip1 = (
             <Tooltip id="modal-tooltip" >
                 <img src={link1} alt="Pokemon1" />
-                {maxHealth1}
+                <ProgressBar>
+                        <ProgressBar bsStyle="success" now={health1*100} label={`${health1*100}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (health1*100)} key={2} />
+                </ProgressBar>
             </Tooltip>
         );
         let switchButton = null;
@@ -169,7 +130,7 @@ export class SwitchBtn extends React.Component {
             switchButton = 
             <div id="switch">
             
-                <Button bsSize="large" onClick={this.randomPokeball}>Switch</Button>
+                <Button bsSize="large" onClick={this.open}>Switch</Button>
 
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>
@@ -178,8 +139,8 @@ export class SwitchBtn extends React.Component {
                     
                     <Modal.Body>
                     <div>
-                        <OverlayTrigger overlay={tooltip0} placement="top"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip1} placement="top"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip0} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
                     </div>
                     </Modal.Body>
                     
