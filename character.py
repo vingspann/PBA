@@ -103,3 +103,10 @@ class character():
         
     def getSpeed(self):
         return self.stat[0].statValue
+        
+    def dealDamage(self, dmg):
+        if dmg > self.currentHp:
+            self.currentHp = 0
+        else:
+            self.currentHp = self.currentHp - dmg
+            
