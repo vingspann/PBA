@@ -49995,11 +49995,12 @@
 	            'showModal': false,
 	            'firstPokeball': "box",
 	            'secondPokeball': "box box2",
-	            'user': 3,
 	            'maxHealth0': 'maxHealth0',
 	            'link0': 'link0',
 	            'maxHealth1': 'maxHealth1',
-	            'link1': 'link1'
+	            'link1': 'link1',
+	            'currentPokemon': 1,
+	            'user': 3
 	        };
 
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
@@ -50016,22 +50017,32 @@
 	    _createClass(SwitchBtn, [{
 	        key: 'onClickSwitchOne',
 	        value: function onClickSwitchOne() {
-	            _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 1 selected for switch.' });
-	            _Socket.Socket.emit('secondaryChar', {});
-	            // Socket.emit('switch', {'cp': '0'});
-	            _Socket.Socket.emit('switch');
-	            console.log('Pokemon 1 selected.');
-	            this.setState({ showModal: false });
+
+	            if (this.state.currentPokemon == 1) {
+	                console.log("Already active pokemon");
+	            } else {
+	                _Socket.Socket.emit('switch', { 'currentPokemon': 1 });
+	                this.setState({ 'currentPokemon': 1 });
+	                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 1 selected for switch.' });
+	                _Socket.Socket.emit('secondaryChar', {});
+	                console.log('Pokemon 1 selected.');
+	                this.setState({ showModal: false });
+	            }
 	        }
 	    }, {
 	        key: 'onClickSwitchTwo',
 	        value: function onClickSwitchTwo() {
-	            _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 2 selected for switch.' });
-	            _Socket.Socket.emit('secondaryChar', {});
-	            // Socket.emit('switch', {'cp': '1'});
-	            _Socket.Socket.emit('switch');
-	            console.log('Pokemon 2 selected.');
-	            this.setState({ showModal: false });
+
+	            if (this.state.currentPokemon == 2) {
+	                console.log("Already currentPokemon");
+	            } else {
+	                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 2 selected for switch.' });
+	                _Socket.Socket.emit('secondaryChar', {});
+	                _Socket.Socket.emit('switch', { 'currentPokemon': 2 });
+	                this.setState({ 'currentPokemon': 2 });
+	                console.log('Pokemon 2 selected.');
+	                this.setState({ showModal: false });
+	            }
 	        }
 	    }, {
 	        key: 'getRandomInt',

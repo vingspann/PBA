@@ -105,26 +105,19 @@ def updateInfo():
     
     
 @socketio.on('switch')
-def switch():
-# def switch(data):
-    # print data
+def switch(data):
     ID = flask.request.sid
     
     if ID == player[0].ID:
         p = 0
-        cp = player[0].currentPokemon
-        # cp = data['cp']
     elif ID == player[1].ID:
         p = 1
-        cp = player[1].currentPokemon
-        # cp = data['cp']
     else: 
         return
-        
-    if cp == 0:
-        player[p].currentPokemon = 1
-    elif cp == 1:
-        player[p].currentPokemon = 0
+    
+    # The pokemon numebrs come in starting at 1. So, it's needed to subtract 1 to get it 
+    # to be proper array indexs 
+    player[p].currentPokemon = data['currentPokemon'] - 1
         
     updatePokemon(ID)
     
