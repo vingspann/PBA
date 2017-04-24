@@ -9,14 +9,12 @@ export class YoPokemon extends React.Component {
 
         this.state = {
             
-             'maxHealth0' : 'maxHealth0',
-             'link0' : 'link0',
-             'maxHealth1' : 'maxHealth1',
-             'link1' : 'link1',
-             'opCharacter0' : 'opCharacter0',
-             'ophealth0' : 'ophealth0',
-             'opCharacter1' : 'opCharacter1',
-             'ophealth1' : 'ophealth1'
+             'character' : 'character',
+             'link' : 'link',
+             'health' : 'health',
+             'opCharacter' : 'opCharacter',
+             'opHealth' : 'opHealth',
+             'opLink' : 'opLink' 
         };
         this.componentDidMount = this.componentDidMount.bind(this);
         
@@ -25,40 +23,33 @@ export class YoPokemon extends React.Component {
     componentDidMount(){
         Socket.emit('updateInfo')
         // Allows moves to be dynamically updated.
-        Socket.on('getBothPokemon', (data) =>{
+        Socket.on('updatePokemon', (data) =>{
             this.setState({
-                'curHealth0': data['curHealth0'],
-                'maxHealth0': data['maxHealth0'],
-                'link0'  : data['link0'],
-                'curHealth1': data['curHealth1'],
-                'maxHealth1': data['maxHealth1'],
-                'link1'  : data['link1'],
+                'character'  : data['name'],
+                'health': data['maxHealth'],
+                'link' : data['link']
             })
         })
         
         
         // Allows moves to be dynamically updated.
-        Socket.on('getBothOpPokemon', (data) =>{
+        Socket.on('updateOpPokemon', (data) =>{
             this.setState({
-                'opCharacter0'  : data['name0'],
-                'health0': data['health0'],
-                'opCharacter1'  : data['name1'],
-                'health1': data['health1']
+                'opCharacter'  : data['name'],
+                'opHealth': data['health'],
+                'opLink' : data['link']
                 
             })
         })
     }
     render() {
-        let link0 = this.state.link0;
-        let maxHealth0 = this.state.maxHealth0;
-        let link1 = this.state.link1;
-        let maxHealth1 = this.state.maxHealth1;
+        let character = this.state.character;
+        let link = this.state.link;
+        let health = this.state.health;
                
-        let opCharacter0 = this.state.opCharacter0;
-        let health0 = this.state.health0;
-        let opCharacter1 = this.state.opCharacter1;
-        let health1 = this.state.health1;
-        console.log(link0);
+        let opCharacter = this.state.opCharacter;
+        let opHealth = this.state.opHealth;
+        let opLink = this.state.opLink;
                 
             
         // sorry i hard coded the indexes and passed both individually.
@@ -68,21 +59,21 @@ export class YoPokemon extends React.Component {
             
                 <h3 id="pokemonInfoHeader">Pokemon</h3>
                 <div>
-                    <img className="images" src={link0}/> 
+                    <img className="images" src={link}/> 
+                    <p id="pokemonInfoHeader">{character}</p>
                     <ProgressBar>
-                        <ProgressBar bsStyle="success" now={maxHealth0*100} label={`${maxHealth0*100}%`} key={1} />
-                        <ProgressBar bsStyle="danger" now={100 - (maxHealth0*100)} key={2} />
-                    </ProgressBar>
-                    <img className="images" src={link1}/>
-                    <ProgressBar>
-                        <ProgressBar bsStyle="success" now={maxHealth1*100} label={`${maxHealth1*100}%`} key={1} />
-                        <ProgressBar bsStyle="danger" now={100 - (maxHealth1*100)} key={2} />
+                        <ProgressBar bsStyle="success" now={health*100} label={`${health*100}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (health*100)} key={2} />
                     </ProgressBar>
                 </div>
                 <h3 id="pokemonInfoHeader">Opponent Pokemon</h3>
                 <div>
-                        <p id="pokemonInfoHeader">{opCharacter0} : {health0}</p>
-                        <p id="pokemonInfoHeader">{opCharacter1} : {health1}</p>
+                    <img className="images" src={opLink}/> 
+                    <p id="pokemonInfoHeader">{opCharacter}</p>
+                    <ProgressBar>
+                        <ProgressBar bsStyle="success" now={opHealth*100} label={`${opHealth*100}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (opHealth*100)} key={2} />
+                    </ProgressBar>
                 </div>
                 
             </div>

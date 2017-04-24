@@ -21546,12 +21546,31 @@
 	    function Content(props) {
 	        _classCallCheck(this, Content);
 
-	        return _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this, props));
+
+	        _this.state = {
+	            'showModal': true
+	        };
+
+	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(Content, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {}
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ showModal: false });
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            this.setState({ showModal: true });
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -21573,7 +21592,7 @@
 	                                null,
 	                                React.createElement(
 	                                    'a',
-	                                    { href: '#' },
+	                                    { href: '#', onClick: this.open },
 	                                    'About'
 	                                )
 	                            ),
@@ -21640,6 +21659,97 @@
 	                    'div',
 	                    { id: 'gameAction' },
 	                    React.createElement(_ActnBtn.ActnBtn, null)
+	                ),
+	                React.createElement(
+	                    _reactBootstrap.Modal,
+	                    { show: this.state.showModal, onHide: this.close, dialogClassName: 'custom-modal' },
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Header,
+	                        { closeButton: true },
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Title,
+	                            null,
+	                            'About'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Body,
+	                        null,
+	                        React.createElement(
+	                            'div',
+	                            { 'class': 'row' },
+	                            React.createElement(
+	                                _reactBootstrap.Carousel,
+	                                null,
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'First slide label'
+	                                        ),
+	                                        React.createElement(
+	                                            'p',
+	                                            null,
+	                                            'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, alt: '900x500', src: '../static/img/pokemonStadium.jpg' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'Second slide label'
+	                                        ),
+	                                        React.createElement(
+	                                            'p',
+	                                            null,
+	                                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, alt: '900x500', src: '../static/img/PBALogo.png' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'Third slide label'
+	                                        ),
+	                                        React.createElement(
+	                                            'p',
+	                                            null,
+	                                            'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Footer,
+	                        null,
+	                        React.createElement(
+	                            _reactBootstrap.Button,
+	                            { onClick: this.close },
+	                            'Continue'
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -49445,7 +49555,8 @@
 	            'move2': 'move2',
 	            'move3': 'move3',
 	            'move4': 'move4',
-	            'user': 3
+	            'user': 3,
+	            'CM': 0
 	        };
 	        _this.onClick1 = _this.onClick1.bind(_this);
 	        _this.onClick2 = _this.onClick2.bind(_this);
@@ -49468,25 +49579,34 @@
 	        key: 'onClick1',
 	        value: function onClick1() {
 	            _Socket.Socket.emit('battleLog', { 'text': this.state.move1 });
+	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
+	            this.setState({ 'CM': 0 });
+	            console.log(this.state.CM);
 	            console.log('Button 1 clicked.');
 	        }
 	    }, {
 	        key: 'onClick2',
 	        value: function onClick2() {
 	            console.log('Button 2 clicked.');
+	            this.setState({ 'CM': 1 });
 	            _Socket.Socket.emit('battleLog', { 'text': this.state.move2 });
+	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
 	        }
 	    }, {
 	        key: 'onClick3',
 	        value: function onClick3() {
 	            console.log('Button 3 clicked.');
+	            this.setState({ 'CM': 2 });
 	            _Socket.Socket.emit('battleLog', { 'text': this.state.move3 });
+	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
 	        }
 	    }, {
 	        key: 'onClick4',
 	        value: function onClick4() {
 	            console.log('Button 4 clicked.');
+	            this.setState({ 'CM': 3 });
 	            _Socket.Socket.emit('battleLog', { 'text': this.state.move4 });
+	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -49519,6 +49639,33 @@
 	            var m2 = this.state.move2;
 	            var m3 = this.state.move3;
 	            var m4 = this.state.move4;
+	            var CM = this.state.CM;
+	            var b1 = 'primary';
+	            var b2 = 'primary';
+	            var b3 = 'primary';
+	            var b4 = 'primary';
+
+	            if (CM == 0) {
+	                b1 = 'success';
+	                b2 = 'primary';
+	                b3 = 'primary';
+	                b4 = 'primary';
+	            } else if (CM == 1) {
+	                b1 = 'primary';
+	                b2 = 'success';
+	                b3 = 'primary';
+	                b4 = 'primary';
+	            } else if (CM == 2) {
+	                b1 = 'primary';
+	                b2 = 'primary';
+	                b3 = 'success';
+	                b4 = 'primary';
+	            } else if (CM == 3) {
+	                b1 = 'primary';
+	                b2 = 'primary';
+	                b3 = 'primary';
+	                b4 = 'success';
+	            }
 
 	            var moveArea = null;
 	            var user = this.state.user;
@@ -49542,22 +49689,22 @@
 	                                null,
 	                                React.createElement(
 	                                    _reactBootstrap.Button,
-	                                    { id: 'move1', bsStyle: 'primary', onClick: this.onClick1 },
+	                                    { id: 'move1', bsStyle: b1, onClick: this.onClick1 },
 	                                    m1
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.Button,
-	                                    { id: 'move2', bsStyle: 'primary', onClick: this.onClick2 },
+	                                    { id: 'move2', bsStyle: b2, onClick: this.onClick2 },
 	                                    m2
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.Button,
-	                                    { id: 'move3', bsStyle: 'primary', onClick: this.onClick3 },
+	                                    { id: 'move3', bsStyle: b3, onClick: this.onClick3 },
 	                                    m3
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.Button,
-	                                    { id: 'move4', bsStyle: 'primary', onClick: this.onClick4 },
+	                                    { id: 'move4', bsStyle: b4, onClick: this.onClick4 },
 	                                    m4
 	                                )
 	                            )
@@ -49710,14 +49857,12 @@
 
 	        _this.state = {
 
-	            'maxHealth0': 'maxHealth0',
-	            'link0': 'link0',
-	            'maxHealth1': 'maxHealth1',
-	            'link1': 'link1',
-	            'opCharacter0': 'opCharacter0',
-	            'ophealth0': 'ophealth0',
-	            'opCharacter1': 'opCharacter1',
-	            'ophealth1': 'ophealth1'
+	            'character': 'character',
+	            'link': 'link',
+	            'health': 'health',
+	            'opCharacter': 'opCharacter',
+	            'opHealth': 'opHealth',
+	            'opLink': 'opLink'
 	        };
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
 
@@ -49731,24 +49876,20 @@
 
 	            _Socket.Socket.emit('updateInfo');
 	            // Allows moves to be dynamically updated.
-	            _Socket.Socket.on('getBothPokemon', function (data) {
+	            _Socket.Socket.on('updatePokemon', function (data) {
 	                _this2.setState({
-	                    'curHealth0': data['curHealth0'],
-	                    'maxHealth0': data['maxHealth0'],
-	                    'link0': data['link0'],
-	                    'curHealth1': data['curHealth1'],
-	                    'maxHealth1': data['maxHealth1'],
-	                    'link1': data['link1']
+	                    'character': data['name'],
+	                    'health': data['maxHealth'],
+	                    'link': data['link']
 	                });
 	            });
 
 	            // Allows moves to be dynamically updated.
-	            _Socket.Socket.on('getBothOpPokemon', function (data) {
+	            _Socket.Socket.on('updateOpPokemon', function (data) {
 	                _this2.setState({
-	                    'opCharacter0': data['name0'],
-	                    'health0': data['health0'],
-	                    'opCharacter1': data['name1'],
-	                    'health1': data['health1']
+	                    'opCharacter': data['name'],
+	                    'opHealth': data['health'],
+	                    'opLink': data['link']
 
 	                });
 	            });
@@ -49756,16 +49897,13 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var link0 = this.state.link0;
-	            var maxHealth0 = this.state.maxHealth0;
-	            var link1 = this.state.link1;
-	            var maxHealth1 = this.state.maxHealth1;
+	            var character = this.state.character;
+	            var link = this.state.link;
+	            var health = this.state.health;
 
-	            var opCharacter0 = this.state.opCharacter0;
-	            var health0 = this.state.health0;
-	            var opCharacter1 = this.state.opCharacter1;
-	            var health1 = this.state.health1;
-	            console.log(link0);
+	            var opCharacter = this.state.opCharacter;
+	            var opHealth = this.state.opHealth;
+	            var opLink = this.state.opLink;
 
 	            // sorry i hard coded the indexes and passed both individually.
 	            // Its a little wierd with the opp charaters until both users are online. 
@@ -49780,19 +49918,17 @@
 	                React.createElement(
 	                    'div',
 	                    null,
-	                    React.createElement('img', { className: 'images', src: link0 }),
+	                    React.createElement('img', { className: 'images', src: link }),
 	                    React.createElement(
-	                        _reactBootstrap.ProgressBar,
-	                        null,
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: maxHealth0 * 100, label: maxHealth0 * 100 + '%', key: 1 }),
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - maxHealth0 * 100, key: 2 })
+	                        'p',
+	                        { id: 'pokemonInfoHeader' },
+	                        character
 	                    ),
-	                    React.createElement('img', { className: 'images', src: link1 }),
 	                    React.createElement(
 	                        _reactBootstrap.ProgressBar,
 	                        null,
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: maxHealth1 * 100, label: maxHealth1 * 100 + '%', key: 1 }),
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - maxHealth1 * 100, key: 2 })
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: health * 100 + '%', key: 1 }),
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health * 100, key: 2 })
 	                    )
 	                ),
 	                React.createElement(
@@ -49803,19 +49939,17 @@
 	                React.createElement(
 	                    'div',
 	                    null,
+	                    React.createElement('img', { className: 'images', src: opLink }),
 	                    React.createElement(
 	                        'p',
 	                        { id: 'pokemonInfoHeader' },
-	                        opCharacter0,
-	                        ' : ',
-	                        health0
+	                        opCharacter
 	                    ),
 	                    React.createElement(
-	                        'p',
-	                        { id: 'pokemonInfoHeader' },
-	                        opCharacter1,
-	                        ' : ',
-	                        health1
+	                        _reactBootstrap.ProgressBar,
+	                        null,
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: opHealth * 100, label: opHealth * 100 + '%', key: 1 }),
+	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - opHealth * 100, key: 2 })
 	                    )
 	                )
 	            );
@@ -49852,7 +49986,7 @@
 
 	var _Socket = __webpack_require__(433);
 
-	var _SwitchBtn = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./SwitchBtn\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _SwitchBtn = __webpack_require__(490);
 
 	var _SurrenderBtn = __webpack_require__(491);
 
@@ -49947,7 +50081,233 @@
 	}(React.Component);
 
 /***/ },
-/* 490 */,
+/* 490 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.SwitchBtn = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var React = _interopRequireWildcard(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var ReactBootstrap = _interopRequireWildcard(_reactBootstrap);
+
+	var _Socket = __webpack_require__(433);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
+	    _inherits(SwitchBtn, _React$Component);
+
+	    function SwitchBtn(props) {
+	        _classCallCheck(this, SwitchBtn);
+
+	        var _this = _possibleConstructorReturn(this, (SwitchBtn.__proto__ || Object.getPrototypeOf(SwitchBtn)).call(this, props));
+
+	        _this.state = {
+	            'showModal': false,
+	            'firstPokeball': "box",
+	            'secondPokeball': "box box2",
+	            'health0': 'health0',
+	            'link0': 'link0',
+	            'health1': 'health1',
+	            'link1': 'link1',
+	            'currentPokemon': 1,
+	            'user': 3
+	        };
+
+	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+	        _this.onClickSwitchOne = _this.onClickSwitchOne.bind(_this);
+	        _this.onClickSwitchTwo = _this.onClickSwitchTwo.bind(_this);
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
+
+	        return _this;
+	    }
+
+	    _createClass(SwitchBtn, [{
+	        key: 'onClickSwitchOne',
+	        value: function onClickSwitchOne() {
+
+	            if (this.state.currentPokemon == 1) {
+	                console.log("Already active pokemon");
+	            } else {
+	                _Socket.Socket.emit('switch', { 'currentPokemon': 1 });
+	                this.setState({ 'currentPokemon': 1 });
+	                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 1 selected for switch.' });
+	                _Socket.Socket.emit('secondaryChar', {});
+	                console.log('Pokemon 1 selected.');
+	                this.setState({ showModal: false });
+	            }
+	        }
+	    }, {
+	        key: 'onClickSwitchTwo',
+	        value: function onClickSwitchTwo() {
+
+	            if (this.state.currentPokemon == 2) {
+	                console.log("Already currentPokemon");
+	            } else {
+	                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 2 selected for switch.' });
+	                _Socket.Socket.emit('secondaryChar', {});
+	                _Socket.Socket.emit('switch', { 'currentPokemon': 2 });
+	                this.setState({ 'currentPokemon': 2 });
+	                console.log('Pokemon 2 selected.');
+	                this.setState({ showModal: false });
+	            }
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ showModal: false });
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            this.setState({ showModal: true });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            _Socket.Socket.on('connection', function (data) {
+	                _this2.setState({
+	                    'user': data['user']
+	                });
+	            });
+	            _Socket.Socket.emit('updateInfo');
+	            // Allows moves to be dynamically updated.
+	            _Socket.Socket.on('getBothPokemon', function (data) {
+	                _this2.setState({
+	                    'health0': data['health0'],
+	                    'link0': data['link0'],
+	                    'health1': data['health1'],
+	                    'link1': data['link1']
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var link0 = this.state.link0;
+	            var health0 = this.state.health0;
+	            var link1 = this.state.link1;
+	            var health1 = this.state.health1;
+	            var popover = React.createElement(
+	                _reactBootstrap.Popover,
+	                { id: 'modal-popover', title: 'popover' },
+	                'very popover. such engagement'
+	            );
+	            var tooltip0 = React.createElement(
+	                _reactBootstrap.Tooltip,
+	                { id: 'modal-tooltip' },
+	                React.createElement('img', { src: link0, alt: 'Pokemon1' }),
+	                React.createElement(
+	                    _reactBootstrap.ProgressBar,
+	                    null,
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health0 * 100, label: health0 * 100 + '%', key: 1 }),
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health0 * 100, key: 2 })
+	                )
+	            );
+	            var tooltip1 = React.createElement(
+	                _reactBootstrap.Tooltip,
+	                { id: 'modal-tooltip' },
+	                React.createElement('img', { src: link1, alt: 'Pokemon1' }),
+	                React.createElement(
+	                    _reactBootstrap.ProgressBar,
+	                    null,
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health1 * 100, label: health1 * 100 + '%', key: 1 }),
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health1 * 100, key: 2 })
+	                )
+	            );
+	            var switchButton = null;
+	            var user = this.state.user;
+	            if (user == 1 || user == 2) {
+	                switchButton = React.createElement(
+	                    'div',
+	                    { id: 'switch' },
+	                    React.createElement(
+	                        _reactBootstrap.Button,
+	                        { bsSize: 'large', onClick: this.open },
+	                        'Switch'
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal,
+	                        { show: this.state.showModal, onHide: this.close },
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Header,
+	                            { closeButton: true },
+	                            React.createElement(
+	                                _reactBootstrap.Modal.Title,
+	                                null,
+	                                'Switch Pokemon'
+	                            )
+	                        ),
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Body,
+	                            null,
+	                            React.createElement(
+	                                'div',
+	                                null,
+	                                React.createElement(
+	                                    _reactBootstrap.OverlayTrigger,
+	                                    { overlay: tooltip0, placement: 'left' },
+	                                    React.createElement('div', { className: this.state.firstPokeball, onClick: this.onClickSwitchOne })
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.OverlayTrigger,
+	                                    { overlay: tooltip1, placement: 'right' },
+	                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchTwo })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Footer,
+	                            null,
+	                            React.createElement(
+	                                _reactBootstrap.Button,
+	                                { onClick: this.close },
+	                                'Cancel'
+	                            )
+	                        )
+	                    )
+	                );
+	            } else if (user == 3) {
+	                switchButton = '';
+	            };
+	            return React.createElement(
+	                'div',
+	                null,
+	                switchButton
+	            );
+	        }
+	    }]);
+
+	    return SwitchBtn;
+	}(React.Component);
+
+/***/ },
 /* 491 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -50133,6 +50493,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Socket = __webpack_require__(433);
+
 	var _reactFacebookLogin = __webpack_require__(493);
 
 	var _reactFacebookLogin2 = _interopRequireDefault(_reactFacebookLogin);
@@ -50148,13 +50510,32 @@
 	var FBLogin = exports.FBLogin = function (_React$Component) {
 	  _inherits(FBLogin, _React$Component);
 
-	  function FBLogin() {
+	  function FBLogin(props) {
 	    _classCallCheck(this, FBLogin);
 
-	    return _possibleConstructorReturn(this, (FBLogin.__proto__ || Object.getPrototypeOf(FBLogin)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (FBLogin.__proto__ || Object.getPrototypeOf(FBLogin)).call(this, props));
+
+	    _this.state = {
+	      'FBkey': ''
+	    };
+
+	    _this.componentDidMount = _this.componentDidMount.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(FBLogin, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      _Socket.Socket.on('FBkey', function (data) {
+	        _this2.setState({
+	          'FBkey': data['key']
+
+	        });
+	      });
+	    }
+	  }, {
 	    key: 'responseFacebook',
 	    value: function responseFacebook(response) {
 	      console.log(response);
@@ -50163,11 +50544,12 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(_reactFacebookLogin2.default, {
-	        appId: '{{ facebook_key }}',
+	        appId: '1981325768753022',
 	        autoLoad: false,
 	        fields: 'name,email,picture',
 	        scope: 'public_profile,euser_friends,user_actions.books',
 	        callback: this.responseFacebook,
+	        reAuthenticate: true,
 	        cssClass: 'facebookLogin'
 	      });
 	    }
