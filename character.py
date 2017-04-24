@@ -12,7 +12,8 @@ class character():
         self.move = []
         self.stat = []
         self.maxHp = 100
-        self.currentHp = self.maxHp
+        self.currentHp = 100
+        self.percent = 1.0
         for i in range(4):
             self.move.append(attack())
         for i in range(6):
@@ -53,9 +54,8 @@ class character():
           
     # change this to the actual formula for the percentage of the health
     def percentHealth(self):
-        return 0.5
-    def healthSet(self, maxHp):
-        self.maxHp = maxHp
+        self.percent = ((self.currentHp)/(self.maxHp))
+        return self.percent
         
     def statSet(self):
         #stats in order: 5 = HP, 4 = Atk, 3 = Def, 2 = SpAtk, 1 = SpDef, 0 = Speed
@@ -76,10 +76,14 @@ class character():
             print self.stat[4].statValue
             self.stat[5].setHPValue(data["stats"][5]["base_stat"])
             print self.stat[5].statValue
+            self.maxHp = self.stat[5].statValue
+            self.currentHp = self.maxHp
             #call 25
         elif self.name == "Dragonite":
             response = requests.get("http://pokeapi.co/api/v2/pokemon/149")
             data = response.json()
+            self.type1 = "dragon"
+            self.type2 = "flying"
             self.stat[0].setStatValue(data["stats"][0]["base_stat"])
             print self.stat[0].statValue
             self.stat[1].setStatValue(data["stats"][1]["base_stat"])
@@ -92,12 +96,14 @@ class character():
             print self.stat[4].statValue
             self.stat[5].setHPValue(data["stats"][5]["base_stat"])
             print self.stat[5].statValue
-            self.type1 = "dragon"
-            self.type2 = "flying"
+            self.maxHp = self.stat[5].statValue
+            self.currentHp = self.maxHp
             #call 149
         elif self.name == "Scyther":
             response = requests.get("http://pokeapi.co/api/v2/pokemon/123")
             data = response.json()
+            self.type1 = "bug"
+            self.type2 = "flying"
             self.stat[0].setStatValue(data["stats"][0]["base_stat"])
             print self.stat[0].statValue
             self.stat[1].setStatValue(data["stats"][1]["base_stat"])
@@ -110,12 +116,14 @@ class character():
             print self.stat[4].statValue
             self.stat[5].setHPValue(data["stats"][5]["base_stat"])
             print self.stat[5].statValue
-            self.type1 = "bug"
-            self.type2 = "flying"
+            self.maxHp = self.stat[5].statValue
+            self.currentHp = self.maxHp
             #call 123
         elif self.name == "Charizard":
             response = requests.get("http://pokeapi.co/api/v2/pokemon/6")
             data = response.json()
+            self.type1 = "fire"
+            self.type2 = "flying"
             self.stat[0].setStatValue(data["stats"][0]["base_stat"])
             print self.stat[0].statValue
             self.stat[1].setStatValue(data["stats"][1]["base_stat"])
@@ -128,8 +136,8 @@ class character():
             print self.stat[4].statValue
             self.stat[5].setHPValue(data["stats"][5]["base_stat"])
             print self.stat[5].statValue
-            self.type1 = "fire"
-            self.type2 = "flying"
+            self.maxHp = self.stat[5].statValue
+            self.currentHp = self.maxHp
             #call 6
     
     def sprite(self, spriteLink):
