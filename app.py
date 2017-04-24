@@ -165,7 +165,10 @@ def updatePokemon(ID):
         'move4' : player[p].pokemon[cp].move[3].name,
         'curHealth' : player[p].pokemon[cp].currentHp,
         'maxHealth' : player[p].pokemon[cp].maxHp,
-        'link' : player[p].pokemon[cp].spriteLink
+        'link' : player[p].pokemon[cp].spriteLink,
+        'opName' : player[op].pokemon[cp].name,
+        'opLink' : player[op].pokemon[cp].spriteLink,
+        'opLealth' : player[op].pokemon[cp].percentHealth()
     }, room=player[p].ID)
     
     # updates the opponents info of the updated info

@@ -27,7 +27,10 @@ export class YoPokemon extends React.Component {
             this.setState({
                 'character'  : data['name'],
                 'health': data['maxHealth'],
-                'link' : data['link']
+                'link' : data['link'],
+                'opCharacter'  : data['opName'],
+                'opHealth': data['opHealth'],
+                'opLink' : data['opLink']
             })
         })
         
