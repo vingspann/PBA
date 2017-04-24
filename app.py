@@ -94,10 +94,10 @@ def battle():
         sText = player[s].pokemon[sPoke].name + " has feinted."
     
     # This will be used to update YoPokemon to display health properly
-    socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].currentHp,
+    socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
         'opHealth' : player[s].pokemon[sPoke].percentHealth()
     }, room=player[f].ID)
-    socketio.emit('battleUpdate', {'curHealth' : player[s].pokemon[sPoke].currentHp,
+    socketio.emit('battleUpdate', {'curHealth' : player[s].pokemon[sPoke].percentHealth(),
         'opHealth' : player[f].pokemon[fPoke].percentHealth()
     }, room=player[s].ID)
     
@@ -149,10 +149,12 @@ def updatePokemon(ID):
         p = 0
         op = 1
         cp = player[0].currentPokemon
+        ocp = player[1].currentPokemon
     elif ID == player[1].ID:
         p = 1
         op = 0
         cp = player[1].currentPokemon
+        ocp = player[0].currentPokemon
     else: 
         return
  
@@ -166,9 +168,9 @@ def updatePokemon(ID):
         'curHealth' : player[p].pokemon[cp].currentHp,
         'maxHealth' : player[p].pokemon[cp].maxHp,
         'link' : player[p].pokemon[cp].spriteLink,
-        'opName' : player[op].pokemon[cp].name,
-        'opLink' : player[op].pokemon[cp].spriteLink,
-        'opLealth' : player[op].pokemon[cp].percentHealth()
+        'opName' : player[op].pokemon[ocp].name,
+        'opLink' : player[op].pokemon[ocp].spriteLink,
+        'opLealth' : player[op].pokemon[ocp].percentHealth()
     }, room=player[p].ID)
     
     # updates the opponents info of the updated info
