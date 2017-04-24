@@ -50,10 +50,10 @@ def battle():
     # sets Attack and defense to special or physical depending on move type
     if player[f].pokemon[fPoke].move[fm].damageClass == 'physical':
         attack = player[f].pokemon[fPoke].getAttack()
-        defense = player[f].pokemon[fPoke].getDefense()
+        defense = player[s].pokemon[sPoke].getDefense()
     elif player[f].pokemon[fPoke].move[fm].damageClass == 'special':
         attack = player[f].pokemon[fPoke].getSpAtk()
-        defense = player[f].pokemon[fPoke].getSpDef()
+        defense = player[s].pokemon[sPoke].getSpDef()
     
     # simple modifer for now.    
     modifier = randint(85, 100) / 100.0
@@ -73,10 +73,10 @@ def battle():
         # sets Attack and defense to special or physical depending on move type
         if player[s].pokemon[sPoke].move[sm].damageClass == 'physical':
             attack = player[s].pokemon[sPoke].getAttack()
-            defense = player[s].pokemon[sPoke].getDefense()
+            defense = player[f].pokemon[fPoke].getDefense()
         elif player[s].pokemon[sPoke].move[sm].damageClass == 'special':
             attack = player[s].pokemon[sPoke].getSpAtk()
-            defense = player[s].pokemon[sPoke].getSpDef()
+            defense = player[f].pokemon[fPoke].getSpDef()
         
         # simple modifer for now.    
         modifier = randint(85, 100) / 100.0
@@ -112,6 +112,8 @@ def battle():
     
     player[0].lockSwitch = False
     player[1].lockSwitch = False
+    
+    
     # Leave this at the bottom, but you might want to add an if statement
     # so that when the game finishes, these two lines don't keep getting called.
     t = Timer( 20, battle)
