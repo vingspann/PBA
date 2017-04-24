@@ -89,17 +89,17 @@ class character():
         #obtain the link to the Pokemon's sprite from within the API data
         self.spriteLink = data["sprites"]["front_default"]
         
-    def getAttack():
+    def getAttack(self):
         return self.stat[4].statValue
         
-    def getDefense():
+    def getDefense(self):
         return self.stat[3].statValue
         
-    def getSpAtk():
+    def getSpAtk(self):
         return self.stat[2].statValue
     
-    def getSpDef():
+    def getSpDef(self):
         return self.stat[1].statValue
         
-    def getSpeed():
+    def getSpeed(self):
         return self.stat[0].statValue
