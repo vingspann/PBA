@@ -6,8 +6,8 @@ import requests
 class character():
     
     def __init__(self):
-        self.name = "MissingNo."
-        self.type1 = "???"
+        self.name = ""
+        self.type1 = ""
         self.type2 = None
         self.move = []
         self.stat = []
@@ -88,3 +88,18 @@ class character():
         
         #obtain the link to the Pokemon's sprite from within the API data
         self.spriteLink = data["sprites"]["front_default"]
+        
+    def getAttack():
+        return self.stat[4].statValue
+        
+    def getDefense():
+        return self.stat[3].statValue
+        
+    def getSpAtk():
+        return self.stat[2].statValue
+    
+    def getSpDef():
+        return self.stat[1].statValue
+        
+    def getSpeed():
+        return self.stat[0].statValue
