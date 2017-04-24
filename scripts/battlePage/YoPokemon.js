@@ -67,12 +67,14 @@ export class YoPokemon extends React.Component {
     render() {
         let character = this.state.character;
         let link = this.state.link;
-        let health = this.state.health;
+        var health = this.state.health;
                
         let opCharacter = this.state.opCharacter;
-        let opHealth = this.state.opHealth;
+        var opHealth = this.state.opHealth;
         let opLink = this.state.opLink;
-                
+        
+        health = parseFloat(health).toFixed(2);
+        opHealth = parseFloat(opHealth).toFixed(2);
             
         // sorry i hard coded the indexes and passed both individually.
         // Its a little wierd with the opp charaters until both users are online. 

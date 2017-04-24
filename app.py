@@ -63,6 +63,9 @@ def battle():
     # damage calculation
     damage = (((levelMod * player[f].pokemon[fPoke].move[fm].attackPower * (attack/defense))/ 50) + 2) * modifier   
     
+    # This keeps damages to whole numbers
+    damage = int(damage)
+    
     # text for the fast pokemon's emit
     fText = player[f].pokemon[fPoke].name + " dealt " + str(damage) + " damage to " + player[s].pokemon[sPoke].name + "."
     
@@ -85,6 +88,9 @@ def battle():
         levelMod = ((2 * 52) / 5) + 2
         # damage calculation
         damage = (((levelMod * player[s].pokemon[sPoke].move[sm].attackPower * (attack/defense))/ 50) + 2) * modifier   
+        
+        # This keeps damages to whole numbers
+        damage = int(damage)
         
         # text for the fast pokemon's emit
         sText = player[s].pokemon[sPoke].name + " dealt " + str(damage) + " damage to " + player[f].pokemon[fPoke].name + "."
