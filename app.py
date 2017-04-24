@@ -47,8 +47,6 @@ def battle():
         f = 1
         s = 0
         
-    print player[f].pokemon[fPoke].move[fm].damageClass
-    print player[s].pokemon[sPoke].move[sm].damageClass
     # sets Attack and defense to special or physical depending on move type
     if player[f].pokemon[fPoke].move[fm].damageClass == 'physical':
         attack = player[f].pokemon[fPoke].getAttack()
@@ -81,7 +79,7 @@ def battle():
             defense = player[s].pokemon[sPoke].getSpDef()
         
         # simple modifer for now.    
-        modifier = randint(85, 100) / 100
+        modifier = randint(85, 100) / 100.0
         
         # this is to clean up the line below
         levelMod = ((2 * 52) / 5) + 2
