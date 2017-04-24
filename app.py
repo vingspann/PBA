@@ -92,6 +92,8 @@ def battle():
         player[f].pokemon[fPoke].dealDamage(damage)
     else:
         sText = player[s].pokemon[sPoke].name + " has feinted."
+        battleSwitch(s, sPoke)
+        player[s].pokemonLeft = player[s].pokemonLeft - 1
     
     # This will be used to update YoPokemon to display health properly
     socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
@@ -108,17 +110,28 @@ def battle():
     if (player[f].pokemon[fPoke].currentHp == 0):
         fText = player[f].pokemon[fPoke].name + " has feinted."
         socketio.emit('battleLogEmit', {'text' : fText})
+        battleSwitch(f, fPoke)
+        player[f].pokemonLeft = player[f].pokemonLeft - 1
 
-    
     player[0].lockSwitch = False
     player[1].lockSwitch = False
     
+    if player[0].pokemonLeft != 0 and player[1].pokemonLeft != 0: 
     
-    # Leave this at the bottom, but you might want to add an if statement
-    # so that when the game finishes, these two lines don't keep getting called.
-    t = Timer( 20, battle)
-    t.start()
+        # Leave this at the bottom, but you might want to add an if statement
+        # so that when the game finishes, these two lines don't keep getting called.
+        t = Timer( 10, battle)
+        t.start()
 
+# This is a helper funtion for the battle to force a pokemon switch when they feint
+def battleSwitch(p, cp):
+    if cp == 0:
+        cp = 1
+    else:
+        cp = 0
+        
+    player[p].currentPokemon = cp
+    updatePokemon(player[p].ID)
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
