@@ -50,10 +50,10 @@ def battle():
     # sets Attack and defense to special or physical depending on move type
     if player[f].pokemon[fPoke].move[fm].damageClass == 'physical':
         attack = player[f].pokemon[fPoke].getAttack()
-        defense = player[f].pokemon[fPoke].getDefense()
+        defense = player[s].pokemon[sPoke].getDefense()
     elif player[f].pokemon[fPoke].move[fm].damageClass == 'special':
         attack = player[f].pokemon[fPoke].getSpAtk()
-        defense = player[f].pokemon[fPoke].getSpDef()
+        defense = player[s].pokemon[sPoke].getSpDef()
     
     # simple modifer for now.    
     modifier = randint(85, 100) / 100.0
@@ -73,10 +73,10 @@ def battle():
         # sets Attack and defense to special or physical depending on move type
         if player[s].pokemon[sPoke].move[sm].damageClass == 'physical':
             attack = player[s].pokemon[sPoke].getAttack()
-            defense = player[s].pokemon[sPoke].getDefense()
+            defense = player[f].pokemon[fPoke].getDefense()
         elif player[s].pokemon[sPoke].move[sm].damageClass == 'special':
             attack = player[s].pokemon[sPoke].getSpAtk()
-            defense = player[s].pokemon[sPoke].getSpDef()
+            defense = player[f].pokemon[fPoke].getSpDef()
         
         # simple modifer for now.    
         modifier = randint(85, 100) / 100.0
@@ -92,6 +92,8 @@ def battle():
         player[f].pokemon[fPoke].dealDamage(damage)
     else:
         sText = player[s].pokemon[sPoke].name + " has feinted."
+        battleSwitch(s, sPoke)
+        player[s].pokemonLeft = player[s].pokemonLeft - 1
     
     # This will be used to update YoPokemon to display health properly
     socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
@@ -108,15 +110,28 @@ def battle():
     if (player[f].pokemon[fPoke].currentHp == 0):
         fText = player[f].pokemon[fPoke].name + " has feinted."
         socketio.emit('battleLogEmit', {'text' : fText})
+        battleSwitch(f, fPoke)
+        player[f].pokemonLeft = player[f].pokemonLeft - 1
 
-    
     player[0].lockSwitch = False
     player[1].lockSwitch = False
-    # Leave this at the bottom, but you might want to add an if statement
-    # so that when the game finishes, these two lines don't keep getting called.
-    t = Timer( 20, battle)
-    t.start()
+    
+    if player[0].pokemonLeft != 0 and player[1].pokemonLeft != 0: 
+    
+        # Leave this at the bottom, but you might want to add an if statement
+        # so that when the game finishes, these two lines don't keep getting called.
+        t = Timer( 10, battle)
+        t.start()
 
+# This is a helper funtion for the battle to force a pokemon switch when they feint
+def battleSwitch(p, cp):
+    if cp == 0:
+        cp = 1
+    else:
+        cp = 0
+        
+    player[p].currentPokemon = cp
+    updatePokemon(player[p].ID)
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
