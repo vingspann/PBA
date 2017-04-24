@@ -1,12 +1,13 @@
 
 class attack():
-    name = ''
-    PP = 0
-    currentPP = 0
-    moveType = ''
-    accuracy = 0
-    status = ''
-    statusChance = 0
+    def __init__(self):
+        self.name = ''
+        self.PP = 0
+        self.currentPP = 0
+        self.moveType = ''
+        self.accuracy = 0
+        self.status = ''
+        self.statusChance = 0
     
     def setInfo(self, name, PP, currentPP, moveType, accuracy, status, statusChance):
         self.name = name
