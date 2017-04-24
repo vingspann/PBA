@@ -180,12 +180,11 @@ def updatePokemon(ID):
         'move2' : player[p].pokemon[cp].move[1].name,
         'move3' : player[p].pokemon[cp].move[2].name,
         'move4' : player[p].pokemon[cp].move[3].name,
-        'curHealth' : player[p].pokemon[cp].currentHp,
-        'maxHealth' : player[p].pokemon[cp].maxHp,
+        'health' : player[p].pokemon[cp].percentHealth(),
         'link' : player[p].pokemon[cp].spriteLink,
         'opName' : player[op].pokemon[ocp].name,
         'opLink' : player[op].pokemon[ocp].spriteLink,
-        'opLealth' : player[op].pokemon[ocp].percentHealth()
+        'opHealth' : player[op].pokemon[ocp].percentHealth()
     }, room=player[p].ID)
     
     # updates the opponents info of the updated info
@@ -195,6 +194,21 @@ def updatePokemon(ID):
         'health' : player[p].pokemon[cp].percentHealth()
     }, room=player[op].ID)
     updateSpectator()
+def PokeballLinkHealth(ID):
+    # p stands for player number for the array
+    if ID == player[0].ID:
+        p = 0
+    elif ID == player[1].ID:
+        p = 1
+    else: 
+        return
+  # pushes both pokemon
+    socketio.emit('getBothPokemon', {
+        'health0' : player[p].pokemon[0].maxHp,
+        'link0' : player[p].pokemon[0].spriteLink,
+        'health1' : player[p].pokemon[1].maxHp,
+        'link1' : player[p].pokemon[1].spriteLink
+    }, room=player[p].ID)  
     
 def updateSpectator():
     cp1 = player[0].currentPokemon
@@ -208,7 +222,9 @@ def updateSpectator():
         'linkP2' : player[1].pokemon[cp2].spriteLink
         
     }, room='spectator')
-   
+    
+
+    
 @socketio.on('CM')
 def updateCurrentMove(data):
     ID = flask.request.sid
@@ -227,6 +243,7 @@ def updateCurrentMove(data):
 def updateInfo():
     ID = flask.request.sid
     updatePokemon(ID)
+    PokeballLinkHealth(ID)
     
     
 @socketio.on('switch')
@@ -248,6 +265,7 @@ def switch(data):
         player[p].currentPokemon = data['currentPokemon'] - 1
             
         updatePokemon(ID)
+        PokeballLinkHealth(ID)
     
 
 @app.route('/')

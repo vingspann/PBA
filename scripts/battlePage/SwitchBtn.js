@@ -101,6 +101,7 @@ export class SwitchBtn extends React.Component {
         let health0 = this.state.health0;
         let link1 = this.state.link1;
         let health1 = this.state.health1;
+        console.log(link0)
         const popover = (
             <Popover id="modal-popover" title="popover">
             very popover. such engagement
