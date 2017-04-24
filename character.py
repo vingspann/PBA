@@ -6,8 +6,8 @@ import requests
 class character():
     
     def __init__(self):
-        self.name = "Pikachu"
-        self.type1 = "electric"
+        self.name = "MissingNo."
+        self.type1 = "???"
         self.type2 = None
         self.move = []
         self.stat = []
@@ -33,42 +33,50 @@ class character():
         
         self.spriteLink = "https://cdn.iconverticons.com/files/png/1e2faeab4fac4558_128x128.png"
     
+    #sets the name of the Pokemon in hardcoded lines, ideally will be done
+    #when a Pokemon is selected by a player in a more advanced implementation
     def nameSet(self, name):
         self.name = name
-        
-    def typeSet(self, type1):
-        self.type1 = type1
-        
-    def typeSet2(self, type2):
-        self.type2 = type2
-    
-    def hp(self, numerator, denominator):
-          self.numerator = numerator
-          self.denominator = denominator
           
-    def moves(self, move1,move2,move3,move4):
+    #takes the hardcoded names for moves, sets the names for the four moves in
+    #the Pokemon/character object, and then uses the name to build the attack
+    #with information from API calls in the buildAttack() function in move.py
+    def buildMoves(self, move1, move2, move3, move4):
           self.move[0].setName(move1)
+          self.move[0].buildAttack()
           self.move[1].setName(move2)
+          self.move[1].buildAttack()
           self.move[2].setName(move3)
+          self.move[2].buildAttack()
           self.move[3].setName(move4)
+          self.move[3].buildAttack()
           
-    # change this to the actual formula for the percentage of the health
+    #Called to update the Hit Point bars of Pokemon in battle, and returns the
+    #value so that the HP bars can be properly updated.
     def percentHealth(self):
         self.percent = ((self.currentHp)/(self.maxHp))
         return self.percent
-        
-    def statSet(self):
+    
+    #Using the name given to the Pokemon object, creates an API call via HTTP GET
+    #to retrieve the Pokemon's type(s), base stats, and link to the Pokemon's sprite
+    #to be displayed in battle and the Switch modal.
+    def buildPokemon(self):
         #stats in order: 5 = HP, 4 = Atk, 3 = Def, 2 = SpAtk, 1 = SpDef, 0 = Speed
         requestString = "http://pokeapi.co/api/v2/pokemon/"
         requestString += str(self.name).lower()
         response = requests.get(requestString)
         data = response.json()
+        
+        #use API data to set types, 1 or 2 depending on the Pokemon
         types = data["types"]
         if(len(types) > 1):
             type2 = types[0]["type"]["name"]
             type1 = types[1]["type"]["name"]
         else:
             type1 = types[0]["type"]["name"]
+            
+        #call the setStatValue function with API data to calculate
+        #the Pokemon's stats based on the base stat of each
         self.stat[0].setStatValue(data["stats"][0]["base_stat"])
         self.stat[1].setStatValue(data["stats"][1]["base_stat"])
         self.stat[2].setStatValue(data["stats"][2]["base_stat"])
@@ -78,10 +86,5 @@ class character():
         self.maxHp = self.stat[5].statValue
         self.currentHp = self.maxHp
         
-    
-    def sprite(self, spriteLink):
-        self.spriteLink = spriteLink
-        
-
-    
-    
+        #obtain the link to the Pokemon's sprite from within the API data
+        self.spriteLink = data["sprites"]["front_default"]
