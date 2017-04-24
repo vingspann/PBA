@@ -77,7 +77,6 @@ class character():
         self.stat[5].setHPValue(data["stats"][5]["base_stat"])
         self.maxHp = self.stat[5].statValue
         self.currentHp = self.maxHp
-        #call 25
         
     
     def sprite(self, spriteLink):
