@@ -71,7 +71,6 @@ def updatePokemon(ID):
     }, room=player[op].ID)
     
 def getBothPokemon(ID):
-    setPokemon()
     # p stands for player number for the array
     # cp stands for current Pokemon. Saves a lot of typing
     # op stands for other player

@@ -59,86 +59,26 @@ class character():
         
     def statSet(self):
         #stats in order: 5 = HP, 4 = Atk, 3 = Def, 2 = SpAtk, 1 = SpDef, 0 = Speed
-        if self.name == "Pikachu":
-            response = requests.get("http://pokeapi.co/api/v2/pokemon/25")
-            data = response.json()
-            self.type1 = "electric"
-            self.type2 = None
-            self.stat[0].setStatValue(data["stats"][0]["base_stat"])
-            print self.stat[0].statValue
-            self.stat[1].setStatValue(data["stats"][1]["base_stat"])
-            print self.stat[1].statValue
-            self.stat[2].setStatValue(data["stats"][2]["base_stat"])
-            print self.stat[2].statValue
-            self.stat[3].setStatValue(data["stats"][3]["base_stat"])
-            print self.stat[3].statValue
-            self.stat[4].setStatValue(data["stats"][4]["base_stat"])
-            print self.stat[4].statValue
-            self.stat[5].setHPValue(data["stats"][5]["base_stat"])
-            print self.stat[5].statValue
-            self.maxHp = self.stat[5].statValue
-            self.currentHp = self.maxHp
-            #call 25
-        elif self.name == "Dragonite":
-            response = requests.get("http://pokeapi.co/api/v2/pokemon/149")
-            data = response.json()
-            self.type1 = "dragon"
-            self.type2 = "flying"
-            self.stat[0].setStatValue(data["stats"][0]["base_stat"])
-            print self.stat[0].statValue
-            self.stat[1].setStatValue(data["stats"][1]["base_stat"])
-            print self.stat[1].statValue
-            self.stat[2].setStatValue(data["stats"][2]["base_stat"])
-            print self.stat[2].statValue
-            self.stat[3].setStatValue(data["stats"][3]["base_stat"])
-            print self.stat[3].statValue
-            self.stat[4].setStatValue(data["stats"][4]["base_stat"])
-            print self.stat[4].statValue
-            self.stat[5].setHPValue(data["stats"][5]["base_stat"])
-            print self.stat[5].statValue
-            self.maxHp = self.stat[5].statValue
-            self.currentHp = self.maxHp
-            #call 149
-        elif self.name == "Scyther":
-            response = requests.get("http://pokeapi.co/api/v2/pokemon/123")
-            data = response.json()
-            self.type1 = "bug"
-            self.type2 = "flying"
-            self.stat[0].setStatValue(data["stats"][0]["base_stat"])
-            print self.stat[0].statValue
-            self.stat[1].setStatValue(data["stats"][1]["base_stat"])
-            print self.stat[1].statValue
-            self.stat[2].setStatValue(data["stats"][2]["base_stat"])
-            print self.stat[2].statValue
-            self.stat[3].setStatValue(data["stats"][3]["base_stat"])
-            print self.stat[3].statValue
-            self.stat[4].setStatValue(data["stats"][4]["base_stat"])
-            print self.stat[4].statValue
-            self.stat[5].setHPValue(data["stats"][5]["base_stat"])
-            print self.stat[5].statValue
-            self.maxHp = self.stat[5].statValue
-            self.currentHp = self.maxHp
-            #call 123
-        elif self.name == "Charizard":
-            response = requests.get("http://pokeapi.co/api/v2/pokemon/6")
-            data = response.json()
-            self.type1 = "fire"
-            self.type2 = "flying"
-            self.stat[0].setStatValue(data["stats"][0]["base_stat"])
-            print self.stat[0].statValue
-            self.stat[1].setStatValue(data["stats"][1]["base_stat"])
-            print self.stat[1].statValue
-            self.stat[2].setStatValue(data["stats"][2]["base_stat"])
-            print self.stat[2].statValue
-            self.stat[3].setStatValue(data["stats"][3]["base_stat"])
-            print self.stat[3].statValue
-            self.stat[4].setStatValue(data["stats"][4]["base_stat"])
-            print self.stat[4].statValue
-            self.stat[5].setHPValue(data["stats"][5]["base_stat"])
-            print self.stat[5].statValue
-            self.maxHp = self.stat[5].statValue
-            self.currentHp = self.maxHp
-            #call 6
+        requestString = "http://pokeapi.co/api/v2/pokemon/"
+        requestString += str(self.name).lower()
+        response = requests.get(requestString)
+        data = response.json()
+        types = data["types"]
+        if(len(types) > 1):
+            type2 = types[0]["type"]["name"]
+            type1 = types[1]["type"]["name"]
+        else:
+            type1 = types[0]["type"]["name"]
+        self.stat[0].setStatValue(data["stats"][0]["base_stat"])
+        self.stat[1].setStatValue(data["stats"][1]["base_stat"])
+        self.stat[2].setStatValue(data["stats"][2]["base_stat"])
+        self.stat[3].setStatValue(data["stats"][3]["base_stat"])
+        self.stat[4].setStatValue(data["stats"][4]["base_stat"])
+        self.stat[5].setHPValue(data["stats"][5]["base_stat"])
+        self.maxHp = self.stat[5].statValue
+        self.currentHp = self.maxHp
+        #call 25
+        
     
     def sprite(self, spriteLink):
         self.spriteLink = spriteLink
