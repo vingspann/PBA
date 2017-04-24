@@ -1,4 +1,5 @@
-import os, flask, flask_socketio
+import os, flask, flask_socketio, time
+from threading import Timer
 from chatBot import bot
 from user import user
 oak = bot()
@@ -8,6 +9,21 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 player = [user(), user()]
+
+# this is where the battle and turns will happen
+def battle():
+    
+    
+    # Put all the battle stuff you need inside this function. 
+    # I would suggest having two socket emits, for the different players moves
+    
+    socketio.emit('battleLogEmit', {'text' : 'timer updated'})
+    
+    # Leave this at the bottom, but you might want to add an if statement
+    # so that when the game finishes, these two lines don't keep getting called.
+    t = Timer( 20, battle)
+    t.start()
+
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
@@ -93,7 +109,21 @@ def getBothPokemon(ID):
         'health1' : player[p].pokemon[1].maxHp,
         'link1' : player[p].pokemon[1].spriteLink
     }, room=player[p].ID)
+   
+@socketio.on('CM')
+def updateCurrentMove(data):
+    ID = flask.request.sid
     
+    if ID == player[0].ID:
+        p = 0
+    elif ID == player[1].ID:
+        p = 1
+    else: 
+        return
+    
+    player[p].recentMove = data['CM'];
+
+
 @socketio.on('updateInfo')
 def updateInfo():
     ID = flask.request.sid
@@ -151,7 +181,7 @@ def on_connect():
         socketio.emit('connection', {'user' : 2}, room=clientId)
         print "user 2 sid: " + clientId
         player[1].ID = clientId
-
+        battle()
     else: 
         socketio.emit('connection', {'user' : 3})
     
@@ -159,7 +189,6 @@ def on_connect():
 if __name__ == '__main__':
     
     setPokemon()
-    
     socketio.run(
             app,
             host=os.getenv('IP', '0.0.0.0'),
