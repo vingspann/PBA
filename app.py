@@ -296,7 +296,12 @@ def on_connect():
         socketio.emit('connection', {'user' : 2}, room=clientId)
         print "user 2 sid: " + clientId
         player[1].ID = clientId
-        battle()
+        
+        # This makes it so that there is a timer before the battle starts.
+        # This stops an attack from happening as soon as both people log in.
+        t = Timer(20, battle)
+        t.start()
+        
     else: 
         socketio.emit('connection', {'user' : 3})
     
