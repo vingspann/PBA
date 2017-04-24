@@ -174,29 +174,20 @@ def updatePokemon(ID):
         'link' : player[p].pokemon[cp].spriteLink,
         'health' : player[p].pokemon[cp].percentHealth()
     }, room=player[op].ID)
+    updateSpectator()
     
-def getBothPokemon(ID):
-    # p stands for player number for the array
-    # cp stands for current Pokemon. Saves a lot of typing
-    # op stands for other player
-    if ID == player[0].ID:
-        p = 0
-        op = 1
-        cp = player[0].currentPokemon
-    elif ID == player[1].ID:
-        p = 1
-        op = 0
-        cp = player[1].currentPokemon
-    else: 
-        return
- 
-  # pushes both pokemon
-    socketio.emit('getBothPokemon', {
-        'health0' : player[p].pokemon[0].maxHp,
-        'link0' : player[p].pokemon[0].spriteLink,
-        'health1' : player[p].pokemon[1].maxHp,
-        'link1' : player[p].pokemon[1].spriteLink
-    }, room=player[p].ID)
+def updateSpectator():
+    cp1 = player[0].currentPokemon
+    cp2 = player[1].currentPokemon
+    socketio.emit('updateSpectator', {
+        'nameP1' : player[0].pokemon[cp1].name,
+        'healthP1' : player[0].pokemon[cp1].percentHealth(),
+        'linkP1' : player[0].pokemon[cp1].spriteLink,
+        'nameP2' : player[1].pokemon[cp2].name,
+        'healthP2' : player[1].pokemon[cp2].percentHealth(),
+        'linkP2' : player[1].pokemon[cp2].spriteLink
+        
+    }, room='spectator')
    
 @socketio.on('CM')
 def updateCurrentMove(data):
@@ -216,7 +207,6 @@ def updateCurrentMove(data):
 def updateInfo():
     ID = flask.request.sid
     updatePokemon(ID)
-    getBothPokemon(ID)
     
     
 @socketio.on('switch')
@@ -298,7 +288,9 @@ def on_connect():
         player[1].ID = clientId
         battle()
     else: 
-        socketio.emit('connection', {'user' : 3})
+        flask_socketio.join_room('spectator')
+        socketio.emit('connection', {'user' : 3}, room='spectator')
+        updateSpectator()
     
 
 if __name__ == '__main__':
