@@ -15,7 +15,8 @@ export class CmdBtn extends React.Component {
              'move1' : 'move1',
              'move2' : 'move2',
              'move3' : 'move3',
-             'move4' : 'move4'
+             'move4' : 'move4',
+             'user' : 3
         };
         this.onClick1 = this.onClick1.bind(this);
         this.onClick2 = this.onClick2.bind(this);
@@ -66,6 +67,12 @@ export class CmdBtn extends React.Component {
                 'move4' : data['move4']
             })
         });
+        
+        Socket.on('connection', (data) => {
+            this.setState({
+                'user' : data['user']
+            })
+        });
     }
 
 
@@ -76,24 +83,34 @@ export class CmdBtn extends React.Component {
         var m3 = this.state.move3;
         var m4 = this.state.move4;
         
+        let moveArea = null;
+        var user = this.state.user;
+        if (user == 1 || user == 2){
+            moveArea = 
+            <form onSubmit={this.handleSubmit}>
+                <FormGroup>
+                    <div id='nameLog'>
+                    {name}
+                    </div>
+                    <InputGroup>
+                        <ButtonToolbar>
+                            <Button id='move1' bsStyle='primary' onClick={this.onClick1}>{m1}</Button>
+                            <Button id='move2' bsStyle='primary' onClick={this.onClick2}>{m2}</Button>
+                            <Button id='move3' bsStyle='primary' onClick={this.onClick3}>{m3}</Button>
+                            <Button id='move4' bsStyle='primary' onClick={this.onClick4}>{m4}</Button>
+                        </ButtonToolbar>
+                    </InputGroup>
+                </FormGroup>
+            </form>;
+        } else if (user == 3){
+                // Just add in html elements like the above. Don't forget a semi colon.
+                moveArea = 'You are spectating';
+        };
+      
+        
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                            <div id="nameLog">
-                            {name}
-                            </div>
-                            <InputGroup>
-                                <ButtonToolbar>
-                                    <Button id="move1" bsStyle="primary" onClick={this.onClick1}>{m1}</Button>
-                                    <Button id="move2" bsStyle="primary" onClick={this.onClick2}>{m2}</Button>
-                                    <Button id="move3" bsStyle="primary" onClick={this.onClick3}>{m3}</Button>
-                                    <Button id="move4" bsStyle="primary" onClick={this.onClick4}>{m4}</Button>
-                                </ButtonToolbar>
-                            </InputGroup>
-                        </FormGroup>
-                    
-                </form>
+                {moveArea}
             </div>
         );
     }
