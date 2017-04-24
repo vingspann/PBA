@@ -29,8 +29,6 @@ export class SwitchBtn extends React.Component {
         this.onClickSwitchTwo = this.onClickSwitchTwo.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
-        this.getRandomInt = this.getRandomInt.bind(this);
-        this.randomPokeball = this.randomPokeball.bind(this);
 
     }
 
@@ -69,50 +67,7 @@ export class SwitchBtn extends React.Component {
 
     }
     
-    getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    
-    randomPokeball(){
-        var ballOne = this.getRandomInt(1,4);
-        var ballTwo = this.getRandomInt(1,4);
-        
-        if(ballOne == 1)
-        {
-            this.setState({firstPokeball: "box"});
-        }
-        else if(ballOne == 2)
-        {
-            this.setState({firstPokeball: "box box2"});
-        }
-        else if(ballOne == 3)
-        {
-            this.setState({firstPokeball: "box box3"});
-        }
-        else if(ballOne == 4)
-        {
-            this.setState({firstPokeball: "box box4"});
-        }
-        
-        if(ballTwo == 1)
-        {
-            this.setState({secondPokeball: "box"});
-        }
-        else if(ballTwo == 2)
-        {
-            this.setState({firstPokeball: "box box2"});
-        }
-        else if(ballTwo == 3)
-        {
-            this.setState({secondPokeball: "box box3"});
-        }
-        else if(ballTwo == 4)
-        {
-            this.setState({secondPokeball: "box box4"});
-        }
-        
-        this.setState({ showModal: true });
-    }
+  
     
     close() {
         this.setState({ showModal: false });
@@ -175,7 +130,7 @@ export class SwitchBtn extends React.Component {
             switchButton = 
             <div id="switch">
             
-                <Button bsSize="large" onClick={this.randomPokeball}>Switch</Button>
+                <Button bsSize="large" onClick={this.open}>Switch</Button>
 
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>
