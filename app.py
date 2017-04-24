@@ -165,7 +165,10 @@ def updatePokemon(ID):
         'move4' : player[p].pokemon[cp].move[3].name,
         'curHealth' : player[p].pokemon[cp].currentHp,
         'maxHealth' : player[p].pokemon[cp].maxHp,
-        'link' : player[p].pokemon[cp].spriteLink
+        'link' : player[p].pokemon[cp].spriteLink,
+        'opName' : player[op].pokemon[cp].name,
+        'opLink' : player[op].pokemon[cp].spriteLink,
+        'opLealth' : player[op].pokemon[cp].percentHealth()
     }, room=player[p].ID)
     
     # updates the opponents info of the updated info
@@ -286,7 +289,12 @@ def on_connect():
         socketio.emit('connection', {'user' : 2}, room=clientId)
         print "user 2 sid: " + clientId
         player[1].ID = clientId
-        battle()
+        
+        # This makes it so that there is a timer before the battle starts.
+        # This stops an attack from happening as soon as both people log in.
+        t = Timer(20, battle)
+        t.start()
+        
     else: 
         flask_socketio.join_room('spectator')
         socketio.emit('connection', {'user' : 3}, room='spectator')

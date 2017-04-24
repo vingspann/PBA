@@ -27,7 +27,10 @@ export class YoPokemon extends React.Component {
             this.setState({
                 'character'  : data['name'],
                 'health': data['maxHealth'],
-                'link' : data['link']
+                'link' : data['link'],
+                'opCharacter'  : data['opName'],
+                'opHealth': data['opHealth'],
+                'opLink' : data['opLink']
             })
         })
         
@@ -42,6 +45,7 @@ export class YoPokemon extends React.Component {
             })
         })
         
+<<<<<<< HEAD
         Socket.on('updateSpectator', (data) =>{
             this.setState({
                 'health' : data['healthP1'],
@@ -53,6 +57,15 @@ export class YoPokemon extends React.Component {
             })
         })
         
+=======
+        Socket.on('battleUpdate', (data) =>{
+            this.setState({
+                'health' : data['curHealth'],
+                'opHealth' : data['opHealth']
+            });
+            this.forceUpdate();
+        })
+>>>>>>> master
     }
     render() {
         let character = this.state.character;
