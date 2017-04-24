@@ -157,18 +157,24 @@ def chatLogSubmit(data):
         if message == "1337":
             cp1 = player[0].currentPokemon
             cp2 = player[1].currentPokemon
-            types = player[0].pokemon[cp1].name + " type(s) are "
-            types = types + player[0].pokemon[cp1].type1
+            types = player[0].pokemon[cp1].name + " is "
+            
             if player[0].pokemon[cp1].type2 != None:
+                types = types + player[0].pokemon[cp1].type1
                 types = types + " and " + player[0].pokemon[cp1].type2
-            types = types + "."
+            else:
+                types = types + player[0].pokemon[cp1].type1
+            types = types + "type."
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
             
-            types = player[1].pokemon[cp2].name + " type(s) are "
-            types = types + player[1].pokemon[cp2].type1
+            types = player[1].pokemon[cp2].name + " is "
+            
             if player[1].pokemon[cp2].type2 != None:
+                types = types + player[1].pokemon[cp2].type1
                 types = types + " and " + player[1].pokemon[cp2].type2
-            types = types + "."
+            else:
+                types = types + player[1].pokemon[cp2].type1
+            types = types + "type."
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
             
         else:
