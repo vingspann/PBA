@@ -21530,11 +21530,7 @@
 
 	var _reactBootstrap = __webpack_require__(180);
 
-<<<<<<< HEAD
-	var _FBLogin = __webpack_require__(498);
-=======
 	var _FBLogin = __webpack_require__(492);
->>>>>>> master
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -49928,20 +49924,11 @@
 	                        { id: 'pokemonInfoHeader' },
 	                        character
 	                    ),
-<<<<<<< HEAD
-	                    React.createElement('img', { className: 'images', src: link1 }),
-	                    React.createElement(
-	                        _reactBootstrap.ProgressBar,
-	                        null,
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: maxHealth1 * 100, label: maxHealth1 * 100 + '%', key: 1 }),
-	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - maxHealth1 * 100, key: 2 })
-=======
 	                    React.createElement(
 	                        _reactBootstrap.ProgressBar,
 	                        null,
 	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: health * 100 + '%', key: 1 }),
 	                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health * 100, key: 2 })
->>>>>>> master
 	                    )
 	                ),
 	                React.createElement(
@@ -49952,10 +49939,7 @@
 	                React.createElement(
 	                    'div',
 	                    null,
-<<<<<<< HEAD
-=======
 	                    React.createElement('img', { className: 'images', src: opLink }),
->>>>>>> master
 	                    React.createElement(
 	                        'p',
 	                        { id: 'pokemonInfoHeader' },
@@ -50004,11 +49988,7 @@
 
 	var _SwitchBtn = __webpack_require__(490);
 
-<<<<<<< HEAD
-	var _SurrenderBtn = __webpack_require__(497);
-=======
 	var _SurrenderBtn = __webpack_require__(491);
->>>>>>> master
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -50149,11 +50129,7 @@
 	            'showModal': false,
 	            'firstPokeball': "box",
 	            'secondPokeball': "box box2",
-<<<<<<< HEAD
-	            'maxHealth0': 'maxHealth0',
-=======
 	            'health0': 'health0',
->>>>>>> master
 	            'link0': 'link0',
 	            'health1': 'health1',
 	            'link1': 'link1',
@@ -50199,42 +50175,6 @@
 	                console.log('Pokemon 2 selected.');
 	                this.setState({ showModal: false });
 	            }
-<<<<<<< HEAD
-	        }
-	    }, {
-	        key: 'getRandomInt',
-	        value: function getRandomInt(min, max) {
-	            return Math.floor(Math.random() * (max - min + 1)) + min;
-	        }
-	    }, {
-	        key: 'randomPokeball',
-	        value: function randomPokeball() {
-	            var ballOne = this.getRandomInt(1, 4);
-	            var ballTwo = this.getRandomInt(1, 4);
-
-	            if (ballOne == 1) {
-	                this.setState({ firstPokeball: "box" });
-	            } else if (ballOne == 2) {
-	                this.setState({ firstPokeball: "box box2" });
-	            } else if (ballOne == 3) {
-	                this.setState({ firstPokeball: "box box3" });
-	            } else if (ballOne == 4) {
-	                this.setState({ firstPokeball: "box box4" });
-	            }
-
-	            if (ballTwo == 1) {
-	                this.setState({ secondPokeball: "box" });
-	            } else if (ballTwo == 2) {
-	                this.setState({ firstPokeball: "box box2" });
-	            } else if (ballTwo == 3) {
-	                this.setState({ secondPokeball: "box box3" });
-	            } else if (ballTwo == 4) {
-	                this.setState({ secondPokeball: "box box4" });
-	            }
-
-	            this.setState({ showModal: true });
-=======
->>>>>>> master
 	        }
 	    }, {
 	        key: 'close',
@@ -50368,11 +50308,7 @@
 	}(React.Component);
 
 /***/ },
-<<<<<<< HEAD
-/* 497 */
-=======
 /* 491 */
->>>>>>> master
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
