@@ -70,10 +70,10 @@ class character():
         #use API data to set types, 1 or 2 depending on the Pokemon
         types = data["types"]
         if(len(types) > 1):
-            type2 = types[0]["type"]["name"]
-            type1 = types[1]["type"]["name"]
+            self.type2 = types[0]["type"]["name"]
+            self.type1 = types[1]["type"]["name"]
         else:
-            type1 = types[0]["type"]["name"]
+            self.type1 = types[0]["type"]["name"]
             
         #call the setStatValue function with API data to calculate
         #the Pokemon's stats based on the base stat of each
