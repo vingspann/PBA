@@ -21815,7 +21815,11 @@
 
 	var _reactBootstrap = __webpack_require__(184);
 
+<<<<<<< HEAD
 	var _FBLogin = __webpack_require__(498);
+=======
+	var _FBLogin = __webpack_require__(492);
+>>>>>>> master
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -50650,7 +50654,11 @@
 
 	var _SwitchBtn = __webpack_require__(496);
 
+<<<<<<< HEAD
 	var _SurrenderBtn = __webpack_require__(497);
+=======
+	var _SurrenderBtn = __webpack_require__(491);
+>>>>>>> master
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -50970,7 +50978,11 @@
 	}(React.Component);
 
 /***/ },
+<<<<<<< HEAD
 /* 497 */
+=======
+/* 491 */
+>>>>>>> master
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

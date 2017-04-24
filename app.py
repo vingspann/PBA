@@ -31,6 +31,7 @@ def battle():
 # Sets the players initial pokemon when they connect
 def setPokemon():
     player[0].pokemon[0].nameSet('Pikachu')
+<<<<<<< HEAD
     player[0].pokemon[0].buildMoves('Thunderbolt','Slam','Iron Tail','Brick Break')
     player[0].pokemon[0].buildPokemon()
     player[0].pokemon[0].percentHealth()
@@ -45,6 +46,26 @@ def setPokemon():
     player[1].pokemon[1].nameSet('Scyther')
     player[1].pokemon[1].buildMoves('Steel Wing','Night Slash','X-Scissor','Wing Attack')
     player[1].pokemon[1].buildPokemon()
+=======
+    player[0].pokemon[0].moves('Thunderbolt','Slam','Iron Tail','Brick Break')
+    player[0].pokemon[0].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png')
+    #player[0].pokemon[0].statSet()
+    player[0].pokemon[0].percentHealth()
+    player[0].pokemon[1].nameSet('Charizard')
+    player[0].pokemon[1].moves('Wing Attack','Slash','Flamethrower','Dragon Claw')
+    player[0].pokemon[1].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png')
+    #player[0].pokemon[1].statSet()
+    player[0].pokemon[1].percentHealth()
+    player[1].pokemon[0].nameSet('Dragonite')
+    player[1].pokemon[0].moves('Wing Attack','Dragon Claw','Fire Punch','Aqua Tail')
+    player[1].pokemon[0].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png')
+    #player[1].pokemon[0].statSet()
+    player[1].pokemon[0].percentHealth()
+    player[1].pokemon[1].nameSet('Scyther')
+    player[1].pokemon[1].moves('Steel Wing','Night Slash','X-Scissor','Wing Attack')
+    player[1].pokemon[1].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/123.png')
+    #player[1].pokemon[1].statSet()
+>>>>>>> master
     player[1].pokemon[1].percentHealth()
     
 # Helper function used by seperate socket Io calls
@@ -154,7 +175,25 @@ def chatLogSubmit(data):
     socketio.emit('chatLogEmit', {'name' : data['name'], 'text' : data['text']})
     allow, message = oak.check(data['text'])
     if allow:
-        socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
+        if message == "1337":
+            cp1 = player[0].currentPokemon
+            cp2 = player[1].currentPokemon
+            types = player[0].pokemon[cp1].name + " type(s) are "
+            types = types + player[0].pokemon[cp1].type1
+            if player[0].pokemon[cp1].type2 != None:
+                types = types + " and " + player[0].pokemon[cp1].type2
+            types = types + "."
+            socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
+            
+            types = player[1].pokemon[cp2].name + " type(s) are "
+            types = types + player[1].pokemon[cp2].type1
+            if player[1].pokemon[cp2].type2 != None:
+                types = types + " and " + player[1].pokemon[cp2].type2
+            types = types + "."
+            socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
+            
+        else:
+            socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
 
 
 @socketio.on('battleLog')
