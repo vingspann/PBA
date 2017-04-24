@@ -1,4 +1,5 @@
 import os, flask, flask_socketio, time
+from random import randint
 from threading import Timer
 from chatBot import bot
 from user import user
@@ -13,12 +14,106 @@ player = [user(), user()]
 # this is where the battle and turns will happen
 def battle():
     
+    # This ensures they can't switch pokemon until the lock is lifted at end of function
+    player[0].lockSwitch = True
+    player[1].lockSwitch = True
     
-    # Put all the battle stuff you need inside this function. 
-    # I would suggest having two socket emits, for the different players moves
+    p1 = player[0].currentPokemon
+    p2 = player[1].currentPokemon
+    m1 = player[0].recentMove
+    m2 = player[1].recentMove
+    fText = ''
+    sText = ''
     
-    socketio.emit('battleLogEmit', {'text' : 'timer updated'})
+    #fast pokemon and slow pokemon
+    fPoke = None
+    sPoke = None
     
+    # This is needed to remember who the pokemon belong to
+    f = 0
+    s = 1
+    # this makes it so I don't need to worry about dealing with player arrays
+    # as well as making it so no other emits change the locked in moves
+    if player[0].pokemon[p1].getSpeed() > player[1].pokemon[p2].getSpeed():
+        fPoke = p1
+        sPoke = p2
+        fm = m1
+        sm = m2
+    else:
+        fPoke = p2
+        sPoke = p1
+        fm = m2
+        sm = m1
+        f = 1
+        s = 0
+        
+    print player[f].pokemon[fPoke].move[fm].damageClass
+    print player[s].pokemon[sPoke].move[sm].damageClass
+    # sets Attack and defense to special or physical depending on move type
+    if player[f].pokemon[fPoke].move[fm].damageClass == 'physical':
+        attack = player[f].pokemon[fPoke].getAttack()
+        defense = player[f].pokemon[fPoke].getDefense()
+    elif player[f].pokemon[fPoke].move[fm].damageClass == 'special':
+        attack = player[f].pokemon[fPoke].getSpAtk()
+        defense = player[f].pokemon[fPoke].getSpDef()
+    
+    # simple modifer for now.    
+    modifier = randint(85, 100) / 100.0
+    
+    # this is to clean up the line below
+    levelMod = ((2 * 52) / 5) + 2
+    # damage calculation
+    damage = (((levelMod * player[f].pokemon[fPoke].move[fm].attackPower * (attack/defense))/ 50) + 2) * modifier   
+    
+    # text for the fast pokemon's emit
+    fText = player[f].pokemon[fPoke].name + " dealt " + str(damage) + " damage to " + player[s].pokemon[sPoke].name + "."
+    
+    player[s].pokemon[sPoke].dealDamage(damage)
+    # Checks to see if the pokemon has feinted or not. If not it does a normal move,
+    # else, if the pokemon feints it sets the slow pokemon's message to reflect the feint
+    if player[s].pokemon[sPoke].currentHp > 0:
+        # sets Attack and defense to special or physical depending on move type
+        if player[s].pokemon[sPoke].move[sm].damageClass == 'physical':
+            attack = player[s].pokemon[sPoke].getAttack()
+            defense = player[s].pokemon[sPoke].getDefense()
+        elif player[s].pokemon[sPoke].move[sm].damageClass == 'special':
+            attack = player[s].pokemon[sPoke].getSpAtk()
+            defense = player[s].pokemon[sPoke].getSpDef()
+        
+        # simple modifer for now.    
+        modifier = randint(85, 100) / 100
+        
+        # this is to clean up the line below
+        levelMod = ((2 * 52) / 5) + 2
+        # damage calculation
+        damage = (((levelMod * player[s].pokemon[sPoke].move[sm].attackPower * (attack/defense))/ 50) + 2) * modifier   
+        
+        # text for the fast pokemon's emit
+        sText = player[s].pokemon[sPoke].name + " dealt " + str(damage) + " damage to " + player[f].pokemon[fPoke].name + "."
+        
+        player[f].pokemon[fPoke].dealDamage(damage)
+    else:
+        sText = player[s].pokemon[sPoke].name + " has feinted."
+    
+    # This will be used to update YoPokemon to display health properly
+    socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].currentHp,
+        'opHealth' : player[s].pokemon[sPoke].percentHealth()
+    }, room=player[f].ID)
+    socketio.emit('battleUpdate', {'curHealth' : player[s].pokemon[sPoke].currentHp,
+        'opHealth' : player[f].pokemon[fPoke].percentHealth()
+    }, room=player[s].ID)
+    
+    
+    socketio.emit('battleLogEmit', {'text' : fText})
+    socketio.emit('battleLogEmit', {'text' : sText})
+    
+    if (player[f].pokemon[fPoke].currentHp == 0):
+        fText = player[f].pokemon[fPoke].name + " has feinted."
+        socketio.emit('battleLogEmit', {'text' : fText})
+
+    
+    player[0].lockSwitch = False
+    player[1].lockSwitch = False
     # Leave this at the bottom, but you might want to add an if statement
     # so that when the game finishes, these two lines don't keep getting called.
     t = Timer( 20, battle)
@@ -137,11 +232,14 @@ def switch(data):
     else: 
         return
     
-    # The pokemon numebrs come in starting at 1. So, it's needed to subtract 1 to get it 
-    # to be proper array indexs 
-    player[p].currentPokemon = data['currentPokemon'] - 1
-        
-    updatePokemon(ID)
+    # If they are not locked, they can switch pokemon
+    if not player[p].lockSwitch:
+    
+        # The pokemon numebrs come in starting at 1. So, it's needed to subtract 1 to get it 
+        # to be proper array indexs 
+        player[p].currentPokemon = data['currentPokemon'] - 1
+            
+        updatePokemon(ID)
     
 
 @app.route('/')
