@@ -23,7 +23,7 @@ def setPokemon():
     player[0].pokemon[1].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png')
     player[0].pokemon[1].healthSet(.60)
     player[1].pokemon[0].nameSet('Dragonite')
-    player[1].pokemon[0].moves('Wing Attack','Drangon Claw','Fire Punch','Aqua Tail')
+    player[1].pokemon[0].moves('Wing Attack','Dragon Claw','Fire Punch','Aqua Tail')
     player[1].pokemon[0].sprite('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png')
     player[1].pokemon[0].healthSet(.84)
     player[1].pokemon[1].nameSet('Scyther')
@@ -74,29 +74,22 @@ def getBothPokemon(ID):
     if ID == player[0].ID:
         p = 0
         op = 1
+        cp = player[0].currentPokemon
     elif ID == player[1].ID:
         p = 1
         op = 0
+        cp = player[1].currentPokemon
     else: 
         return
  
   # pushes both pokemon
     socketio.emit('getBothPokemon', {
-        'curHealth0' : player[p].pokemon[0].currentHp,
-        'maxHealth0' : player[p].pokemon[0].maxHp,
+        'health0' : player[p].pokemon[0].maxHp,
         'link0' : player[p].pokemon[0].spriteLink,
-        'curHealth1' : player[p].pokemon[1].currentHp,
-        'maxHealth1' : player[p].pokemon[1].maxHp,
+        'health1' : player[p].pokemon[1].maxHp,
         'link1' : player[p].pokemon[1].spriteLink
     }, room=player[p].ID)
     
-    # pushes both op pokemon
-    socketio.emit('getBothOpPokemon', {
-        'name0' : player[p].pokemon[0].name,
-        'health0' : player[p].pokemon[0].maxHp,
-        'name1' : player[p].pokemon[1].name,
-        'health1' : player[p].pokemon[1].maxHp
-    }, room=player[op].ID)
 @socketio.on('updateInfo')
 def updateInfo():
     ID = flask.request.sid
