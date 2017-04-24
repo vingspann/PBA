@@ -21478,6 +21478,12 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
 
         _this.state = {
             'showModal': false,
+            'firstPokeball': "box",
+            'secondPokeball': "box box2",
+            'health0': 'health0',
+            'link0': 'link0',
+            'health1': 'health1',
+            'link1': 'link1',
             'currentPokemon': 1,
             'user': 3
         };
@@ -21541,19 +21547,50 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
                     'user': data['user']
                 });
             });
+            _Socket.Socket.emit('updateInfo');
+            // Allows moves to be dynamically updated.
+            _Socket.Socket.on('getBothPokemon', function (data) {
+                _this2.setState({
+                    'health0': data['health0'],
+                    'link0': data['link0'],
+                    'health1': data['health1'],
+                    'link1': data['link1']
+                });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
+            var link0 = this.state.link0;
+            var health0 = this.state.health0;
+            var link1 = this.state.link1;
+            var health1 = this.state.health1;
             var popover = React.createElement(
                 _reactBootstrap.Popover,
                 { id: 'modal-popover', title: 'popover' },
                 'very popover. such engagement'
             );
-            var tooltip = React.createElement(
+            var tooltip0 = React.createElement(
                 _reactBootstrap.Tooltip,
                 { id: 'modal-tooltip' },
-                React.createElement('img', { src: '../static/img/PBALogo.png', alt: 'PBA logo' })
+                React.createElement('img', { src: link0, alt: 'Pokemon1' }),
+                React.createElement(
+                    _reactBootstrap.ProgressBar,
+                    null,
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health0 * 100, label: health0 * 100 + '%', key: 1 }),
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health0 * 100, key: 2 })
+                )
+            );
+            var tooltip1 = React.createElement(
+                _reactBootstrap.Tooltip,
+                { id: 'modal-tooltip' },
+                React.createElement('img', { src: link1, alt: 'Pokemon1' }),
+                React.createElement(
+                    _reactBootstrap.ProgressBar,
+                    null,
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health1 * 100, label: health1 * 100 + '%', key: 1 }),
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health1 * 100, key: 2 })
+                )
             );
             var switchButton = null;
             var user = this.state.user;
@@ -21586,13 +21623,13 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
                                 null,
                                 React.createElement(
                                     _reactBootstrap.OverlayTrigger,
-                                    { overlay: tooltip, placement: 'top' },
-                                    React.createElement('div', { className: 'box', onClick: this.onClickSwitchOne })
+                                    { overlay: tooltip0, placement: 'left' },
+                                    React.createElement('div', { className: this.state.firstPokeball, onClick: this.onClickSwitchOne })
                                 ),
                                 React.createElement(
                                     _reactBootstrap.OverlayTrigger,
-                                    { overlay: tooltip, placement: 'top' },
-                                    React.createElement('div', { className: 'box', onClick: this.onClickSwitchTwo })
+                                    { overlay: tooltip1, placement: 'right' },
+                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchTwo })
                                 )
                             )
                         ),
@@ -21663,14 +21700,12 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
 
         _this.state = {
 
-            'maxHealth0': 'maxHealth0',
-            'link0': 'link0',
-            'maxHealth1': 'maxHealth1',
-            'link1': 'link1',
-            'opCharacter0': 'opCharacter0',
-            'ophealth0': 'ophealth0',
-            'opCharacter1': 'opCharacter1',
-            'ophealth1': 'ophealth1'
+            'character': 'character',
+            'link': 'link',
+            'health': 'health',
+            'opCharacter': 'opCharacter',
+            'opHealth': 'opHealth',
+            'opLink': 'opLink'
         };
         _this.componentDidMount = _this.componentDidMount.bind(_this);
 
@@ -21684,24 +21719,20 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
 
             _Socket.Socket.emit('updateInfo');
             // Allows moves to be dynamically updated.
-            _Socket.Socket.on('getBothPokemon', function (data) {
+            _Socket.Socket.on('updatePokemon', function (data) {
                 _this2.setState({
-                    'curHealth0': data['curHealth0'],
-                    'maxHealth0': data['maxHealth0'],
-                    'link0': data['link0'],
-                    'curHealth1': data['curHealth1'],
-                    'maxHealth1': data['maxHealth1'],
-                    'link1': data['link1']
+                    'character': data['name'],
+                    'health': data['maxHealth'],
+                    'link': data['link']
                 });
             });
 
             // Allows moves to be dynamically updated.
-            _Socket.Socket.on('getBothOpPokemon', function (data) {
+            _Socket.Socket.on('updateOpPokemon', function (data) {
                 _this2.setState({
-                    'opCharacter0': data['name0'],
-                    'health0': data['health0'],
-                    'opCharacter1': data['name1'],
-                    'health1': data['health1']
+                    'opCharacter': data['name'],
+                    'opHealth': data['health'],
+                    'opLink': data['link']
 
                 });
             });
@@ -21709,16 +21740,13 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var link0 = this.state.link0;
-            var maxHealth0 = this.state.maxHealth0;
-            var link1 = this.state.link1;
-            var maxHealth1 = this.state.maxHealth1;
+            var character = this.state.character;
+            var link = this.state.link;
+            var health = this.state.health;
 
-            var opCharacter0 = this.state.opCharacter0;
-            var health0 = this.state.health0;
-            var opCharacter1 = this.state.opCharacter1;
-            var health1 = this.state.health1;
-            console.log(link0);
+            var opCharacter = this.state.opCharacter;
+            var opHealth = this.state.opHealth;
+            var opLink = this.state.opLink;
 
             // sorry i hard coded the indexes and passed both individually.
             // Its a little wierd with the opp charaters until both users are online. 
@@ -21733,19 +21761,17 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                 React.createElement(
                     'div',
                     null,
-                    React.createElement('img', { className: 'images', src: link0 }),
+                    React.createElement('img', { className: 'images', src: link }),
                     React.createElement(
-                        _reactBootstrap.ProgressBar,
-                        null,
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: maxHealth0 * 100, label: maxHealth0 * 100 + '%', key: 1 }),
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - maxHealth0 * 100, key: 2 })
+                        'p',
+                        { id: 'pokemonInfoHeader' },
+                        character
                     ),
-                    React.createElement('img', { className: 'images', src: link1 }),
                     React.createElement(
                         _reactBootstrap.ProgressBar,
                         null,
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: maxHealth1 * 100, label: maxHealth1 * 100 + '%', key: 1 }),
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - maxHealth1 * 100, key: 2 })
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: health * 100 + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health * 100, key: 2 })
                     )
                 ),
                 React.createElement(
@@ -21756,19 +21782,17 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                 React.createElement(
                     'div',
                     null,
+                    React.createElement('img', { className: 'images', src: opLink }),
                     React.createElement(
                         'p',
                         { id: 'pokemonInfoHeader' },
-                        opCharacter0,
-                        ' : ',
-                        health0
+                        opCharacter
                     ),
                     React.createElement(
-                        'p',
-                        { id: 'pokemonInfoHeader' },
-                        opCharacter1,
-                        ' : ',
-                        health1
+                        _reactBootstrap.ProgressBar,
+                        null,
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: opHealth * 100, label: opHealth * 100 + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - opHealth * 100, key: 2 })
                     )
                 )
             );

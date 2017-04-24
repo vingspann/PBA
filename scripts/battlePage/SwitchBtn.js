@@ -7,13 +7,19 @@ import { OverlayTrigger } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
 import { Tooltip } from 'react-bootstrap';
-
+import { ProgressBar } from 'react-bootstrap';
 
 export class SwitchBtn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
              'showModal': false,
+             'firstPokeball': "box",
+             'secondPokeball': "box box2",
+             'health0' : 'health0',
+             'link0' : 'link0',
+             'health1' : 'health1',
+             'link1' : 'link1',
              'currentPokemon' : 1,
              'user' : 3
         };
@@ -27,6 +33,7 @@ export class SwitchBtn extends React.Component {
     }
 
     onClickSwitchOne(){
+
         
         if (this.state.currentPokemon == 1){
             console.log("Already active pokemon")
@@ -39,10 +46,12 @@ export class SwitchBtn extends React.Component {
             this.setState({ showModal: false });
         }
         
+
        
     }
     
      onClickSwitchTwo(){
+
         
         if (this.state.currentPokemon == 2){
             console.log("Already currentPokemon")
@@ -55,6 +64,7 @@ export class SwitchBtn extends React.Component {
             this.setState({ showModal: false });
         }
         
+
     }
     
   
@@ -73,18 +83,45 @@ export class SwitchBtn extends React.Component {
                 'user' : data['user']
             })
         });
+        Socket.emit('updateInfo')
+        // Allows moves to be dynamically updated.
+        Socket.on('getBothPokemon', (data) =>{
+            this.setState({
+                'health0': data['health0'],
+                'link0'  : data['link0'],
+                'health1': data['health1'],
+                'link1'  : data['link1'],
+            })
+        })
     }
 
 
     render() {
+        let link0 = this.state.link0;
+        let health0 = this.state.health0;
+        let link1 = this.state.link1;
+        let health1 = this.state.health1;
         const popover = (
             <Popover id="modal-popover" title="popover">
             very popover. such engagement
             </Popover>
         );
-        const tooltip = (
+        const tooltip0 = (
             <Tooltip id="modal-tooltip" >
-                <img src="../static/img/PBALogo.png" alt="PBA logo" />
+                <img src={link0} alt="Pokemon1" />
+                <ProgressBar>
+                        <ProgressBar bsStyle="success" now={health0*100} label={`${health0*100}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (health0*100)} key={2} />
+                </ProgressBar>
+            </Tooltip>
+        );
+        const tooltip1 = (
+            <Tooltip id="modal-tooltip" >
+                <img src={link1} alt="Pokemon1" />
+                <ProgressBar>
+                        <ProgressBar bsStyle="success" now={health1*100} label={`${health1*100}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (health1*100)} key={2} />
+                </ProgressBar>
             </Tooltip>
         );
         let switchButton = null;
@@ -102,8 +139,8 @@ export class SwitchBtn extends React.Component {
                     
                     <Modal.Body>
                     <div>
-                        <OverlayTrigger overlay={tooltip} placement="top"><div className='box' onClick={this.onClickSwitchOne}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip} placement="top"><div className='box' onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip0} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
                     </div>
                     </Modal.Body>
                     
