@@ -50,10 +50,10 @@ def battle():
     # sets Attack and defense to special or physical depending on move type
     if player[f].pokemon[fPoke].move[fm].damageClass == 'physical':
         attack = player[f].pokemon[fPoke].getAttack()
-        defense = player[f].pokemon[fPoke].getDefense()
+        defense = player[s].pokemon[sPoke].getDefense()
     elif player[f].pokemon[fPoke].move[fm].damageClass == 'special':
         attack = player[f].pokemon[fPoke].getSpAtk()
-        defense = player[f].pokemon[fPoke].getSpDef()
+        defense = player[s].pokemon[sPoke].getSpDef()
     
     # simple modifer for now.    
     modifier = randint(85, 100) / 100.0
@@ -73,10 +73,10 @@ def battle():
         # sets Attack and defense to special or physical depending on move type
         if player[s].pokemon[sPoke].move[sm].damageClass == 'physical':
             attack = player[s].pokemon[sPoke].getAttack()
-            defense = player[s].pokemon[sPoke].getDefense()
+            defense = player[f].pokemon[fPoke].getDefense()
         elif player[s].pokemon[sPoke].move[sm].damageClass == 'special':
             attack = player[s].pokemon[sPoke].getSpAtk()
-            defense = player[s].pokemon[sPoke].getSpDef()
+            defense = player[f].pokemon[fPoke].getSpDef()
         
         # simple modifer for now.    
         modifier = randint(85, 100) / 100.0
@@ -92,12 +92,14 @@ def battle():
         player[f].pokemon[fPoke].dealDamage(damage)
     else:
         sText = player[s].pokemon[sPoke].name + " has feinted."
+        battleSwitch(s, sPoke)
+        player[s].pokemonLeft = player[s].pokemonLeft - 1
     
     # This will be used to update YoPokemon to display health properly
-    socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].currentHp,
+    socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
         'opHealth' : player[s].pokemon[sPoke].percentHealth()
     }, room=player[f].ID)
-    socketio.emit('battleUpdate', {'curHealth' : player[s].pokemon[sPoke].currentHp,
+    socketio.emit('battleUpdate', {'curHealth' : player[s].pokemon[sPoke].percentHealth(),
         'opHealth' : player[f].pokemon[fPoke].percentHealth()
     }, room=player[s].ID)
     
@@ -108,15 +110,28 @@ def battle():
     if (player[f].pokemon[fPoke].currentHp == 0):
         fText = player[f].pokemon[fPoke].name + " has feinted."
         socketio.emit('battleLogEmit', {'text' : fText})
+        battleSwitch(f, fPoke)
+        player[f].pokemonLeft = player[f].pokemonLeft - 1
 
-    
     player[0].lockSwitch = False
     player[1].lockSwitch = False
-    # Leave this at the bottom, but you might want to add an if statement
-    # so that when the game finishes, these two lines don't keep getting called.
-    t = Timer( 20, battle)
-    t.start()
+    
+    if player[0].pokemonLeft != 0 and player[1].pokemonLeft != 0: 
+    
+        # Leave this at the bottom, but you might want to add an if statement
+        # so that when the game finishes, these two lines don't keep getting called.
+        t = Timer( 10, battle)
+        t.start()
 
+# This is a helper funtion for the battle to force a pokemon switch when they feint
+def battleSwitch(p, cp):
+    if cp == 0:
+        cp = 1
+    else:
+        cp = 0
+        
+    player[p].currentPokemon = cp
+    updatePokemon(player[p].ID)
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
@@ -149,10 +164,12 @@ def updatePokemon(ID):
         p = 0
         op = 1
         cp = player[0].currentPokemon
+        ocp = player[1].currentPokemon
     elif ID == player[1].ID:
         p = 1
         op = 0
         cp = player[1].currentPokemon
+        ocp = player[0].currentPokemon
     else: 
         return
  
@@ -163,9 +180,11 @@ def updatePokemon(ID):
         'move2' : player[p].pokemon[cp].move[1].name,
         'move3' : player[p].pokemon[cp].move[2].name,
         'move4' : player[p].pokemon[cp].move[3].name,
-        'curHealth' : player[p].pokemon[cp].currentHp,
-        'maxHealth' : player[p].pokemon[cp].maxHp,
-        'link' : player[p].pokemon[cp].spriteLink
+        'health' : player[p].pokemon[cp].percentHealth(),
+        'link' : player[p].pokemon[cp].spriteLink,
+        'opName' : player[op].pokemon[ocp].name,
+        'opLink' : player[op].pokemon[ocp].spriteLink,
+        'opHealth' : player[op].pokemon[ocp].percentHealth()
     }, room=player[p].ID)
     
     # updates the opponents info of the updated info
@@ -174,30 +193,38 @@ def updatePokemon(ID):
         'link' : player[p].pokemon[cp].spriteLink,
         'health' : player[p].pokemon[cp].percentHealth()
     }, room=player[op].ID)
-    
-def getBothPokemon(ID):
+    updateSpectator()
+def PokeballLinkHealth(ID):
     # p stands for player number for the array
-    # cp stands for current Pokemon. Saves a lot of typing
-    # op stands for other player
     if ID == player[0].ID:
         p = 0
-        op = 1
-        cp = player[0].currentPokemon
     elif ID == player[1].ID:
         p = 1
-        op = 0
-        cp = player[1].currentPokemon
     else: 
         return
- 
   # pushes both pokemon
     socketio.emit('getBothPokemon', {
         'health0' : player[p].pokemon[0].maxHp,
         'link0' : player[p].pokemon[0].spriteLink,
         'health1' : player[p].pokemon[1].maxHp,
         'link1' : player[p].pokemon[1].spriteLink
-    }, room=player[p].ID)
-   
+    }, room=player[p].ID)  
+    
+def updateSpectator():
+    cp1 = player[0].currentPokemon
+    cp2 = player[1].currentPokemon
+    socketio.emit('updateSpectator', {
+        'nameP1' : player[0].pokemon[cp1].name,
+        'healthP1' : player[0].pokemon[cp1].percentHealth(),
+        'linkP1' : player[0].pokemon[cp1].spriteLink,
+        'nameP2' : player[1].pokemon[cp2].name,
+        'healthP2' : player[1].pokemon[cp2].percentHealth(),
+        'linkP2' : player[1].pokemon[cp2].spriteLink
+        
+    }, room='spectator')
+    
+
+    
 @socketio.on('CM')
 def updateCurrentMove(data):
     ID = flask.request.sid
@@ -216,7 +243,7 @@ def updateCurrentMove(data):
 def updateInfo():
     ID = flask.request.sid
     updatePokemon(ID)
-    getBothPokemon(ID)
+    PokeballLinkHealth(ID)
     
     
 @socketio.on('switch')
@@ -238,6 +265,7 @@ def switch(data):
         player[p].currentPokemon = data['currentPokemon'] - 1
             
         updatePokemon(ID)
+        PokeballLinkHealth(ID)
     
 
 @app.route('/')
@@ -303,7 +331,9 @@ def on_connect():
         t.start()
         
     else: 
-        socketio.emit('connection', {'user' : 3})
+        flask_socketio.join_room('spectator')
+        socketio.emit('connection', {'user' : 3}, room='spectator')
+        updateSpectator()
     
 
 if __name__ == '__main__':

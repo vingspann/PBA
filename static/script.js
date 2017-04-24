@@ -21283,7 +21283,7 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(_reactFacebookLogin2.default, {
-        appId: '1981325768753022',
+        appId: '1378809085491759',
         autoLoad: false,
         fields: 'name,email,picture',
         scope: 'public_profile,euser_friends,user_actions.books',
@@ -21602,6 +21602,7 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
             var health0 = this.state.health0;
             var link1 = this.state.link1;
             var health1 = this.state.health1;
+            console.log(link0);
             var popover = React.createElement(
                 _reactBootstrap.Popover,
                 { id: 'modal-popover', title: 'popover' },
@@ -21759,8 +21760,11 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
             _Socket.Socket.on('updatePokemon', function (data) {
                 _this2.setState({
                     'character': data['name'],
-                    'health': data['maxHealth'],
-                    'link': data['link']
+                    'health': data['health'],
+                    'link': data['link'],
+                    'opCharacter': data['opName'],
+                    'opHealth': data['opHealth'],
+                    'opLink': data['opLink']
                 });
             });
 
@@ -21771,6 +21775,17 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                     'opHealth': data['health'],
                     'opLink': data['link']
 
+                });
+            });
+
+            _Socket.Socket.on('updateSpectator', function (data) {
+                _this2.setState({
+                    'health': data['healthP1'],
+                    'opHealth': data['healthP2'],
+                    'character': data['nameP1'],
+                    'opCharacter': data['nameP2'],
+                    'link': data['linkP1'],
+                    'opLink': data['linkP2']
                 });
             });
 
