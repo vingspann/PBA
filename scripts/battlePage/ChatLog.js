@@ -12,7 +12,8 @@ export class ChatLog extends React.Component {
         super(props);
         this.state = {
              value : '',
-            'messages': []
+            'messages': [],
+            'name': ''
         };
         
         this.handleChange = this.handleChange.bind(this);
@@ -39,15 +40,15 @@ export class ChatLog extends React.Component {
         element.scrollTop = element.scrollHeight;
     }
 
-
     
     handleSubmit(event){
         event.preventDefault();
         
         // Prints to the chatlog without authentication
+       
         console.log(this.state.value);
         Socket.emit('chatLogSubmit', {
-            'name' : 'test',
+            'name' : this.state.name,
             'text' : this.state.value
         });        
         this.setState({value:''});

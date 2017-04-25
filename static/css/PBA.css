@@ -87,6 +87,11 @@ body {
 
 #StadiumText {
      font-family: metroregular, Arial, sans-serif;
+     color: #5b5f66;
+}
+
+#pokemonInfoCharName{
+    font-family: pokemon-font, Arial, sans-serif;
 }
 
 #navBar {

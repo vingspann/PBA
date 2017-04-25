@@ -42,22 +42,6 @@ import { Button } from 'react-bootstrap';
     //
     // These three cases are handled in the callback function.
     FB.getLoginStatus(function(response) {
-      if(response.status === 'connected')
-      {
-        this.setState({ status: 'connected' });
-        this.setState({ name: response.authResponse.name });
-        
-        this.setState({ accessToken: response.authResponse.accessToken });
-        
-      }
-      else if(response.status === 'not_authorized')
-      {
-        this.setState({ status: 'not_authorized' });
-        this.setState({ name: response.authResponse.name });
-        
-        this.setState({ accessToken: response.authResponse.accessToken });
-
-      }
       this.statusChangeCallback(response);
     }.bind(this));
   }.bind(this);
@@ -78,6 +62,9 @@ testAPI() {
   console.log('Welcome!  Fetching your information.... ');
   FB.api('/me', function(response) {
   console.log('Successful login for: ' + response.name);
+  Socket.emit('FBInfo', {
+            'name' : String(response.name)
+        });
   document.getElementById('status').innerHTML =
     'Thanks for logging in, ' + response.name + '!';
   });
@@ -93,8 +80,6 @@ statusChangeCallback(response) {
   // for FB.getLoginStatus().
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
-    this.setState({ status: response.status });
-    this.setState({ name: response.name });
     this.testAPI();
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
@@ -130,12 +115,6 @@ fbLogoutUser() {
             });
         }
     });
-}
-
-sendFBInfo() {
-  Socket.emit('FBInfo', {
-            'name' : this.state.name
-        });
 }
 
 

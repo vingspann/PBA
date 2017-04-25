@@ -9,6 +9,7 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 player = [user(), user()]
+userList = {}
 i = 0
 # this is where the battle and turns will happen
 def battle():
@@ -296,7 +297,12 @@ def hello():
 @socketio.on('chatLogSubmit')
 def chatLogSubmit(data):
     print data
-    socketio.emit('chatLogEmit', {'name' : data['name'], 'text' : data['text']})
+    ID = flask.request.sid
+    name = 'Anon'
+    if (ID in userList):
+        name = userList[ID]
+
+    socketio.emit('chatLogEmit', {'name' : name, 'text' : data['text']})
     allow, message = oak.check(data['text'])
     if allow:
         if message == "1337":
@@ -325,7 +331,14 @@ def chatLogSubmit(data):
         else:
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
 
-
+@socketio.on('FBInfo')
+def onFBInfo(data):
+    ID = flask.request.sid
+    print "chat Id:  " + ID
+    name = data['name']
+    print "name:  " + name
+    userList[ID] = name
+    
 @socketio.on('battleLog')
 def battleLog(data):
     socketio.emit('battleLogEmit', {'text' : data['text']})
