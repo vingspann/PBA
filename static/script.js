@@ -20901,7 +20901,6 @@ var ChatLog = exports.ChatLog = function (_React$Component) {
 
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
-        _this.testAPI = _this.testAPI.bind(_this);
         _this.componentDidMount = _this.componentDidMount.bind(_this);
 
         return _this;
@@ -20930,21 +20929,12 @@ var ChatLog = exports.ChatLog = function (_React$Component) {
             element.scrollTop = element.scrollHeight;
         }
     }, {
-        key: 'testAPI',
-        value: function testAPI() {
-            console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me', function (response) {
-                console.log('Successful login for: ' + response.name);
-                this.setState({ 'name': String(response.name) });
-            });
-        }
-    }, {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
             event.preventDefault();
 
             // Prints to the chatlog without authentication
-            this.testAPI();
+
             console.log(this.state.value);
             _Socket.Socket.emit('chatLogSubmit', {
                 'name': this.state.name,
@@ -21302,7 +21292,7 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
     value: function componentDidMount() {
       window.fbAsyncInit = function () {
         FB.init({
-          appId: '1981325768753022',
+          appId: '1378809085491759',
           cookie: true, // enable cookies to allow the server to access
           // the session
           xfbml: true, // parse social plugins on this page
@@ -21321,17 +21311,6 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
         //
         // These three cases are handled in the callback function.
         FB.getLoginStatus(function (response) {
-          if (response.status === 'connected') {
-            this.setState({ status: 'connected' });
-            this.setState({ name: response.authResponse.name });
-
-            this.setState({ accessToken: response.authResponse.accessToken });
-          } else if (response.status === 'not_authorized') {
-            this.setState({ status: 'not_authorized' });
-            this.setState({ name: response.authResponse.name });
-
-            this.setState({ accessToken: response.authResponse.accessToken });
-          }
           this.statusChangeCallback(response);
         }.bind(this));
       }.bind(this);
@@ -21356,6 +21335,9 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', function (response) {
         console.log('Successful login for: ' + response.name);
+        _Socket.Socket.emit('FBInfo', {
+          'name': String(response.name)
+        });
         document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
       });
     }
@@ -21373,8 +21355,6 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
       // for FB.getLoginStatus().
       if (response.status === 'connected') {
         // Logged into your app and Facebook.
-        this.setState({ status: response.status });
-        this.setState({ name: response.name });
         this.testAPI();
       } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
@@ -21412,13 +21392,6 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
             document.location.reload();
           });
         }
-      });
-    }
-  }, {
-    key: 'sendFBInfo',
-    value: function sendFBInfo() {
-      _Socket.Socket.emit('FBInfo', {
-        'name': this.state.name
       });
     }
   }, {
@@ -21683,12 +21656,10 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
             if (this.state.currentPokemon == 1) {
                 console.log("Already active pokemon");
             } else {
-                _Socket.Socket.emit('CM', {
-                    'CM': 5,
-                    'currentPokemon': 1
-
-                });
+                _Socket.Socket.emit('switch', { 'currentPokemon': 1 });
                 this.setState({ 'currentPokemon': 1 });
+                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 1 selected for switch.' });
+                _Socket.Socket.emit('secondaryChar', {});
                 console.log('Pokemon 1 selected.');
                 this.setState({ showModal: false });
             }
@@ -21700,12 +21671,9 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
             if (this.state.currentPokemon == 2) {
                 console.log("Already currentPokemon");
             } else {
-
-                _Socket.Socket.emit('CM', {
-                    'CM': 5,
-                    'currentPokemon': 2
-
-                });
+                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 2 selected for switch.' });
+                _Socket.Socket.emit('secondaryChar', {});
+                _Socket.Socket.emit('switch', { 'currentPokemon': 2 });
                 this.setState({ 'currentPokemon': 2 });
                 console.log('Pokemon 2 selected.');
                 this.setState({ showModal: false });

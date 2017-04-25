@@ -18,7 +18,6 @@ export class ChatLog extends React.Component {
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.testAPI = this.testAPI.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -40,22 +39,13 @@ export class ChatLog extends React.Component {
         var element = document.getElementById("chatLog");
         element.scrollTop = element.scrollHeight;
     }
-    
-    testAPI() {
-        console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me', function(response) {
-            console.log('Successful login for: ' + response.name);
-            this.setState({ 'name': String(response.name) });
-        });
-    }
-
 
     
     handleSubmit(event){
         event.preventDefault();
         
         // Prints to the chatlog without authentication
-        this.testAPI();
+       
         console.log(this.state.value);
         Socket.emit('chatLogSubmit', {
             'name' : this.state.name,

@@ -38,12 +38,10 @@ export class SwitchBtn extends React.Component {
         if (this.state.currentPokemon == 1){
             console.log("Already active pokemon")
         }else {    
-            Socket.emit('CM', {
-                'CM' : 5,
-                'currentPokemon' : 1
-                
-            });
+            Socket.emit('switch', {'currentPokemon' : 1});
             this.setState({'currentPokemon' : 1});
+            Socket.emit('battleLog', {'text' : 'Pokemon 1 selected for switch.'});
+            Socket.emit('secondaryChar', {});
             console.log('Pokemon 1 selected.');
             this.setState({ showModal: false });
         }
@@ -58,12 +56,9 @@ export class SwitchBtn extends React.Component {
         if (this.state.currentPokemon == 2){
             console.log("Already currentPokemon")
         } else {
-           
-            Socket.emit('CM', {
-                'CM' : 5,
-                'currentPokemon' : 2
-                
-            });
+            Socket.emit('battleLog', {'text' : 'Pokemon 2 selected for switch.'});
+            Socket.emit('secondaryChar', {});
+            Socket.emit('switch', {'currentPokemon' : 2});
             this.setState({'currentPokemon' : 2});
             console.log('Pokemon 2 selected.');
             this.setState({ showModal: false });
