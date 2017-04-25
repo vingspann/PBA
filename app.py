@@ -39,20 +39,30 @@ def battle():
         sm = m1
         f = 1
         s = 0
-        
+    
+    # if the player chose to switch, it switches the pokemon and updates info
+    # from fPoke to the react components
+    # fturn makes it so, if they chose to switch, then they don't take an attack
     if player[f].recentMove == 5:
         battleSwitch(f, fPoke)
+        fPoke = player[f].currentPokemon
+        updatePokemon(player[f].ID)
         fTurn = False
     
     if player[s].recentMove == 5:
         battleSwitch(s, sPoke)
+        sPoke = player[s].currentPokemon
+        updatePokemon(player[s].ID)
         sTurn = False
-        
+    
+    # If they didn't switch, then they can attack
     if fTurn:
-        battleDamage(f, fPoke, fm, s, sPoke, sm)
-    # Checks to see if the pokemon has fainted or not. If not it does a normal move,
-    # else, if the pokemon faints it sets the slow pokemon's message to reflect the faint
-    if player[s].pokemon[sPoke].currentHp > 0 and sTurn:
+        # If the slow pokemon fainted, then battleDamage returns false
+        # this makes it so the slow pokemon's team can't attack
+        sTurn = battleDamage(f, fPoke, fm, s, sPoke, sm)
+    
+    # If they didn't switch and didn't faint, then they can attack
+    if sTurn:
         battleDamage(s, sPoke, sm, f, fPoke, fm)
 
     fPoke = player[f].currentPokemon
@@ -121,10 +131,12 @@ def battleDamage(p, cp, m, op, ocp, om):
     socketio.emit('battleLogEmit', {'text' : text2})
     
     if player[op].pokemon[ocp].currentHp == 0:
-        text3 = player[ocp].pokemon[ocp].name + " has fainted."
+        text3 = player[op].pokemon[ocp].name + " has fainted."
         socketio.emit('battleLogEmit', {'text' : text3})
         battleSwitch(op, ocp)
         player[op].pokemonLeft = player[op].pokemonLeft - 1
+        return False
+    return True
 
         
 # This is a helper funtion for the battle to force a pokemon switch when they faint
