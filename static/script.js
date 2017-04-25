@@ -20895,11 +20895,13 @@ var ChatLog = exports.ChatLog = function (_React$Component) {
 
         _this.state = {
             value: '',
-            'messages': []
+            'messages': [],
+            'name': ''
         };
 
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.testAPI = _this.testAPI.bind(_this);
         _this.componentDidMount = _this.componentDidMount.bind(_this);
 
         return _this;
@@ -20928,14 +20930,24 @@ var ChatLog = exports.ChatLog = function (_React$Component) {
             element.scrollTop = element.scrollHeight;
         }
     }, {
+        key: 'testAPI',
+        value: function testAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function (response) {
+                console.log('Successful login for: ' + response.name);
+                this.setState({ 'name': String(response.name) });
+            });
+        }
+    }, {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
             event.preventDefault();
 
             // Prints to the chatlog without authentication
+            this.testAPI();
             console.log(this.state.value);
             _Socket.Socket.emit('chatLogSubmit', {
-                'name': 'test',
+                'name': this.state.name,
                 'text': this.state.value
             });
             this.setState({ value: '' });
@@ -21290,7 +21302,7 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
     value: function componentDidMount() {
       window.fbAsyncInit = function () {
         FB.init({
-          appId: '1378809085491759',
+          appId: '1981325768753022',
           cookie: true, // enable cookies to allow the server to access
           // the session
           xfbml: true, // parse social plugins on this page
@@ -21570,7 +21582,7 @@ var SurrenderBtn = exports.SurrenderBtn = function (_React$Component) {
                                 null,
                                 React.createElement(
                                     _reactBootstrap.Button,
-                                    { id: 'SurrenderConfirm', bsSize: 'large', bsStyle: 'primary', onClick: this.onClickConfirmSurrender },
+                                    { id: 'SurrenderConfirm', bsSize: 'large', bsStyle: 'danger', onClick: this.onClickConfirmSurrender },
                                     'Confirm'
                                 ),
                                 React.createElement(
@@ -21904,6 +21916,7 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                     'opCharacter': data['name'],
                     'opHealth': data['health'],
                     'opLink': data['link']
+
                 });
             });
 
@@ -21937,9 +21950,6 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
             var opHealth = this.state.opHealth;
             var opLink = this.state.opLink;
 
-            health = parseFloat(health).toFixed(2);
-            opHealth = parseFloat(opHealth).toFixed(2);
-
             // sorry i hard coded the indexes and passed both individually.
             // Its a little wierd with the opp charaters until both users are online. 
             return React.createElement(
@@ -21956,13 +21966,13 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                     React.createElement('img', { className: 'images', src: link }),
                     React.createElement(
                         'p',
-                        { id: 'pokemonInfoHeader' },
+                        { id: 'pokemonInfoCharName' },
                         character
                     ),
                     React.createElement(
                         _reactBootstrap.ProgressBar,
                         null,
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: Math.floor(health * 100) + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: health * 100 + '%', key: 1 }),
                         React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health * 100, key: 2 })
                     )
                 ),
@@ -21977,13 +21987,13 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                     React.createElement('img', { className: 'images', src: opLink }),
                     React.createElement(
                         'p',
-                        { id: 'pokemonInfoHeader' },
+                        { id: 'pokemonInfoCharName' },
                         opCharacter
                     ),
                     React.createElement(
                         _reactBootstrap.ProgressBar,
                         null,
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: opHealth * 100, label: Math.floor(opHealth * 100) + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: opHealth * 100, label: opHealth * 100 + '%', key: 1 }),
                         React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - opHealth * 100, key: 2 })
                     )
                 )

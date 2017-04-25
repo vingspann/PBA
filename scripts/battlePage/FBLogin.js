@@ -23,7 +23,7 @@ import { Button } from 'react-bootstrap';
     componentDidMount() {
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '1378809085491759',
+      appId      : '1981325768753022',
       cookie     : true,  // enable cookies to allow the server to access
                         // the session
       xfbml      : true,  // parse social plugins on this page

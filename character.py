@@ -54,7 +54,7 @@ class character():
     #Called to update the Hit Point bars of Pokemon in battle, and returns the
     #value so that the HP bars can be properly updated.
     def percentHealth(self):
-        self.percent = (float(self.currentHp)/float(self.maxHp))
+        self.percent = ((self.currentHp)/(self.maxHp))
         return self.percent
     
     #Using the name given to the Pokemon object, creates an API call via HTTP GET
