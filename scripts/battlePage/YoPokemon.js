@@ -85,7 +85,7 @@ export class YoPokemon extends React.Component {
                     <img className="images" src={link}/> 
                     <p id="pokemonInfoHeader">{character}</p>
                     <ProgressBar>
-                        <ProgressBar bsStyle="success" now={health*100} label={`${health*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={health*100} label={`${Math.floor(health*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (health*100)} key={2} />
                     </ProgressBar>
                 </div>
@@ -94,7 +94,7 @@ export class YoPokemon extends React.Component {
                     <img className="images" src={opLink}/> 
                     <p id="pokemonInfoHeader">{opCharacter}</p>
                     <ProgressBar>
-                        <ProgressBar bsStyle="success" now={opHealth*100} label={`${opHealth*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={opHealth*100} label={`${Math.floor(opHealth*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (opHealth*100)} key={2} />
                     </ProgressBar>
                 </div>
