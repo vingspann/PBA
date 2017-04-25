@@ -41,7 +41,6 @@ export class YoPokemon extends React.Component {
                 'opCharacter'  : data['name'],
                 'opHealth': data['health'],
                 'opLink' : data['link']
-                
             })
         })
         
