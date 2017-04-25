@@ -111,7 +111,7 @@ def battleDamage(p, cp, m, op, ocp, om):
         attack = player[p].pokemon[cp].getAttack()
         defense = player[op].pokemon[ocp].getDefense()
     elif player[p].pokemon[cp].move[m].damageClass == 'special':
-        attack = player[p].pokemon[m].getSpAtk()
+        attack = player[p].pokemon[cp].getSpAtk()
         defense = player[op].pokemon[ocp].getSpDef()
     
     # simple modifer for now.    
