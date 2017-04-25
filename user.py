@@ -12,6 +12,7 @@ class user():
         self.ID = None
         self.lockSwitch = False
         self.pokemonLeft = 2
+        self.lockMove = False
     #for i in range(2):
      #   pokemon.append(character())
         
