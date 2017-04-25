@@ -21055,6 +21055,7 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
         _this.onClick3 = _this.onClick3.bind(_this);
         _this.onClick4 = _this.onClick4.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.confirmMove = _this.confirmMove.bind(_this);
         _this.componentDidMount = _this.componentDidMount.bind(_this);
 
         return _this;
@@ -21095,6 +21096,12 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
             console.log('Button 4 clicked.');
             this.setState({ 'CM': 3 });
             _Socket.Socket.emit('CM', { 'CM': this.state.CM });
+        }
+    }, {
+        key: 'confirmMove',
+        value: function confirmMove() {
+            console.log('Confirm move button clicked.');
+            _Socket.Socket.emit('confirmMove', {});
         }
     }, {
         key: 'componentDidMount',
@@ -21194,6 +21201,11 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
                                     _reactBootstrap.Button,
                                     { id: 'move4', bsStyle: b4, onClick: this.onClick4 },
                                     m4
+                                ),
+                                React.createElement(
+                                    _reactBootstrap.Button,
+                                    { id: 'confirm', bsStyle: 'default', onClick: this.confirmMove },
+                                    'Confirm Move'
                                 )
                             )
                         )
