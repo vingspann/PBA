@@ -26,7 +26,7 @@ def battle():
     fText2 = ''
     sText = ''
     sText2 = ''
-    feint = False
+    faint = False
     #fast pokemon and slow pokemon
     fPoke = None
     sPoke = None
@@ -73,8 +73,8 @@ def battle():
     fText2 = player[s].pokemon[sPoke].name + " took " + str(damage) + " damage."
     
     player[s].pokemon[sPoke].dealDamage(damage)
-    # Checks to see if the pokemon has feinted or not. If not it does a normal move,
-    # else, if the pokemon feints it sets the slow pokemon's message to reflect the feint
+    # Checks to see if the pokemon has fainted or not. If not it does a normal move,
+    # else, if the pokemon faints it sets the slow pokemon's message to reflect the faint
     if player[s].pokemon[sPoke].currentHp > 0:
         # sets Attack and defense to special or physical depending on move type
         if player[s].pokemon[sPoke].move[sm].damageClass == 'physical':
@@ -97,14 +97,14 @@ def battle():
         
         # text for the fast pokemon's emit
         sText = player[s].pokemon[sPoke].name + " used " + player[s].pokemon[sPoke].move[sm].name + "."
-        sText2 = player[f].pokemon[fPoke].name + " took " + str(damage) + "damage."
+        sText2 = player[f].pokemon[fPoke].name + " took " + str(damage) + " damage."
         
         player[f].pokemon[fPoke].dealDamage(damage)
     else:
-        sText = player[s].pokemon[sPoke].name + " has feinted."
+        sText = player[s].pokemon[sPoke].name + " has fainted."
         battleSwitch(s, sPoke)
         player[s].pokemonLeft = player[s].pokemonLeft - 1
-        feint = True
+        faint = True
     
     # This will be used to update YoPokemon to display health properly
     socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
@@ -118,12 +118,12 @@ def battle():
     socketio.emit('battleLogEmit', {'text' : fText})
     socketio.emit('battleLogEmit', {'text' : fText2})
     socketio.emit('battleLogEmit', {'text' : sText})
-    # this stops an empty emit from happening if the slow pokemon feints
-    if not feint:
+    # this stops an empty emit from happening if the slow pokemon faints
+    if not faint:
         socketio.emit('battleLogEmit', {'text' : sText2})
     
     if (player[f].pokemon[fPoke].currentHp == 0):
-        fText = player[f].pokemon[fPoke].name + " has feinted."
+        fText = player[f].pokemon[fPoke].name + " has fainted."
         socketio.emit('battleLogEmit', {'text' : fText})
         battleSwitch(f, fPoke)
         player[f].pokemonLeft = player[f].pokemonLeft - 1
@@ -138,7 +138,7 @@ def battle():
         t = Timer( 10, battle)
         t.start()
 
-# This is a helper funtion for the battle to force a pokemon switch when they feint
+# This is a helper funtion for the battle to force a pokemon switch when they faint
 def battleSwitch(p, cp):
     if cp == 0:
         cp = 1
