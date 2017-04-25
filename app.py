@@ -60,10 +60,8 @@ def battle():
     # simple modifer for now.    
     modifier = randint(85, 100) / 100.0
     
-    # this is to clean up the line below
-    levelMod = ((2 * 52) / 5) + 2
     # damage calculation
-    damage = (((levelMod * player[f].pokemon[fPoke].move[fm].attackPower * (attack/defense))/ 50) + 2) * modifier   
+    damage = (((22.0 * player[f].pokemon[fPoke].move[fm].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier   
     
     # This keeps damages to whole numbers
     damage = int(damage)
@@ -87,10 +85,8 @@ def battle():
         # simple modifer for now.    
         modifier = randint(85, 100) / 100.0
         
-        # this is to clean up the line below
-        levelMod = ((2 * 52) / 5) + 2
         # damage calculation
-        damage = (((levelMod * player[s].pokemon[sPoke].move[sm].attackPower * (attack/defense))/ 50) + 2) * modifier   
+        damage = (((22.0 * player[s].pokemon[sPoke].move[sm].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier   
         
         # This keeps damages to whole numbers
         damage = int(damage)
@@ -137,7 +133,27 @@ def battle():
         # so that when the game finishes, these two lines don't keep getting called.
         t = Timer( 10, battle)
         t.start()
-
+        
+    else:
+        
+        # Defaults to player 0 winner. Changes if they lost
+        # w stands for winner, l stands for loser
+        w = 0
+        l = 1
+        if player[0].pokemonLeft:
+            w = 1
+            l = 0
+            
+        wMsg = "Congratulations! You won with " + player[w].pokemon[0] + " and " + player[w].pokemon[1] + "."
+        lMsg = "Oh no! You lost with " + player[l].pokemon[0] + " and " + player[l].pokemon[1] + "."
+        specMsg = "Player " + str(w) + " won with their team of " + player[w].pokemon[0] + " and " + player[w].pokemon[1] + "."
+        
+        print "win emits"
+        # Emits a seperate msg to each player, and all spectators get the same message
+        socketio.emit('battleLogEmit', {'text' : wMsg}, room=player[w].ID)
+        socketio.emit('battleLogEmit', {'text' : lMsg}, room=player[l].ID)
+        socketio.emit('battleLogEmit', {'text' : specMsg}, room='spectator')
+        
 # This is a helper funtion for the battle to force a pokemon switch when they faint
 def battleSwitch(p, cp):
     if cp == 0:
