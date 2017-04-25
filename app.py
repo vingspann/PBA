@@ -13,23 +13,15 @@ i = 0
 # this is where the battle and turns will happen
 def battle():
     
-    # This ensures they can't switch pokemon until the lock is lifted at end of function
-    player[0].lockSwitch = True
-    player[1].lockSwitch = True
-    
     p1 = player[0].currentPokemon
     p2 = player[1].currentPokemon
     m1 = player[0].recentMove
     m2 = player[1].recentMove
-    fText = ''
-    fText2 = ''
-    sText = ''
-    sText2 = ''
-    faint = False
     #fast pokemon and slow pokemon
     fPoke = None
     sPoke = None
-    
+    fTurn = True
+    sTurn = True
     # This is needed to remember who the pokemon belong to
     f = 0
     s = 1
@@ -48,58 +40,23 @@ def battle():
         f = 1
         s = 0
         
-    # sets Attack and defense to special or physical depending on move type
-    if player[f].pokemon[fPoke].move[fm].damageClass == 'physical':
-        attack = player[f].pokemon[fPoke].getAttack()
-        defense = player[s].pokemon[sPoke].getDefense()
-    elif player[f].pokemon[fPoke].move[fm].damageClass == 'special':
-        attack = player[f].pokemon[fPoke].getSpAtk()
-        defense = player[s].pokemon[sPoke].getSpDef()
+    if player[f].recentMove == 5:
+        battleSwitch(f, fPoke)
+        fTurn = False
     
-    # simple modifer for now.    
-    modifier = randint(85, 100) / 100.0
-    
-    # damage calculation
-    damage = (((22.0 * player[f].pokemon[fPoke].move[fm].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier   
-    
-    # This keeps damages to whole numbers
-    damage = int(damage)
-    
-    # text for the fast pokemon's emit
-    fText = player[f].pokemon[fPoke].name + " used " + player[f].pokemon[fPoke].move[fm].name + "."
-    fText2 = player[s].pokemon[sPoke].name + " took " + str(damage) + " damage."
-    
-    player[s].pokemon[sPoke].dealDamage(damage)
+    if player[s].recentMove == 5:
+        battleSwitch(s, sPoke)
+        sTurn = False
+        
+    if fTurn:
+        battleDamage(sm, fm, sPoke, f, fPoke, s)
     # Checks to see if the pokemon has fainted or not. If not it does a normal move,
     # else, if the pokemon faints it sets the slow pokemon's message to reflect the faint
-    if player[s].pokemon[sPoke].currentHp > 0:
-        # sets Attack and defense to special or physical depending on move type
-        if player[s].pokemon[sPoke].move[sm].damageClass == 'physical':
-            attack = player[s].pokemon[sPoke].getAttack()
-            defense = player[f].pokemon[fPoke].getDefense()
-        elif player[s].pokemon[sPoke].move[sm].damageClass == 'special':
-            attack = player[s].pokemon[sPoke].getSpAtk()
-            defense = player[f].pokemon[fPoke].getSpDef()
-        
-        # simple modifer for now.    
-        modifier = randint(85, 100) / 100.0
-        
-        # damage calculation
-        damage = (((22.0 * player[s].pokemon[sPoke].move[sm].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier   
-        
-        # This keeps damages to whole numbers
-        damage = int(damage)
-        
-        # text for the fast pokemon's emit
-        sText = player[s].pokemon[sPoke].name + " used " + player[s].pokemon[sPoke].move[sm].name + "."
-        sText2 = player[f].pokemon[fPoke].name + " took " + str(damage) + " damage."
-        
-        player[f].pokemon[fPoke].dealDamage(damage)
-    else:
-        sText = player[s].pokemon[sPoke].name + " has fainted."
-        battleSwitch(s, sPoke)
-        player[s].pokemonLeft = player[s].pokemonLeft - 1
-        faint = True
+    if player[s].pokemon[sPoke].currentHp > 0 and sTurn:
+        battleDamage(fm, sm, fPoke, s, sPoke, f)
+    
+    fPoke = player[f].currentPokemon
+    sPoke = player[s].currentPokemon
     
     # This will be used to update YoPokemon to display health properly
     socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
@@ -109,23 +66,9 @@ def battle():
         'opHealth' : player[f].pokemon[fPoke].percentHealth()
     }, room=player[s].ID)
     
-    
-    socketio.emit('battleLogEmit', {'text' : fText})
-    socketio.emit('battleLogEmit', {'text' : fText2})
-    socketio.emit('battleLogEmit', {'text' : sText})
-    # this stops an empty emit from happening if the slow pokemon faints
-    if not faint:
-        socketio.emit('battleLogEmit', {'text' : sText2})
-    
-    if (player[f].pokemon[fPoke].currentHp == 0):
-        fText = player[f].pokemon[fPoke].name + " has fainted."
-        socketio.emit('battleLogEmit', {'text' : fText})
-        battleSwitch(f, fPoke)
-        player[f].pokemonLeft = player[f].pokemonLeft - 1
-
-    player[0].lockSwitch = False
-    player[1].lockSwitch = False
-    
+    # Lets them select a new move for the next turn.
+    player[0].lockMove = False
+    player[1].lockMove = False
     if player[0].pokemonLeft == 0 or player[1].pokemonLeft == 0: 
     
         # Defaults to player 0 winner. Changes if they lost
@@ -145,6 +88,44 @@ def battle():
         socketio.emit('battleLogEmit', {'text' : wMsg}, room=player[w].ID)
         socketio.emit('battleLogEmit', {'text' : lMsg}, room=player[l].ID)
         socketio.emit('battleLogEmit', {'text' : specMsg}, room='spectator')
+        
+# Helper function to make battle function less repetative
+def battleDamage(p, cp, m, op, ocp, om):
+    # p = player, cp = p's current pokemon, m = p's recent move
+    # op = other player, ocp = other's current pokemon, om = op's recent move
+    
+    # sets Attack and defense to special or physical depending on move type
+    if player[p].pokemon[cp].move[m].damageClass == 'physical':
+        attack = player[p].pokemon[cp].getAttack()
+        defense = player[op].pokemon[ocp].getDefense()
+    elif player[p].pokemon[cp].move[m].damageClass == 'special':
+        attack = player[p].pokemon[m].getSpAtk()
+        defense = player[op].pokemon[ocp].getSpDef()
+    
+    # simple modifer for now.    
+    modifier = randint(85, 100) / 100.0
+    
+    # damage calculation
+    damage = (((22.0 * player[p].pokemon[cp].move[m].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier
+    
+    # This keeps damages to whole numbers
+    damage = int(damage)
+    
+    # text for the fast pokemon's emit
+    text = player[p].pokemon[cp].name + " used " + player[p].pokemon[cp].move[m].name + "."
+    text2 = player[op].pokemon[ocp].name + " took " + str(damage) + " damage."
+    
+    player[op].pokemon[ocp].dealDamage(damage)
+    
+    socketio.emit('battleLogEmit', {'text' : text})
+    socketio.emit('battleLogEmit', {'text' : text2})
+    
+    if player[op].pokemon[ocp].curHealth == 0:
+        text3 = player[ocp].pokemon[ocp].name + " has fainted."
+        socketio.emit('battleLogEmit', {'text' : text3})
+        battleSwitch(op, ocp)
+        player[op].pokemonLeft = player[op].pokemonLeft - 1
+
         
 # This is a helper funtion for the battle to force a pokemon switch when they faint
 def battleSwitch(p, cp):
@@ -220,6 +201,7 @@ def updatePokemon(ID):
     i = i + 1
 
     updateSpectator()
+    
 def PokeballLinkHealth(ID):
     # p stands for player number for the array
     if ID == player[0].ID:
@@ -253,6 +235,7 @@ def updateSpectator():
     
 @socketio.on('CM')
 def updateCurrentMove(data):
+    
     ID = flask.request.sid
     
     if ID == player[0].ID:
@@ -262,37 +245,23 @@ def updateCurrentMove(data):
     else: 
         return
     
-    player[p].recentMove = data['CM'];
-
-
+    if not player[p].lockMove:
+    
+        player[p].recentMove = data['CM']
+        # Locks their move if they choose to switch pokemon
+        if data['CM'] == 5:
+            player[p].lockMove = True
+            # Sets their current pokemon to the new pokemon. This is needed for
+            # the battle function
+            player[p].switchPokemon = data['currentPokemon'] - 1
+        if player[0].lockMove and player[1].lockMove:
+            battle()
+        
 @socketio.on('updateInfo')
 def updateInfo():
     ID = flask.request.sid
     updatePokemon(ID)
     PokeballLinkHealth(ID)
-    
-    
-@socketio.on('switch')
-def switch(data):
-    ID = flask.request.sid
-    
-    if ID == player[0].ID:
-        p = 0
-    elif ID == player[1].ID:
-        p = 1
-    else: 
-        return
-    
-    # If they are not locked, they can switch pokemon
-    if not player[p].lockSwitch:
-    
-        # The pokemon numebrs come in starting at 1. So, it's needed to subtract 1 to get it 
-        # to be proper array indexs 
-        player[p].currentPokemon = data['currentPokemon'] - 1
-            
-        updatePokemon(ID)
-        PokeballLinkHealth(ID)
-    
 
 @app.route('/')
 def hello():
@@ -350,11 +319,6 @@ def on_connect():
         socketio.emit('connection', {'user' : 2}, room=clientId)
         print "user 2 sid: " + clientId
         player[1].ID = clientId
-        
-        # This makes it so that there is a timer before the battle starts.
-        # This stops an attack from happening as soon as both people log in.
-        t = Timer(20, battle)
-        t.start()
         
     else: 
         flask_socketio.join_room('spectator')
