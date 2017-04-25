@@ -10,8 +10,9 @@ class user():
         self.currentPokemon = 0
         self.recentMove = 0
         self.ID = None
-        self.lockSwitch = False
         self.pokemonLeft = 2
+        self.lockMove = False
+        self.switchPokemon = 0
     #for i in range(2):
      #   pokemon.append(character())
         

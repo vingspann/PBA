@@ -21113,7 +21113,7 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
         key: 'confirmMove',
         value: function confirmMove() {
             console.log('Confirm move button clicked.');
-            _Socket.Socket.emit('confirmMove', {});
+            _Socket.Socket.emit('confirmMove');
         }
     }, {
         key: 'componentDidMount',
@@ -21683,10 +21683,12 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
             if (this.state.currentPokemon == 1) {
                 console.log("Already active pokemon");
             } else {
-                _Socket.Socket.emit('switch', { 'currentPokemon': 1 });
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 1
+
+                });
                 this.setState({ 'currentPokemon': 1 });
-                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 1 selected for switch.' });
-                _Socket.Socket.emit('secondaryChar', {});
                 console.log('Pokemon 1 selected.');
                 this.setState({ showModal: false });
             }
@@ -21698,9 +21700,12 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
             if (this.state.currentPokemon == 2) {
                 console.log("Already currentPokemon");
             } else {
-                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 2 selected for switch.' });
-                _Socket.Socket.emit('secondaryChar', {});
-                _Socket.Socket.emit('switch', { 'currentPokemon': 2 });
+
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 2
+
+                });
                 this.setState({ 'currentPokemon': 2 });
                 console.log('Pokemon 2 selected.');
                 this.setState({ showModal: false });
