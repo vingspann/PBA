@@ -137,7 +137,11 @@ export class CmdBtn extends React.Component {
             </form>;
         } else if (user == 3){
                 // Just add in html elements like the above. Don't forget a semi colon.
-                moveArea = 'You are spectating';
+                
+                moveArea =
+                <div id='nameLog'>
+                    You are spectating
+                </div>
         };
       
         
