@@ -1,6 +1,5 @@
 import os, flask, flask_socketio, time
 from random import randint
-from threading import Timer
 from chatBot import bot
 from user import user
 oak = bot()
@@ -127,15 +126,8 @@ def battle():
     player[0].lockSwitch = False
     player[1].lockSwitch = False
     
-    if player[0].pokemonLeft != 0 and player[1].pokemonLeft != 0: 
+    if player[0].pokemonLeft == 0 or player[1].pokemonLeft == 0: 
     
-        # Leave this at the bottom, but you might want to add an if statement
-        # so that when the game finishes, these two lines don't keep getting called.
-        t = Timer( 10, battle)
-        t.start()
-        
-    else:
-        
         # Defaults to player 0 winner. Changes if they lost
         # w stands for winner, l stands for loser
         w = 0
