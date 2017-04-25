@@ -144,9 +144,9 @@ def battle():
             w = 1
             l = 0
             
-        wMsg = "Congratulations! You won with " + player[w].pokemon[0] + " and " + player[w].pokemon[1] + "."
-        lMsg = "Oh no! You lost with " + player[l].pokemon[0] + " and " + player[l].pokemon[1] + "."
-        specMsg = "Player " + str(w) + " won with their team of " + player[w].pokemon[0] + " and " + player[w].pokemon[1] + "."
+        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
+        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + " and " + player[l].pokemon[1].name + "."
+        specMsg = "Player " + str(w) + " won with their team of " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
         
         print "win emits"
         # Emits a seperate msg to each player, and all spectators get the same message
