@@ -41,7 +41,6 @@ export class YoPokemon extends React.Component {
                 'opCharacter'  : data['name'],
                 'opHealth': data['health'],
                 'opLink' : data['link']
-                
             })
         })
         
@@ -67,12 +66,14 @@ export class YoPokemon extends React.Component {
     render() {
         let character = this.state.character;
         let link = this.state.link;
-        let health = this.state.health;
+        var health = this.state.health;
                
         let opCharacter = this.state.opCharacter;
-        let opHealth = this.state.opHealth;
+        var opHealth = this.state.opHealth;
         let opLink = this.state.opLink;
-                
+        
+        health = parseFloat(health).toFixed(2);
+        opHealth = parseFloat(opHealth).toFixed(2);
             
         // sorry i hard coded the indexes and passed both individually.
         // Its a little wierd with the opp charaters until both users are online. 
@@ -82,18 +83,18 @@ export class YoPokemon extends React.Component {
                 <h3 id="pokemonInfoHeader">Pokemon</h3>
                 <div>
                     <img className="images" src={link}/> 
-                    <p id="pokemonInfoCharName">{character}</p>
+                    <p id="pokemonInfoHeader">{character}</p>
                     <ProgressBar>
-                        <ProgressBar bsStyle="success" now={health*100} label={`${health*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={health*100} label={`${Math.floor(health*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (health*100)} key={2} />
                     </ProgressBar>
                 </div>
                 <h3 id="pokemonInfoHeader">Opponent Pokemon</h3>
                 <div>
                     <img className="images" src={opLink}/> 
-                    <p id="pokemonInfoCharName">{opCharacter}</p>
+                    <p id="pokemonInfoHeader">{opCharacter}</p>
                     <ProgressBar>
-                        <ProgressBar bsStyle="success" now={opHealth*100} label={`${opHealth*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={opHealth*100} label={`${Math.floor(opHealth*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (opHealth*100)} key={2} />
                     </ProgressBar>
                 </div>

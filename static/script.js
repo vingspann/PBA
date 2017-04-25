@@ -21656,10 +21656,12 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
             if (this.state.currentPokemon == 1) {
                 console.log("Already active pokemon");
             } else {
-                _Socket.Socket.emit('switch', { 'currentPokemon': 1 });
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 1
+
+                });
                 this.setState({ 'currentPokemon': 1 });
-                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 1 selected for switch.' });
-                _Socket.Socket.emit('secondaryChar', {});
                 console.log('Pokemon 1 selected.');
                 this.setState({ showModal: false });
             }
@@ -21671,9 +21673,12 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
             if (this.state.currentPokemon == 2) {
                 console.log("Already currentPokemon");
             } else {
-                _Socket.Socket.emit('battleLog', { 'text': 'Pokemon 2 selected for switch.' });
-                _Socket.Socket.emit('secondaryChar', {});
-                _Socket.Socket.emit('switch', { 'currentPokemon': 2 });
+
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 2
+
+                });
                 this.setState({ 'currentPokemon': 2 });
                 console.log('Pokemon 2 selected.');
                 this.setState({ showModal: false });
@@ -21889,7 +21894,6 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                     'opCharacter': data['name'],
                     'opHealth': data['health'],
                     'opLink': data['link']
-
                 });
             });
 
@@ -21923,6 +21927,9 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
             var opHealth = this.state.opHealth;
             var opLink = this.state.opLink;
 
+            health = parseFloat(health).toFixed(2);
+            opHealth = parseFloat(opHealth).toFixed(2);
+
             // sorry i hard coded the indexes and passed both individually.
             // Its a little wierd with the opp charaters until both users are online. 
             return React.createElement(
@@ -21939,13 +21946,13 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                     React.createElement('img', { className: 'images', src: link }),
                     React.createElement(
                         'p',
-                        { id: 'pokemonInfoCharName' },
+                        { id: 'pokemonInfoHeader' },
                         character
                     ),
                     React.createElement(
                         _reactBootstrap.ProgressBar,
                         null,
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: health * 100 + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: Math.floor(health * 100) + '%', key: 1 }),
                         React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health * 100, key: 2 })
                     )
                 ),
@@ -21960,13 +21967,13 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                     React.createElement('img', { className: 'images', src: opLink }),
                     React.createElement(
                         'p',
-                        { id: 'pokemonInfoCharName' },
+                        { id: 'pokemonInfoHeader' },
                         opCharacter
                     ),
                     React.createElement(
                         _reactBootstrap.ProgressBar,
                         null,
-                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: opHealth * 100, label: opHealth * 100 + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: opHealth * 100, label: Math.floor(opHealth * 100) + '%', key: 1 }),
                         React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - opHealth * 100, key: 2 })
                     )
                 )
