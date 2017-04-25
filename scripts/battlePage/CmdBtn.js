@@ -24,6 +24,7 @@ export class CmdBtn extends React.Component {
         this.onClick3 = this.onClick3.bind(this);
         this.onClick4 = this.onClick4.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.confirmMove = this.confirmMove.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -58,6 +59,11 @@ export class CmdBtn extends React.Component {
         console.log('Button 4 clicked.')
         this.setState({'CM' : 3});
         Socket.emit('CM', {'CM' : this.state.CM});
+    }
+    
+    confirmMove() {
+        console.log('Confirm move button clicked.')
+        Socket.emit('confirmMove', {});
     }
 
     componentDidMount(){
@@ -131,13 +137,18 @@ export class CmdBtn extends React.Component {
                             <Button id='move2' bsStyle={b2} onClick={this.onClick2}>{m2}</Button>
                             <Button id='move3' bsStyle={b3} onClick={this.onClick3}>{m3}</Button>
                             <Button id='move4' bsStyle={b4} onClick={this.onClick4}>{m4}</Button>
+                            <Button id='confirm' bsStyle='default' onClick={this.confirmMove}>Confirm Move</Button>
                         </ButtonToolbar>
                     </InputGroup>
                 </FormGroup>
             </form>;
         } else if (user == 3){
                 // Just add in html elements like the above. Don't forget a semi colon.
-                moveArea = 'You are spectating';
+                
+                moveArea =
+                <div id='nameLog'>
+                    You are spectating
+                </div>;
         };
       
         
