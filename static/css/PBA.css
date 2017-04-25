@@ -189,14 +189,15 @@ body {
 
 #HealthLog {
     font-family: pokemon-font, Arial, sans-serif;
-    height: 20%;
-    flex-grow: 1;
     justify-content: center;
     margin: 10px;
     border-radius: 5px;
     background: gray;
-    
+    overflow-y: scroll;
+    background-color: gray;
+     
 }
+
 #opHealthLog {
     font-family: pokemon-font, Arial, sans-serif;
     flex-grow: 1;
