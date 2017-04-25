@@ -10,7 +10,7 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 player = [user(), user()]
-
+i = 0
 # this is where the battle and turns will happen
 def battle():
     
@@ -172,6 +172,7 @@ def setPokemon():
     
 # Helper function used by seperate socket Io calls
 def updatePokemon(ID):
+    global i 
     # p stands for player number for the array
     # cp stands for current Pokemon. Saves a lot of typing
     # op stands for other player
@@ -201,13 +202,15 @@ def updatePokemon(ID):
         'opLink' : player[op].pokemon[ocp].spriteLink,
         'opHealth' : player[op].pokemon[ocp].percentHealth()
     }, room=player[p].ID)
-    
-    # updates the opponents info of the updated info
-    socketio.emit('updateOpPokemon', {
-        'name' : player[p].pokemon[cp].name,
-        'link' : player[p].pokemon[cp].spriteLink,
-        'health' : player[p].pokemon[cp].percentHealth()
-    }, room=player[op].ID)
+    if(i >3):
+        # updates the opponents info of the updated info
+        socketio.emit('updateOpPokemon', {
+            'name' : player[p].pokemon[cp].name,
+            'link' : player[p].pokemon[cp].spriteLink,
+            'health' : player[p].pokemon[cp].percentHealth()
+        }, room=player[op].ID)
+    i = i + 1
+
     updateSpectator()
 def PokeballLinkHealth(ID):
     # p stands for player number for the array
