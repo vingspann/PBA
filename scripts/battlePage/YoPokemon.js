@@ -78,7 +78,7 @@ export class YoPokemon extends React.Component {
         // sorry i hard coded the indexes and passed both individually.
         // Its a little wierd with the opp charaters until both users are online. 
         return (
-            <div>
+            <div id = 'HealthLog'>
             
                 <h3 id="pokemonInfoHeader">Pokemon</h3>
                 <div>
