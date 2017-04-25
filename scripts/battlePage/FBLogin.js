@@ -1,6 +1,5 @@
 import React from 'react';
 import { Socket } from './Socket';
-import FacebookLogin from 'react-facebook-login';
 import { Button } from 'react-bootstrap';
 
  export class FBLogin extends React.Component {
@@ -11,8 +10,8 @@ import { Button } from 'react-bootstrap';
           'status': '',
           'name': '',
           'btnText': 'Facebook Login',
-          'localResponse': ''
-        }
+          'accessToken': ''
+        };
         
         this.handleClick = this.handleClick.bind(this);
       this.checkLoginState = this.checkLoginState.bind(this);
@@ -24,7 +23,7 @@ import { Button } from 'react-bootstrap';
     componentDidMount() {
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '1981325768753022',
+      appId      : '1378809085491759',
       cookie     : true,  // enable cookies to allow the server to access
                         // the session
       xfbml      : true,  // parse social plugins on this page
@@ -43,6 +42,22 @@ import { Button } from 'react-bootstrap';
     //
     // These three cases are handled in the callback function.
     FB.getLoginStatus(function(response) {
+      if(response.status === 'connected')
+      {
+        this.setState({ status: 'connected' });
+        this.setState({ name: response.authResponse.name });
+        
+        this.setState({ accessToken: response.authResponse.accessToken });
+        
+      }
+      else if(response.status === 'not_authorized')
+      {
+        this.setState({ status: 'not_authorized' });
+        this.setState({ name: response.authResponse.name });
+        
+        this.setState({ accessToken: response.authResponse.accessToken });
+
+      }
       this.statusChangeCallback(response);
     }.bind(this));
   }.bind(this);
@@ -99,21 +114,12 @@ statusChangeCallback(response) {
 checkLoginState() {
   FB.getLoginStatus(function(response) {
     this.statusChangeCallback(response);
-    this.setState({ localResponse: response});
   }.bind(this));
 }
 
 handleClick() {
-  if(this.state.localResponse.status === 'connected')
-  {
-    this.fbLogoutUser;
-    this.setState({ btnText: 'Facebook Login'});
-  }
-  else{
-    FB.login(this.checkLoginState());
-    this.setState({ btnText: 'Facebook Logout'});
-  }
   
+    FB.login(this.checkLoginState());
 }
 
 fbLogoutUser() {
