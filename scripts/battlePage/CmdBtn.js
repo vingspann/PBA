@@ -36,7 +36,6 @@ export class CmdBtn extends React.Component {
     }
  
     onClick1(){
-        Socket.emit('battleLog', {'text' : this.state.move1});
         Socket.emit('CM', {'CM' : this.state.CM});
         this.setState({'CM' : 0});
         console.log(this.state.CM);
@@ -46,21 +45,18 @@ export class CmdBtn extends React.Component {
     onClick2(){
         console.log('Button 2 clicked.')
         this.setState({'CM' : 1});
-        Socket.emit('battleLog', {'text' : this.state.move2});
         Socket.emit('CM', {'CM' : this.state.CM});
     }
     
     onClick3(){
         console.log('Button 3 clicked.')
         this.setState({'CM' : 2});
-        Socket.emit('battleLog', {'text' : this.state.move3});
         Socket.emit('CM', {'CM' : this.state.CM});
     }
     
     onClick4(){
         console.log('Button 4 clicked.')
         this.setState({'CM' : 3});
-        Socket.emit('battleLog', {'text' : this.state.move4});
         Socket.emit('CM', {'CM' : this.state.CM});
     }
 
@@ -141,7 +137,11 @@ export class CmdBtn extends React.Component {
             </form>;
         } else if (user == 3){
                 // Just add in html elements like the above. Don't forget a semi colon.
-                moveArea = 'You are spectating';
+                
+                moveArea =
+                <div id='nameLog'>
+                    You are spectating
+                </div>;
         };
       
         

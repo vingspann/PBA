@@ -10,7 +10,7 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 player = [user(), user()]
-
+i = 0
 # this is where the battle and turns will happen
 def battle():
     
@@ -23,8 +23,10 @@ def battle():
     m1 = player[0].recentMove
     m2 = player[1].recentMove
     fText = ''
+    fText2 = ''
     sText = ''
-    
+    sText2 = ''
+    faint = False
     #fast pokemon and slow pokemon
     fPoke = None
     sPoke = None
@@ -58,17 +60,19 @@ def battle():
     # simple modifer for now.    
     modifier = randint(85, 100) / 100.0
     
-    # this is to clean up the line below
-    levelMod = ((2 * 52) / 5) + 2
     # damage calculation
-    damage = (((levelMod * player[f].pokemon[fPoke].move[fm].attackPower * (attack/defense))/ 50) + 2) * modifier   
+    damage = (((22.0 * player[f].pokemon[fPoke].move[fm].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier   
+    
+    # This keeps damages to whole numbers
+    damage = int(damage)
     
     # text for the fast pokemon's emit
-    fText = player[f].pokemon[fPoke].name + " dealt " + str(damage) + " damage to " + player[s].pokemon[sPoke].name + "."
+    fText = player[f].pokemon[fPoke].name + " used " + player[f].pokemon[fPoke].move[fm].name + "."
+    fText2 = player[s].pokemon[sPoke].name + " took " + str(damage) + " damage."
     
     player[s].pokemon[sPoke].dealDamage(damage)
-    # Checks to see if the pokemon has feinted or not. If not it does a normal move,
-    # else, if the pokemon feints it sets the slow pokemon's message to reflect the feint
+    # Checks to see if the pokemon has fainted or not. If not it does a normal move,
+    # else, if the pokemon faints it sets the slow pokemon's message to reflect the faint
     if player[s].pokemon[sPoke].currentHp > 0:
         # sets Attack and defense to special or physical depending on move type
         if player[s].pokemon[sPoke].move[sm].damageClass == 'physical':
@@ -81,19 +85,22 @@ def battle():
         # simple modifer for now.    
         modifier = randint(85, 100) / 100.0
         
-        # this is to clean up the line below
-        levelMod = ((2 * 52) / 5) + 2
         # damage calculation
-        damage = (((levelMod * player[s].pokemon[sPoke].move[sm].attackPower * (attack/defense))/ 50) + 2) * modifier   
+        damage = (((22.0 * player[s].pokemon[sPoke].move[sm].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier   
+        
+        # This keeps damages to whole numbers
+        damage = int(damage)
         
         # text for the fast pokemon's emit
-        sText = player[s].pokemon[sPoke].name + " dealt " + str(damage) + " damage to " + player[f].pokemon[fPoke].name + "."
+        sText = player[s].pokemon[sPoke].name + " used " + player[s].pokemon[sPoke].move[sm].name + "."
+        sText2 = player[f].pokemon[fPoke].name + " took " + str(damage) + " damage."
         
         player[f].pokemon[fPoke].dealDamage(damage)
     else:
-        sText = player[s].pokemon[sPoke].name + " has feinted."
+        sText = player[s].pokemon[sPoke].name + " has fainted."
         battleSwitch(s, sPoke)
         player[s].pokemonLeft = player[s].pokemonLeft - 1
+        faint = True
     
     # This will be used to update YoPokemon to display health properly
     socketio.emit('battleUpdate', {'curHealth' : player[f].pokemon[fPoke].percentHealth(),
@@ -105,10 +112,14 @@ def battle():
     
     
     socketio.emit('battleLogEmit', {'text' : fText})
+    socketio.emit('battleLogEmit', {'text' : fText2})
     socketio.emit('battleLogEmit', {'text' : sText})
+    # this stops an empty emit from happening if the slow pokemon faints
+    if not faint:
+        socketio.emit('battleLogEmit', {'text' : sText2})
     
     if (player[f].pokemon[fPoke].currentHp == 0):
-        fText = player[f].pokemon[fPoke].name + " has feinted."
+        fText = player[f].pokemon[fPoke].name + " has fainted."
         socketio.emit('battleLogEmit', {'text' : fText})
         battleSwitch(f, fPoke)
         player[f].pokemonLeft = player[f].pokemonLeft - 1
@@ -122,8 +133,28 @@ def battle():
         # so that when the game finishes, these two lines don't keep getting called.
         t = Timer( 10, battle)
         t.start()
-
-# This is a helper funtion for the battle to force a pokemon switch when they feint
+        
+    else:
+        
+        # Defaults to player 0 winner. Changes if they lost
+        # w stands for winner, l stands for loser
+        w = 0
+        l = 1
+        if player[0].pokemonLeft == 0:
+            w = 1
+            l = 0
+            
+        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
+        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + " and " + player[l].pokemon[1].name + "."
+        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
+        
+        print "win emits"
+        # Emits a seperate msg to each player, and all spectators get the same message
+        socketio.emit('battleLogEmit', {'text' : wMsg}, room=player[w].ID)
+        socketio.emit('battleLogEmit', {'text' : lMsg}, room=player[l].ID)
+        socketio.emit('battleLogEmit', {'text' : specMsg}, room='spectator')
+        
+# This is a helper funtion for the battle to force a pokemon switch when they faint
 def battleSwitch(p, cp):
     if cp == 0:
         cp = 1
@@ -157,6 +188,7 @@ def setPokemon():
     
 # Helper function used by seperate socket Io calls
 def updatePokemon(ID):
+    global i 
     # p stands for player number for the array
     # cp stands for current Pokemon. Saves a lot of typing
     # op stands for other player
@@ -186,13 +218,15 @@ def updatePokemon(ID):
         'opLink' : player[op].pokemon[ocp].spriteLink,
         'opHealth' : player[op].pokemon[ocp].percentHealth()
     }, room=player[p].ID)
-    
-    # updates the opponents info of the updated info
-    socketio.emit('updateOpPokemon', {
-        'name' : player[p].pokemon[cp].name,
-        'link' : player[p].pokemon[cp].spriteLink,
-        'health' : player[p].pokemon[cp].percentHealth()
-    }, room=player[op].ID)
+    if(i >3):
+        # updates the opponents info of the updated info
+        socketio.emit('updateOpPokemon', {
+            'name' : player[p].pokemon[cp].name,
+            'link' : player[p].pokemon[cp].spriteLink,
+            'health' : player[p].pokemon[cp].percentHealth()
+        }, room=player[op].ID)
+    i = i + 1
+
     updateSpectator()
 def PokeballLinkHealth(ID):
     # p stands for player number for the array
@@ -288,7 +322,7 @@ def chatLogSubmit(data):
                 types = types + " and " + player[0].pokemon[cp1].type2
             else:
                 types = types + player[0].pokemon[cp1].type1
-            types = types + "type."
+            types = types + " type."
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
             
             types = player[1].pokemon[cp2].name + " is "
@@ -298,7 +332,7 @@ def chatLogSubmit(data):
                 types = types + " and " + player[1].pokemon[cp2].type2
             else:
                 types = types + player[1].pokemon[cp2].type1
-            types = types + "type."
+            types = types + " type."
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
             
         else:
