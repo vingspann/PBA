@@ -49578,7 +49578,6 @@
 	    }, {
 	        key: 'onClick1',
 	        value: function onClick1() {
-	            _Socket.Socket.emit('battleLog', { 'text': this.state.move1 });
 	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
 	            this.setState({ 'CM': 0 });
 	            console.log(this.state.CM);
@@ -49589,7 +49588,6 @@
 	        value: function onClick2() {
 	            console.log('Button 2 clicked.');
 	            this.setState({ 'CM': 1 });
-	            _Socket.Socket.emit('battleLog', { 'text': this.state.move2 });
 	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
 	        }
 	    }, {
@@ -49597,7 +49595,6 @@
 	        value: function onClick3() {
 	            console.log('Button 3 clicked.');
 	            this.setState({ 'CM': 2 });
-	            _Socket.Socket.emit('battleLog', { 'text': this.state.move3 });
 	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
 	        }
 	    }, {
@@ -49605,7 +49602,6 @@
 	        value: function onClick4() {
 	            console.log('Button 4 clicked.');
 	            this.setState({ 'CM': 3 });
-	            _Socket.Socket.emit('battleLog', { 'text': this.state.move4 });
 	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
 	        }
 	    }, {
