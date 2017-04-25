@@ -63,7 +63,7 @@ export class CmdBtn extends React.Component {
     
     confirmMove() {
         console.log('Confirm move button clicked.')
-        Socket.emit('confirmMove', {});
+        Socket.emit('confirmMove');
     }
 
     componentDidMount(){
