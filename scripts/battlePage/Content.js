@@ -61,6 +61,9 @@ export class Content extends React.Component{
                         
                         <Nav pullRight>
                             <NavItem eventKey={2} href="#">
+                                <div id='status'></div>
+                            </NavItem>
+                            <NavItem eventKey={2} href="#">
                                 <FBLogin/>
                             </NavItem>
                         </Nav>
@@ -83,7 +86,7 @@ export class Content extends React.Component{
                     </Modal.Header>
                     
                     <Modal.Body>
-                    <div class="row">
+                    <div>
                         <Carousel>
                             <Carousel.Item>
                                 <img width={900} height={500} alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
