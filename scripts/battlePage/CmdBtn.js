@@ -141,7 +141,7 @@ export class CmdBtn extends React.Component {
                 moveArea =
                 <div id='nameLog'>
                     You are spectating
-                </div>
+                </div>;
         };
       
         
