@@ -49,12 +49,12 @@ def battle():
         sTurn = False
         
     if fTurn:
-        battleDamage(sm, fm, sPoke, f, fPoke, s)
+        battleDamage(f, fPoke, fm, s, sPoke, sm)
     # Checks to see if the pokemon has fainted or not. If not it does a normal move,
     # else, if the pokemon faints it sets the slow pokemon's message to reflect the faint
     if player[s].pokemon[sPoke].currentHp > 0 and sTurn:
-        battleDamage(fm, sm, fPoke, s, sPoke, f)
-    
+        battleDamage(s, sPoke, sm, f, fPoke, fm)
+
     fPoke = player[f].currentPokemon
     sPoke = player[s].currentPokemon
     
@@ -93,7 +93,7 @@ def battle():
 def battleDamage(p, cp, m, op, ocp, om):
     # p = player, cp = p's current pokemon, m = p's recent move
     # op = other player, ocp = other's current pokemon, om = op's recent move
-    
+
     # sets Attack and defense to special or physical depending on move type
     if player[p].pokemon[cp].move[m].damageClass == 'physical':
         attack = player[p].pokemon[cp].getAttack()
@@ -120,7 +120,7 @@ def battleDamage(p, cp, m, op, ocp, om):
     socketio.emit('battleLogEmit', {'text' : text})
     socketio.emit('battleLogEmit', {'text' : text2})
     
-    if player[op].pokemon[ocp].curHealth == 0:
+    if player[op].pokemon[ocp].currentHp == 0:
         text3 = player[ocp].pokemon[ocp].name + " has fainted."
         socketio.emit('battleLogEmit', {'text' : text3})
         battleSwitch(op, ocp)
@@ -231,7 +231,20 @@ def updateSpectator():
         
     }, room='spectator')
     
-
+@socketio.on('confirmMove')
+def confirmMove():
+    ID = flask.request.sid
+    
+    if ID == player[0].ID:
+        p = 0
+    elif ID == player[1].ID:
+        p = 1
+    else: 
+        return
+    
+    player[p].lockMove = True
+    if player[0].lockMove and player[1].lockMove:
+        battle()
     
 @socketio.on('CM')
 def updateCurrentMove(data):
@@ -250,10 +263,11 @@ def updateCurrentMove(data):
         player[p].recentMove = data['CM']
         # Locks their move if they choose to switch pokemon
         if data['CM'] == 5:
-            player[p].lockMove = True
             # Sets their current pokemon to the new pokemon. This is needed for
             # the battle function
             player[p].switchPokemon = data['currentPokemon'] - 1
+            player[p].lockMove = True
+        
         if player[0].lockMove and player[1].lockMove:
             battle()
         
