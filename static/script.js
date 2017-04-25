@@ -20503,6 +20503,11 @@ var Content = exports.Content = function (_React$Component) {
                                 React.createElement(
                                     _reactBootstrap.NavItem,
                                     { eventKey: 2, href: '#' },
+                                    React.createElement('div', { id: 'status' })
+                                ),
+                                React.createElement(
+                                    _reactBootstrap.NavItem,
+                                    { eventKey: 2, href: '#' },
                                     React.createElement(_FBLogin.FBLogin, null)
                                 )
                             )
@@ -20555,7 +20560,7 @@ var Content = exports.Content = function (_React$Component) {
                         null,
                         React.createElement(
                             'div',
-                            { 'class': 'row' },
+                            null,
                             React.createElement(
                                 _reactBootstrap.Carousel,
                                 null,
@@ -21234,9 +21239,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Socket = __webpack_require__(32);
 
-var _reactFacebookLogin = __webpack_require__(456);
+var _reactFacebookLogin = __webpack_require__(498);
 
 var _reactFacebookLogin2 = _interopRequireDefault(_reactFacebookLogin);
+
+var _reactBootstrap = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21255,42 +21262,151 @@ var FBLogin = exports.FBLogin = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (FBLogin.__proto__ || Object.getPrototypeOf(FBLogin)).call(this, props));
 
     _this.state = {
-      'FBkey': ''
+      'status': '',
+      'name': '',
+      'btnText': 'Facebook Login',
+      'localResponse': ''
     };
 
-    _this.componentDidMount = _this.componentDidMount.bind(_this);
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.checkLoginState = _this.checkLoginState.bind(_this);
+    _this.statusChangeCallback = _this.statusChangeCallback.bind(_this);
+    _this.testAPI = _this.testAPI.bind(_this);
+    _this.fbLogoutUser = _this.fbLogoutUser.bind(_this);
     return _this;
   }
 
   _createClass(FBLogin, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
-      _Socket.Socket.on('FBkey', function (data) {
-        _this2.setState({
-          'FBkey': data['key']
-
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: '1981325768753022',
+          cookie: true, // enable cookies to allow the server to access
+          // the session
+          xfbml: true, // parse social plugins on this page
+          version: 'v2.3' // use version 2.1
         });
+
+        // Now that we've initialized the JavaScript SDK, we call
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
+        FB.getLoginStatus(function (response) {
+          this.statusChangeCallback(response);
+        }.bind(this));
+      }.bind(this);
+
+      // Load the SDK asynchronously
+      (function (d, s, id) {
+        var js,
+            fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'facebook-jssdk');
+    }
+
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+
+  }, {
+    key: 'testAPI',
+    value: function testAPI() {
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me', function (response) {
+        console.log('Successful login for: ' + response.name);
+        document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+      });
+    }
+
+    // This is called with the results from from FB.getLoginStatus().
+
+  }, {
+    key: 'statusChangeCallback',
+    value: function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      // The response object is returned with a status field that lets the
+      // app know the current login status of the person.
+      // Full docs on the response object can be found in the documentation
+      // for FB.getLoginStatus().
+      if (response.status === 'connected') {
+        // Logged into your app and Facebook.
+        this.setState({ status: response.status });
+        this.setState({ name: response.name });
+        this.testAPI();
+      } else if (response.status === 'not_authorized') {
+        // The person is logged into Facebook, but not your app.
+        document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+      } else {
+        // The person is not logged into Facebook, so we're not sure if
+        // they are logged into this app or not.
+        document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
+      }
+    }
+
+    // This function is called when someone finishes with the Login
+    // Button.  See the onlogin handler attached to it in the sample
+    // code below.
+
+  }, {
+    key: 'checkLoginState',
+    value: function checkLoginState() {
+      FB.getLoginStatus(function (response) {
+        this.statusChangeCallback(response);
+        this.setState({ localResponse: response });
+      }.bind(this));
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick() {
+      if (this.state.localResponse.status === 'connected') {
+        this.fbLogoutUser;
+        this.setState({ btnText: 'Facebook Login' });
+      } else {
+        FB.login(this.checkLoginState());
+        this.setState({ btnText: 'Facebook Logout' });
+      }
+    }
+  }, {
+    key: 'fbLogoutUser',
+    value: function fbLogoutUser() {
+      FB.getLoginStatus(function (response) {
+        if (response && response.status === 'connected') {
+          FB.logout(function (response) {
+            document.location.reload();
+          });
+        }
       });
     }
   }, {
-    key: 'responseFacebook',
-    value: function responseFacebook(response) {
-      console.log(response);
+    key: 'sendFBInfo',
+    value: function sendFBInfo() {
+      _Socket.Socket.emit('FBInfo', {
+        'name': this.state.name
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_reactFacebookLogin2.default, {
-        appId: '1378809085491759',
-        autoLoad: false,
-        fields: 'name,email,picture',
-        scope: 'public_profile,euser_friends,user_actions.books',
-        callback: this.responseFacebook,
-        reAuthenticate: true,
-        cssClass: 'facebookLogin'
-      });
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          _reactBootstrap.Button,
+          { bsStyle: 'primary', onClick: this.handleClick },
+          this.state.btnText
+        )
+      );
     }
   }]);
 
@@ -42712,12 +42828,7 @@ if (performance.now) {
 module.exports = performanceNow;
 
 /***/ }),
-/* 456 */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function(e,t){ true?module.exports=t(__webpack_require__(0)):"function"==typeof define&&define.amd?define(["react"],t):"object"==typeof exports?exports.FacebookLogin=t(require("react")):e.FacebookLogin=t(e.react)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={exports:{},id:n,loaded:!1};return e[n].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var o={};return t.m=e,t.c=o,t.p="",t(0)}([function(e,t,o){e.exports=o(2)},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function r(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var o=arguments[t];for(var n in o)Object.prototype.hasOwnProperty.call(o,n)&&(e[n]=o[n])}return e},c=function(){function e(e,t){for(var o=0;o<t.length;o++){var n=t[o];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,o,n){return o&&e(t.prototype,o),n&&e(t,n),t}}(),l=o(6),p=n(l),u=o(4),f=n(u),d=o(3),y=n(d),b=function(){var e=!1;try{e=window.navigator&&window.navigator.standalone||navigator.userAgent.match("CriOS")||navigator.userAgent.match(/mobile/i)}catch(t){}return e},h=function(e){function t(){var e,o,n,s;i(this,t);for(var c=arguments.length,l=Array(c),p=0;p<c;p++)l[p]=arguments[p];return o=n=r(this,(e=t.__proto__||Object.getPrototypeOf(t)).call.apply(e,[this].concat(l))),n.state={isSdkLoaded:!1,isProcessing:!1},n.responseApi=function(e){window.FB.api("/me",{fields:n.props.fields},function(t){a(t,e),n.props.callback(t)})},n.checkLoginState=function(e){n.setStateIfMounted({isProcessing:!1}),e.authResponse?n.responseApi(e.authResponse):n.props.callback&&n.props.callback({status:e.status})},n.checkLoginAfterRefresh=function(e){"connected"===e.status?n.checkLoginState(e):window.FB.login(function(e){return n.checkLoginState(e)},!0)},n.click=function(){if(n.state.isSdkLoaded&&!n.state.isProcessing&&!n.props.isDisabled){n.setState({isProcessing:!0});var e=n.props,t=e.scope,o=e.appId,i=e.onClick,r=e.reAuthenticate,s=e.redirectUri,a=e.disableMobileRedirect;"function"==typeof i&&i();var c={client_id:o,redirect_uri:s,state:"facebookdirect",scope:t};r&&(c.auth_type="reauthenticate"),n.props.isMobile&&!a?window.location.href="//www.facebook.com/dialog/oauth?"+(0,y["default"])(c):window.FB.login(n.checkLoginState,{scope:t,auth_type:c.auth_type})}},s=o,r(n,s)}return s(t,e),c(t,[{key:"componentDidMount",value:function(){if(document.getElementById("facebook-jssdk"))return void this.sdkLoaded();this.setFbAsyncInit(),this.loadSdkAsynchronously();var e=document.getElementById("fb-root");e||(e=document.createElement("div"),e.id="fb-root",document.body.appendChild(e)),this._isMounted=!0}},{key:"componentWillUnmount",value:function(){this._isMounted=!1}},{key:"setStateIfMounted",value:function(e){this._isMounted&&this.setState(e)}},{key:"setFbAsyncInit",value:function(){var e=this,t=this.props,o=t.appId,n=t.xfbml,i=t.cookie,r=t.version,s=t.autoLoad;window.fbAsyncInit=function(){window.FB.init({version:"v"+r,appId:o,xfbml:n,cookie:i}),e.setStateIfMounted({isSdkLoaded:!0}),(s||window.location.search.includes("facebookdirect"))&&window.FB.getLoginStatus(e.checkLoginAfterRefresh)}}},{key:"sdkLoaded",value:function(){this.setState({isSdkLoaded:!0})}},{key:"loadSdkAsynchronously",value:function(){var e=this.props.language;!function(t,o,n){var i=t.getElementsByTagName(o)[0],r=i,s=i;t.getElementById(n)||(s=t.createElement(o),s.id=n,s.src="//connect.facebook.net/"+e+"/all.js",r.parentNode.insertBefore(s,r))}(document,"script","facebook-jssdk")}},{key:"style",value:function(){var e=this.constructor.defaultProps.cssClass;return this.props.cssClass===e&&p["default"].createElement("style",{dangerouslySetInnerHTML:{__html:f["default"]}})}},{key:"containerStyle",value:function(){var e={transition:"opacity 0.5s"};return(this.state.isProcessing||!this.state.isSdkLoaded||this.props.isDisabled)&&(e.opacity=.6),a(e,this.props.containerStyle)}},{key:"render",value:function(){var e=this.props,t=e.cssClass,o=e.size,n=e.icon,i=e.textButton,r=e.typeButton,s=e.buttonStyle,a="string"==typeof n;return p["default"].createElement("span",{style:this.containerStyle()},a&&p["default"].createElement("link",{rel:"stylesheet",href:"//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"}),p["default"].createElement(this.props.tag,{type:r,className:t+" "+o,style:s,onClick:this.click},n&&a&&p["default"].createElement("i",{className:"fa "+n}),n&&!a&&n,i),this.style())}}]),t}(p["default"].Component);h.propTypes={isDisabled:l.PropTypes.bool,callback:l.PropTypes.func.isRequired,appId:l.PropTypes.string.isRequired,xfbml:l.PropTypes.bool,cookie:l.PropTypes.bool,reAuthenticate:l.PropTypes.bool,scope:l.PropTypes.string,redirectUri:l.PropTypes.string,textButton:l.PropTypes.string,typeButton:l.PropTypes.string,autoLoad:l.PropTypes.bool,disableMobileRedirect:l.PropTypes.bool,isMobile:l.PropTypes.bool,size:l.PropTypes.string,fields:l.PropTypes.string,cssClass:l.PropTypes.string,version:l.PropTypes.string,icon:l.PropTypes.any,language:l.PropTypes.string,onClick:l.PropTypes.func,containerStyle:l.PropTypes.object,buttonStyle:l.PropTypes.object,tag:l.PropTypes.oneOfType([l.PropTypes.node,l.PropTypes.func])},h.defaultProps={textButton:"Login with Facebook",typeButton:"button",redirectUri:"undefined"!=typeof window?window.location.href:"/",scope:"public_profile,email",xfbml:!1,cookie:!1,reAuthenticate:!1,size:"metro",fields:"name",cssClass:"kep-login-facebook",version:"2.3",language:"en_US",disableMobileRedirect:!1,isMobile:b(),tag:"button"},t["default"]=h},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=void 0;var i=o(1),r=n(i);t["default"]=r["default"]},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=function(e){var t="";for(var o in e)""!==t&&(t+="&"),t+=o+"="+encodeURIComponent(e[o]);return t}},function(e,t,o){t=e.exports=o(5)(),t.push([e.id,".kep-login-facebook{font-family:Helvetica,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;color:#fff;cursor:pointer;display:inline-block;font-size:calc(.27548vw + 12.71074px);text-decoration:none;text-transform:uppercase;transition:background-color .3s,border-color .3s;background-color:#4c69ba;border:calc(.06887vw + .67769px) solid #4c69ba;padding:calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px)}.kep-login-facebook.small{padding:calc(.34435vw + 3.38843px) calc(.34435vw + 8.38843px)}.kep-login-facebook.medium{padding:calc(.34435vw + 8.38843px) calc(.34435vw + 13.38843px)}.kep-login-facebook.metro{border-radius:0}.kep-login-facebook .fa{margin-right:calc(.34435vw + 3.38843px)}",""]),t.locals={"kep-login-facebook":"kep-login-facebook",small:"small",medium:"medium",metro:"metro",fa:"fa"}},function(e,t){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var o=this[t];o[2]?e.push("@media "+o[2]+"{"+o[1]+"}"):e.push(o[1])}return e.join("")},e.i=function(t,o){"string"==typeof t&&(t=[[null,t,""]]);for(var n={},i=0;i<this.length;i++){var r=this[i][0];"number"==typeof r&&(n[r]=!0)}for(i=0;i<t.length;i++){var s=t[i];"number"==typeof s[0]&&n[s[0]]||(o&&!s[2]?s[2]=o:o&&(s[2]="("+s[2]+") and ("+o+")"),e.push(s))}},e}},function(t,o){t.exports=e}])});
-
-/***/ }),
+/* 456 */,
 /* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49556,6 +49667,12 @@ module.exports = __webpack_amd_options__;
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 498 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t(__webpack_require__(0)):"function"==typeof define&&define.amd?define(["react"],t):"object"==typeof exports?exports.FacebookLogin=t(require("react")):e.FacebookLogin=t(e.react)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={exports:{},id:n,loaded:!1};return e[n].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var o={};return t.m=e,t.c=o,t.p="",t(0)}([function(e,t,o){e.exports=o(2)},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function r(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var o=arguments[t];for(var n in o)Object.prototype.hasOwnProperty.call(o,n)&&(e[n]=o[n])}return e},c=function(){function e(e,t){for(var o=0;o<t.length;o++){var n=t[o];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,o,n){return o&&e(t.prototype,o),n&&e(t,n),t}}(),l=o(6),p=n(l),u=o(4),f=n(u),d=o(3),y=n(d),b=function(){var e=!1;try{e=window.navigator&&window.navigator.standalone||navigator.userAgent.match("CriOS")||navigator.userAgent.match(/mobile/i)}catch(t){}return e},h=function(e){function t(){var e,o,n,s;i(this,t);for(var c=arguments.length,l=Array(c),p=0;p<c;p++)l[p]=arguments[p];return o=n=r(this,(e=t.__proto__||Object.getPrototypeOf(t)).call.apply(e,[this].concat(l))),n.state={isSdkLoaded:!1,isProcessing:!1},n.responseApi=function(e){window.FB.api("/me",{fields:n.props.fields},function(t){a(t,e),n.props.callback(t)})},n.checkLoginState=function(e){n.setStateIfMounted({isProcessing:!1}),e.authResponse?n.responseApi(e.authResponse):n.props.callback&&n.props.callback({status:e.status})},n.checkLoginAfterRefresh=function(e){"connected"===e.status?n.checkLoginState(e):window.FB.login(function(e){return n.checkLoginState(e)},!0)},n.click=function(){if(n.state.isSdkLoaded&&!n.state.isProcessing&&!n.props.isDisabled){n.setState({isProcessing:!0});var e=n.props,t=e.scope,o=e.appId,i=e.onClick,r=e.reAuthenticate,s=e.redirectUri,a=e.disableMobileRedirect;"function"==typeof i&&i();var c={client_id:o,redirect_uri:s,state:"facebookdirect",scope:t};r&&(c.auth_type="reauthenticate"),n.props.isMobile&&!a?window.location.href="//www.facebook.com/dialog/oauth?"+(0,y["default"])(c):window.FB.login(n.checkLoginState,{scope:t,auth_type:c.auth_type})}},s=o,r(n,s)}return s(t,e),c(t,[{key:"componentDidMount",value:function(){if(document.getElementById("facebook-jssdk"))return void this.sdkLoaded();this.setFbAsyncInit(),this.loadSdkAsynchronously();var e=document.getElementById("fb-root");e||(e=document.createElement("div"),e.id="fb-root",document.body.appendChild(e)),this._isMounted=!0}},{key:"componentWillUnmount",value:function(){this._isMounted=!1}},{key:"setStateIfMounted",value:function(e){this._isMounted&&this.setState(e)}},{key:"setFbAsyncInit",value:function(){var e=this,t=this.props,o=t.appId,n=t.xfbml,i=t.cookie,r=t.version,s=t.autoLoad;window.fbAsyncInit=function(){window.FB.init({version:"v"+r,appId:o,xfbml:n,cookie:i}),e.setStateIfMounted({isSdkLoaded:!0}),(s||window.location.search.includes("facebookdirect"))&&window.FB.getLoginStatus(e.checkLoginAfterRefresh)}}},{key:"sdkLoaded",value:function(){this.setState({isSdkLoaded:!0})}},{key:"loadSdkAsynchronously",value:function(){var e=this.props.language;!function(t,o,n){var i=t.getElementsByTagName(o)[0],r=i,s=i;t.getElementById(n)||(s=t.createElement(o),s.id=n,s.src="//connect.facebook.net/"+e+"/all.js",r.parentNode.insertBefore(s,r))}(document,"script","facebook-jssdk")}},{key:"style",value:function(){var e=this.constructor.defaultProps.cssClass;return this.props.cssClass===e&&p["default"].createElement("style",{dangerouslySetInnerHTML:{__html:f["default"]}})}},{key:"containerStyle",value:function(){var e={transition:"opacity 0.5s"};return(this.state.isProcessing||!this.state.isSdkLoaded||this.props.isDisabled)&&(e.opacity=.6),a(e,this.props.containerStyle)}},{key:"render",value:function(){var e=this.props,t=e.cssClass,o=e.size,n=e.icon,i=e.textButton,r=e.typeButton,s=e.buttonStyle,a="string"==typeof n;return p["default"].createElement("span",{style:this.containerStyle()},a&&p["default"].createElement("link",{rel:"stylesheet",href:"//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"}),p["default"].createElement(this.props.tag,{type:r,className:t+" "+o,style:s,onClick:this.click},n&&a&&p["default"].createElement("i",{className:"fa "+n}),n&&!a&&n,i),this.style())}}]),t}(p["default"].Component);h.propTypes={isDisabled:l.PropTypes.bool,callback:l.PropTypes.func.isRequired,appId:l.PropTypes.string.isRequired,xfbml:l.PropTypes.bool,cookie:l.PropTypes.bool,reAuthenticate:l.PropTypes.bool,scope:l.PropTypes.string,redirectUri:l.PropTypes.string,textButton:l.PropTypes.string,typeButton:l.PropTypes.string,autoLoad:l.PropTypes.bool,disableMobileRedirect:l.PropTypes.bool,isMobile:l.PropTypes.bool,size:l.PropTypes.string,fields:l.PropTypes.string,cssClass:l.PropTypes.string,version:l.PropTypes.string,icon:l.PropTypes.any,language:l.PropTypes.string,onClick:l.PropTypes.func,containerStyle:l.PropTypes.object,buttonStyle:l.PropTypes.object,tag:l.PropTypes.oneOfType([l.PropTypes.node,l.PropTypes.func])},h.defaultProps={textButton:"Login with Facebook",typeButton:"button",redirectUri:"undefined"!=typeof window?window.location.href:"/",scope:"public_profile,email",xfbml:!1,cookie:!1,reAuthenticate:!1,size:"metro",fields:"name",cssClass:"kep-login-facebook",version:"2.3",language:"en_US",disableMobileRedirect:!1,isMobile:b(),tag:"button"},t["default"]=h},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=void 0;var i=o(1),r=n(i);t["default"]=r["default"]},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=function(e){var t="";for(var o in e)""!==t&&(t+="&"),t+=o+"="+encodeURIComponent(e[o]);return t}},function(e,t,o){t=e.exports=o(5)(),t.push([e.id,".kep-login-facebook{font-family:Helvetica,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;color:#fff;cursor:pointer;display:inline-block;font-size:calc(.27548vw + 12.71074px);text-decoration:none;text-transform:uppercase;transition:background-color .3s,border-color .3s;background-color:#4c69ba;border:calc(.06887vw + .67769px) solid #4c69ba;padding:calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px)}.kep-login-facebook.small{padding:calc(.34435vw + 3.38843px) calc(.34435vw + 8.38843px)}.kep-login-facebook.medium{padding:calc(.34435vw + 8.38843px) calc(.34435vw + 13.38843px)}.kep-login-facebook.metro{border-radius:0}.kep-login-facebook .fa{margin-right:calc(.34435vw + 3.38843px)}",""]),t.locals={"kep-login-facebook":"kep-login-facebook",small:"small",medium:"medium",metro:"metro",fa:"fa"}},function(e,t){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var o=this[t];o[2]?e.push("@media "+o[2]+"{"+o[1]+"}"):e.push(o[1])}return e.join("")},e.i=function(t,o){"string"==typeof t&&(t=[[null,t,""]]);for(var n={},i=0;i<this.length;i++){var r=this[i][0];"number"==typeof r&&(n[r]=!0)}for(i=0;i<t.length;i++){var s=t[i];"number"==typeof s[0]&&n[s[0]]||(o&&!s[2]?s[2]=o:o&&(s[2]="("+s[2]+") and ("+o+")"),e.push(s))}},e}},function(t,o){t.exports=e}])});
 
 /***/ })
 /******/ ]);
