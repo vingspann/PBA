@@ -50,6 +50,14 @@ As we've been working, we have scaled back our goal to be a pre-set team of thre
 of a random moveset for each of their Pokemon. Player 1 will always have Pokemon A, B, C and Player 2 will always have D, E, and F.
 For this Handin, we have focused on implementing a single Pokemon for each user to then expand for Handin 3.
 
+### Handin-3
+HOUSTON, WE HAVE A BATTLE! We have the first two users to connect be assigned as Player 1 and Player 2, each assigned their own
+team of two Pokemon! Damage is applied from attacks appropriately based on stats calculated from API calls. Our next feature
+to implement will be adding in data for Super Effective/Not Very Effective/No Damage hits based on typing (not currently implemented).
+
+Chat functionality is fully up and running, with a reset function to restart the app as there was no way to restart the Heroku application
+remotely or through the web interface. This feature is hidden from the users, and will not be included in the App Info/About carousel.
+
 ## Known Problems
 ### Handin-1
 It goes without saying that our application will not do very much as is, but we've built a skeletal
@@ -63,6 +71,11 @@ Bootstrap, but we're still struggling to implement the Facebook login in a meani
 to interact with their Pokemon specifically. A big roadblock has been getting all of our components working, to then
 be able to implement the data we can call from the PokeAPI, alongside making the switch over to Bootstrap from basic
 CSS.
+
+### Handin-3
+We know that it takes a double-click on attack buttons to appropriately register the new attack before confirming it
+to be used in battle, and that there is an issue with Player 1 connecting and seeing the same Pokemon as both theirs
+and their opponent's, but this is fixed as soon as Player 2 connects.
 
 ## Improvements Over Time
 As detailed in the description, each "official" iteration of the PBA will integrate more complex
