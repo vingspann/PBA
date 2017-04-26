@@ -29,3 +29,15 @@ class user():
         
     def __repr__(self):
         return "Player" + str(self.pokemon)
+        
+    def reset(self):
+        self.name = ''
+        self.pokemon[0].currentHp = self.pokemon[0].maxHp
+        self.pokemon[1].currentHp = self.pokemon[1].maxHp
+        self.hasWon = False
+        self.currentPokemon = 0
+        self.recentMove = 0
+        self.ID = None
+        self.pokemonLeft = 2
+        self.lockMove = False
+        self.switchPokemon = 0
