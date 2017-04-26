@@ -138,6 +138,8 @@ def battleDamage(p, cp, m, op, ocp, om):
         battleSwitch(op, ocp)
         player[op].pokemonLeft = player[op].pokemonLeft - 1
         return False
+    elif om == 5:
+        return False
     return True
 
         
