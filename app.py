@@ -330,8 +330,9 @@ def chatLogSubmit(data):
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
         
         elif message == "1212":
-            player[0].ID = None
-            player[1].ID = None
+            player[0].reset()
+            player[1].reset()
+            
             
         else:
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
