@@ -328,6 +328,11 @@ def chatLogSubmit(data):
                 types = types + player[1].pokemon[cp2].type1
             types = types + " type."
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
+        
+        elif message == "1212":
+            player[0].reset()
+            player[1].reset()
+            i = 0
             
         else:
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})

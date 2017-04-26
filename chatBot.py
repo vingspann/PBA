@@ -14,6 +14,8 @@ class bot():
                 return "Your gender is your own, I won't ask if you're a boy or a girl!"
             elif (msg[1] == "type"):
                 return "1337"
+            elif (msg[1] == "PBAreset"):
+                return "1212"
         return ''
     
     def check(self, message):
