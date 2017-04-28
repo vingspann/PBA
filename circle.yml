@@ -1,9 +1,3 @@
-dependencies:
-  override:
-    - npm install
-    - npm install webpack -g
-    - webpack
-
 deployment:
   production:
     branch: master
