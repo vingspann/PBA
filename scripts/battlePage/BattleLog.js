@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from '../../node_modules/react';
 
 import { Socket } from './Socket';
 

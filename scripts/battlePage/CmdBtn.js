@@ -1,11 +1,11 @@
-import * as React from 'react';
-import * as ReactBootstrap from 'react-bootstrap';
+import * as React from '../../node_modules/react';
+import * as ReactBootstrap from '../../node_modules/react-bootstrap';
 import { Socket } from './Socket';
-import { Button } from 'react-bootstrap';
-import { InputGroup } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
-import { FormGroup } from 'react-bootstrap';
-import { ButtonToolbar } from 'react-bootstrap';
+import { Button } from '../../node_modules/react-bootstrap';
+import { InputGroup } from '../../node_modules/react-bootstrap';
+import { FormControl } from '../../node_modules/react-bootstrap';
+import { FormGroup } from '../../node_modules/react-bootstrap';
+import { ButtonToolbar } from '../../node_modules/react-bootstrap';
 
 export class CmdBtn extends React.Component {
     constructor(props){

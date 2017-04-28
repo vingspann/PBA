@@ -1,6 +1,6 @@
-import React from 'react';
+import React from '../../node_modules/react';
 import { Socket } from './Socket';
-import { Button } from 'react-bootstrap';
+import { Button } from '../../node_modules/react-bootstrap';
 
  export class FBLogin extends React.Component {
     constructor(props){

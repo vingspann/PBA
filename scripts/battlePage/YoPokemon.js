@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as ReactBootstrap from 'react-bootstrap';
+import * as React from '../../node_modules/react';
+import * as ReactBootstrap from '../../node_modules/react-bootstrap';
 import { Socket } from './Socket';
-import { ProgressBar } from 'react-bootstrap';
+import { ProgressBar } from '../../node_modules/react-bootstrap';
 
 export class YoPokemon extends React.Component {
     constructor(props){

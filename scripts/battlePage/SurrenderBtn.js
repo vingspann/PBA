@@ -1,13 +1,13 @@
-import * as React from 'react';
-import ReactDOM from 'react-dom'
-import * as ReactBootstrap from 'react-bootstrap';
+import * as React from '../../node_modules/react';
+import ReactDOM from '../../node_modules/react-dom'
+import * as ReactBootstrap from '../../node_modules/react-bootstrap';
 import { Socket } from './Socket';
-import { Button } from 'react-bootstrap';
-import { OverlayTrigger } from 'react-bootstrap';
-import { Modal } from 'react-bootstrap';
-import { Popover } from 'react-bootstrap';
-import { Tooltip } from 'react-bootstrap';
-import { ButtonToolbar } from 'react-bootstrap';
+import { Button } from '../../node_modules/react-bootstrap';
+import { OverlayTrigger } from '../../node_modules/react-bootstrap';
+import { Modal } from '../../node_modules/react-bootstrap';
+import { Popover } from '../../node_modules/react-bootstrap';
+import { Tooltip } from '../../node_modules/react-bootstrap';
+import { ButtonToolbar } from '../../node_modules/react-bootstrap';
 
 
 export class SurrenderBtn extends React.Component {
