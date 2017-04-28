@@ -2,7 +2,7 @@ dependencies:
   override:
     - npm install
     - npm install webpack -g
-    - webpack
+    - webpack --display-error-details
 
 deployment:
   production:
