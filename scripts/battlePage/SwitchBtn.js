@@ -116,7 +116,7 @@ export class SwitchBtn extends React.Component {
             <Tooltip id="modal-tooltip" >
                 <img src={link0} alt="Pokemon1" />
                 <ProgressBar>
-                        <ProgressBar bsStyle="success" now={health0*100} label={`${health0*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={health0*100} label={`${Math.floor(health0*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (health0*100)} key={2} />
                 </ProgressBar>
             </Tooltip>
@@ -125,7 +125,7 @@ export class SwitchBtn extends React.Component {
             <Tooltip id="modal-tooltip" >
                 <img src={link1} alt="Pokemon1" />
                 <ProgressBar>
-                        <ProgressBar bsStyle="success" now={health1*100} label={`${health1*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={health1*100} label={`${Math.floor(health1*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (health1*100)} key={2} />
                 </ProgressBar>
             </Tooltip>
