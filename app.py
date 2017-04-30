@@ -337,7 +337,8 @@ def chatLogSubmit(data):
             i = 0
         elif message == "join":
             
-            
+            # This makes users leave the spectator mode and join the player mode
+            # if there is an open spot.
             if player[0].ID == None:
                 print "user 1 sid: " + ID
                 flask_socketio.leave_room('spectator')
