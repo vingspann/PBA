@@ -49639,6 +49639,7 @@
 	                _this2.setState({
 	                    'user': data['user']
 	                });
+	                _this2.forceUpdate();
 	            });
 	        }
 	    }, {
@@ -50244,6 +50245,7 @@
 	                _this2.setState({
 	                    'user': data['user']
 	                });
+	                _this2.forceUpdate();
 	            });
 	            _Socket.Socket.emit('updateInfo');
 	            // Allows moves to be dynamically updated.
@@ -50449,6 +50451,7 @@
 	                _this2.setState({
 	                    'user': data['user']
 	                });
+	                _this2.forceUpdate();
 	            });
 	        }
 	    }, {
