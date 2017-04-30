@@ -78,6 +78,10 @@ def battle():
         'opHealth' : player[f].pokemon[fPoke].percentHealth()
     }, room=player[s].ID)
     
+    # Updates each players pokeballs so it shows the current health of pokemon in them
+    updatePokeballs(player[0].ID)
+    updatePokeballs(player[1].ID)
+    
     # Lets them select a new move for the next turn.
     player[0].lockMove = False
     player[1].lockMove = False
@@ -218,7 +222,7 @@ def updatePokemon(ID):
 
     updateSpectator()
     
-def PokeballLinkHealth(ID):
+def updatePokeballs(ID):
     # p stands for player number for the array
     if ID == player[0].ID:
         p = 0
@@ -228,9 +232,9 @@ def PokeballLinkHealth(ID):
         return
   # pushes both pokemon
     socketio.emit('getBothPokemon', {
-        'health0' : player[p].pokemon[0].maxHp,
+        'health0' : player[p].pokemon[0].percentHealth(),
         'link0' : player[p].pokemon[0].spriteLink,
-        'health1' : player[p].pokemon[1].maxHp,
+        'health1' : player[p].pokemon[1].percentHealth(),
         'link1' : player[p].pokemon[1].spriteLink
     }, room=player[p].ID)  
     
@@ -291,7 +295,7 @@ def updateCurrentMove(data):
 def updateInfo():
     ID = flask.request.sid
     updatePokemon(ID)
-    PokeballLinkHealth(ID)
+    updatePokeballs(ID)
 
 @app.route('/')
 def hello():
