@@ -23,6 +23,8 @@ def battle():
             endBattle(1, 0, 1) # w, l, method. check function for method numbers
         elif player[1].recentMove == 6:
             endBattle(0, 1, 1) # w, l, method. check function for method numbers
+        # if either player surrenders this ends the battle sequence.
+        return
     
     
     p1 = player[0].currentPokemon
@@ -101,8 +103,8 @@ def battle():
             w = 1
             l = 0
     
-    # Sends the winner and losers number to the ending function
-    endBattle(w, l, 0)
+        # Sends the winner and losers number to the ending function
+        endBattle(w, l, 0)
         
 # Helper function to make battle function less repetative
 def battleDamage(p, cp, m, op, ocp, om):
