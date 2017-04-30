@@ -15,6 +15,16 @@ i = 0
 # this is where the battle and turns will happen
 def battle():
     
+    # initial if statement so computer skips code section with least amount of checks
+    if player[0].recentMove == 6 or player[1].recentMove == 6:
+        if player[0].recentMove == 6 and player[1].recentMove == 6:
+            endBattle(0, 1, 2) # w, l, method. check function for method numbers
+        elif player[0].recentMove == 6:
+            endBattle(1, 0, 1) # w, l, method. check function for method numbers
+        elif player[1].recentMove == 6:
+            endBattle(0, 1, 1) # w, l, method. check function for method numbers
+    
+    
     p1 = player[0].currentPokemon
     p2 = player[1].currentPokemon
     m1 = player[0].recentMove
@@ -90,16 +100,9 @@ def battle():
         if player[0].pokemonLeft == 0:
             w = 1
             l = 0
-            
-        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
-        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + " and " + player[l].pokemon[1].name + "."
-        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
-        
-        print "win emits"
-        # Emits a seperate msg to each player, and all spectators get the same message
-        socketio.emit('battleLogEmit', {'text' : wMsg}, room=player[w].ID)
-        socketio.emit('battleLogEmit', {'text' : lMsg}, room=player[l].ID)
-        socketio.emit('battleLogEmit', {'text' : specMsg}, room='spectator')
+    
+    # Sends the winner and losers number to the ending function
+    endBattle(w, l, 0)
         
 # Helper function to make battle function less repetative
 def battleDamage(p, cp, m, op, ocp, om):
@@ -152,6 +155,29 @@ def battleSwitch(p, cp):
         
     player[p].currentPokemon = cp
     updatePokemon(player[p].ID)
+    
+# Gave this section its own function to make surrendering easier to code
+# Method gets 0 for battle loss, and 1 for single surrender
+# Method gets 2 for double surrender
+def endBattle(w, l, method):
+    
+    if method == 0:
+        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
+        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + " and " + player[l].pokemon[1].name + "."
+        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
+    elif method == 1:
+        wMsg = "You Win! Player " + str (l + 1) + " chose to surrender."
+        lMsg = "You lose. You chose to surrender. "
+        specMsg = "Player " + str (l + 1) + " surrendered. Player " + str(w + 1) + " won."
+    elif method == 2:
+        wMsg = "It's a draw! You both surrendered."
+        lMsg = wMsg
+        specMsg = "Battle ended in a draw. Both players surrendered."
+    print "win emits"
+    # Emits a seperate msg to each player, and all spectators get the same message
+    socketio.emit('battleLogEmit', {'text' : wMsg}, room=player[w].ID)
+    socketio.emit('battleLogEmit', {'text' : lMsg}, room=player[l].ID)
+    socketio.emit('battleLogEmit', {'text' : specMsg}, room='spectator')
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
@@ -350,7 +376,27 @@ def onFBInfo(data):
 @socketio.on('battleLog')
 def battleLog(data):
     socketio.emit('battleLogEmit', {'text' : data['text']})
-
+    
+@socketio.on('surrender')
+def surrender():
+    ID = flask.request.sid
+    if ID == player[0].ID:
+        p = 0
+    elif ID == player[1].ID:
+        p = 1
+    else: 
+        return
+    
+    
+    # There is no if-statement here incase they decide to surrender before
+    # the other player takes their turn. This would override their current move
+    player[p].recentMove = 6
+    player[p].lockMove = True
+    
+    if player[0].lockMove and player[1].lockMove:
+        battle()
+    
+    
 @socketio.on('connect')
 def on_connect():
     
