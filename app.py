@@ -376,7 +376,8 @@ def onFBInfo(data):
 @socketio.on('battleLog')
 def battleLog(data):
     socketio.emit('battleLogEmit', {'text' : data['text']})
-    
+  
+# overrides users choice if they chose to surrender.   
 @socketio.on('surrender')
 def surrender():
     ID = flask.request.sid
