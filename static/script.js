@@ -50263,6 +50263,9 @@
 	            var health0 = this.state.health0;
 	            var link1 = this.state.link1;
 	            var health1 = this.state.health1;
+
+	            health0 = parseFloat(health0).toFixed(2);
+	            health1 = parseFloat(health1).toFixed(2);
 	            console.log(link0);
 	            var popover = React.createElement(
 	                _reactBootstrap.Popover,
@@ -50276,7 +50279,7 @@
 	                React.createElement(
 	                    _reactBootstrap.ProgressBar,
 	                    null,
-	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health0 * 100, label: health0 * 100 + '%', key: 1 }),
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health0 * 100, label: Math.floor(health0 * 100) + '%', key: 1 }),
 	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health0 * 100, key: 2 })
 	                )
 	            );
@@ -50287,7 +50290,7 @@
 	                React.createElement(
 	                    _reactBootstrap.ProgressBar,
 	                    null,
-	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health1 * 100, label: health1 * 100 + '%', key: 1 }),
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health1 * 100, label: Math.floor(health1 * 100) + '%', key: 1 }),
 	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health1 * 100, key: 2 })
 	                )
 	            );
