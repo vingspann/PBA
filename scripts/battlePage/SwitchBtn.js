@@ -103,9 +103,12 @@ export class SwitchBtn extends React.Component {
 
     render() {
         let link0 = this.state.link0;
-        let health0 = this.state.health0;
+        var health0 = this.state.health0;
         let link1 = this.state.link1;
-        let health1 = this.state.health1;
+        var health1 = this.state.health1;
+        
+        health0 = parseFloat(health0).toFixed(2);
+        health1 = parseFloat(health1).toFixed(2);
         console.log(link0)
         const popover = (
             <Popover id="modal-popover" title="popover">
