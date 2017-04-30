@@ -170,7 +170,7 @@ def endBattle(w, l, method):
     elif method == 1:
         wMsg = "You Win! Player " + str (l + 1) + " chose to surrender."
         lMsg = "You lose. You chose to surrender. "
-        specMsg = "Player " + str (l + 1) + " surrendered. Player " + str(w + 1) + " won."
+        specMsg = "Player " + str(w + 1) + " wins. Player " + str (l + 1) + " surrendered."
     elif method == 2:
         wMsg = "It's a draw! You both surrendered."
         lMsg = wMsg
