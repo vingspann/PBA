@@ -335,7 +335,25 @@ def chatLogSubmit(data):
             player[0].reset()
             player[1].reset()
             i = 0
+        elif message == "join":
             
+            
+            if player[0].ID == None:
+                print "user 1 sid: " + ID
+                flask_socketio.leave_room('spectator')
+                socketio.emit('connection', {'user' : 1}, room=ID)
+                player[0].ID = ID
+                updatePokemon(ID)
+                
+            elif player[1].ID == None:
+                socketio.emit('connection', {'user' : 2}, room=ID)
+                flask_socketio.leave_room('spectator')
+                print "user 2 sid: " + ID
+                player[1].ID = ID
+                updatePokemon(ID)
+            else:
+                msg = "I'm sorry. There are no more open battles. Please try again later."
+                socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : msg})
         else:
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
 
@@ -354,23 +372,9 @@ def battleLog(data):
 @socketio.on('connect')
 def on_connect():
     
-    clientId = flask.request.sid
-    # This makes it so when we do calls later we use this user number to update
-    # the correct users page
-    if player[0].ID == None:
-        print "user 1 sid: " + clientId
-        socketio.emit('connection', {'user' : 1}, room=clientId)
-        player[0].ID = clientId
-        
-    elif player[1].ID == None:
-        socketio.emit('connection', {'user' : 2}, room=clientId)
-        print "user 2 sid: " + clientId
-        player[1].ID = clientId
-        
-    else: 
-        flask_socketio.join_room('spectator')
-        socketio.emit('connection', {'user' : 3}, room='spectator')
-        updateSpectator()
+    flask_socketio.join_room('spectator')
+    socketio.emit('connection', {'user' : 3}, room='spectator')
+    updateSpectator()
     
 
 if __name__ == '__main__':
