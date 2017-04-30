@@ -3,6 +3,7 @@ dependencies:
     - nvm install 6
     - npm install
     - npm install webpack -g
+    - npm i prop-types
     - webpack --display-error-details
 
 deployment:
