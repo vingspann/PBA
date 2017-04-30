@@ -50420,14 +50420,14 @@
 	        key: 'onClickConfirmSurrender',
 	        value: function onClickConfirmSurrender() {
 	            console.log('Surrender Confirmed.');
-	            _Socket.Socket.emit('battleLog', { 'text': 'Surrender confirmed.' });
+	            _Socket.Socket.emit('surrender');
 	            this.setState({ showModal: false });
 	        }
 	    }, {
 	        key: 'onClickCancelSurrender',
 	        value: function onClickCancelSurrender() {
 	            console.log('Surrender Canceled');
-	            _Socket.Socket.emit('battleLog', { 'text': 'Surrender canceled.' });
+
 	            this.setState({ showModal: false });
 	        }
 	    }, {
