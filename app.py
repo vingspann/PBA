@@ -186,6 +186,7 @@ def endBattle(w, l, method):
     socketio.emit('battleLogEmit', {'text' : wMsg}, room=player[w].ID)
     socketio.emit('battleLogEmit', {'text' : lMsg}, room=player[l].ID)
     socketio.emit('battleLogEmit', {'text' : specMsg}, room='spectator')
+    reset()
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
 # This is necessary for switching pokemon
@@ -282,6 +283,16 @@ def updateSpectator():
         
     }, room='spectator')
     
+# Resets the room. Called with chat bot and end of battle
+def reset():
+    flask_socketio.join_room('spectator', sid=player[0].ID)
+    flask_socketio.join_room('spectator', sid=player[1].ID)
+    socketio.emit('connection', {'user' : 3}, room='spectator')
+    player[0].reset()
+    player[1].reset()
+    updateSpectator()
+    i = 0
+    
 @socketio.on('confirmMove')
 def confirmMove():
     ID = flask.request.sid
@@ -372,13 +383,7 @@ def chatLogSubmit(data):
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
         
         elif message == "1212":
-            flask_socketio.join_room('spectator', sid=player[0].ID)
-            flask_socketio.join_room('spectator', sid=player[1].ID)
-            socketio.emit('connection', {'user' : 3}, room='spectator')
-            updateSpectator()
-            player[0].reset()
-            player[1].reset()
-            i = 0
+            reset()
         elif message == "join":
             
             # This makes users leave the spectator mode and join the player mode
