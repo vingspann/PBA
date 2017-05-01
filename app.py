@@ -6,6 +6,8 @@ from user import user
 oak = bot()
 
 
+
+
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
