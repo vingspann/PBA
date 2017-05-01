@@ -2,10 +2,52 @@ import os, flask, flask_socketio, time
 from random import randint
 from chatBot import bot
 from user import user
+from pokeType import pokeType
 
 oak = bot()
 
-
+#building a global list of types for determining
+#damage in the Battle logic
+types = []
+for i in range(18):
+    types.append(pokeType())
+    
+types[0].setName("normal")
+types[0].buildType()
+types[1].setName("fire")
+types[1].buildType()
+types[2].setName("fighting")
+types[2].buildType()
+types[3].setName("water")
+types[3].buildType()
+types[4].setName("flying")
+types[4].buildType()
+types[5].setName("grass")
+types[5].buildType()
+types[6].setName("poison")
+types[6].buildType()
+types[7].setName("electric")
+types[7].buildType()
+types[8].setName("ground")
+types[8].buildType()
+types[9].setName("psychic")
+types[9].buildType()
+types[10].setName("rock")
+types[10].buildType()
+types[11].setName("ice")
+types[11].buildType()
+types[12].setName("bug")
+types[12].buildType()
+types[13].setName("dragon")
+types[13].buildType()
+types[14].setName("ghost")
+types[14].buildType()
+types[15].setName("dark")
+types[15].buildType()
+types[16].setName("steel")
+types[16].buildType()
+types[17].setName("fairy")
+types[17].buildType()
 
 
 app = flask.Flask(__name__)
