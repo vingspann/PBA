@@ -1,14 +1,14 @@
-import * as React from 'react';
-import ReactDOM from 'react-dom'
-import * as ReactBootstrap from 'react-bootstrap';
+import * as React from '../../node_modules/react';
+import ReactDOM from '../../node_modules/react-dom'
+import * as ReactBootstrap from '../../node_modules/react-bootstrap';
 import { Socket } from './Socket';
-import { Button } from 'react-bootstrap';
-import { InputGroup } from 'react-bootstrap';
-import { FormGroup } from 'react-bootstrap';
-import { ButtonToolbar } from 'react-bootstrap';
+import { Button } from '../../node_modules/react-bootstrap';
+import { InputGroup } from '../../node_modules/react-bootstrap';
+import { FormGroup } from '../../node_modules/react-bootstrap';
+import { ButtonToolbar } from '../../node_modules/react-bootstrap';
 import { SwitchBtn } from './SwitchBtn';
 import { SurrenderBtn } from './SurrenderBtn';
-import { ButtonGroup } from 'react-bootstrap';
+import { ButtonGroup } from '../../node_modules/react-bootstrap';
 
 export class ActnBtn extends React.Component {
     constructor(props){
