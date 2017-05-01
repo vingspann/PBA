@@ -16,6 +16,8 @@ class bot():
                 return "1337"
             elif (msg[1] == "PBAreset"):
                 return "1212"
+            elif (msg[1] == "join"):
+                return "join"
         return ''
     
     def check(self, message):

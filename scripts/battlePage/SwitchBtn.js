@@ -86,7 +86,8 @@ export class SwitchBtn extends React.Component {
         Socket.on('connection', (data) => {
             this.setState({
                 'user' : data['user']
-            })
+            });
+            this.forceUpdate();
         });
         Socket.emit('updateInfo')
         // Allows moves to be dynamically updated.

@@ -83,7 +83,8 @@ export class CmdBtn extends React.Component {
         Socket.on('connection', (data) => {
             this.setState({
                 'user' : data['user']
-            })
+            });
+            this.forceUpdate();
         });
     }
 
