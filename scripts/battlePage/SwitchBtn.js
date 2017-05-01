@@ -110,7 +110,7 @@ export class SwitchBtn extends React.Component {
         
         health0 = parseFloat(health0).toFixed(2);
         health1 = parseFloat(health1).toFixed(2);
-        console.log(link0)
+ 
         const popover = (
             <Popover id="modal-popover" title="popover">
             very popover. such engagement
