@@ -28,13 +28,13 @@ export class SurrenderBtn extends React.Component {
     
     onClickConfirmSurrender(){
         console.log('Surrender Confirmed.');
-        Socket.emit('battleLog', {'text' : 'Surrender confirmed.'});
+        Socket.emit('surrender');
          this.setState({ showModal: false });
     }
     
     onClickCancelSurrender(){
         console.log('Surrender Canceled')
-        Socket.emit('battleLog', {'text' : 'Surrender canceled.'});
+        
         this.setState({ showModal: false });
     }
 
@@ -51,7 +51,8 @@ export class SurrenderBtn extends React.Component {
         Socket.on('connection', (data) => {
             this.setState({
                 'user' : data['user']
-            })
+            });
+            this.forceUpdate();
         });
     }
 
