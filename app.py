@@ -308,6 +308,7 @@ def chatLogSubmit(data):
     
     allow, bot, message = oak.check(data['text'])
     
+    # Determines whether or not users message will be displayed
     if allow:
         socketio.emit('chatLogEmit', {'name' : name, 'text' : data['text']})
     
