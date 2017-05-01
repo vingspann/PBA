@@ -247,7 +247,8 @@ def updatePokemon(ID):
             'health' : player[p].pokemon[cp].percentHealth()
         }, room=player[op].ID)
     i = i + 1
-
+    
+    updatePokeballs(ID)
     updateSpectator()
     
 def updatePokeballs(ID):
@@ -364,6 +365,10 @@ def chatLogSubmit(data):
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
         
         elif message == "1212":
+            flask_socketio.join_room('spectator', sid=player[0].ID)
+            flask_socketio.join_room('spectator', sid=player[1].ID)
+            socketio.emit('connection', {'user' : 3}, room='spectator')
+            updateSpectator()
             player[0].reset()
             player[1].reset()
             i = 0
