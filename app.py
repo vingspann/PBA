@@ -305,9 +305,13 @@ def chatLogSubmit(data):
     if (ID in userList):
         name = userList[ID]
 
-    socketio.emit('chatLogEmit', {'name' : name, 'text' : data['text']})
-    allow, message = oak.check(data['text'])
+    
+    allow, bot, message = oak.check(data['text'])
+    
     if allow:
+        socketio.emit('chatLogEmit', {'name' : name, 'text' : data['text']})
+    
+    if bot:
         if message == "1337":
             cp1 = player[0].currentPokemon
             cp2 = player[1].currentPokemon
