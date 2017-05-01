@@ -1,16 +1,16 @@
-import * as React from 'react';
+import * as React from '../../node_modules/react';
 import { ChatLog } from './ChatLog';
 import { CmdBtn } from './CmdBtn';
 import { BattleLog } from './BattleLog';
 import { YoPokemon } from './YoPokemon';
 import { ActnBtn } from './ActnBtn';
-import { Navbar } from 'react-bootstrap';
-import { NavItem } from 'react-bootstrap';
-import { Nav } from 'react-bootstrap';
-import { Modal } from 'react-bootstrap';
-import { Carousel } from 'react-bootstrap';
+import { Navbar } from '../../node_modules/react-bootstrap';
+import { NavItem } from '../../node_modules/react-bootstrap';
+import { Nav } from '../../node_modules/react-bootstrap';
+import { Modal } from '../../node_modules/react-bootstrap';
+import { Carousel } from '../../node_modules/react-bootstrap';
 import { FBLogin } from './FBLogin';
-import { Button } from 'react-bootstrap';
+import { Button } from '../../node_modules/react-bootstrap';
 
 
 export class Content extends React.Component{

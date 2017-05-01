@@ -1,13 +1,13 @@
-import * as React from 'react';
-import ReactDOM from 'react-dom'
-import * as ReactBootstrap from 'react-bootstrap';
+import * as React from '../../node_modules/react';
+import ReactDOM from '../../node_modules/react-dom';
+import * as ReactBootstrap from '../../node_modules/react-bootstrap';
 import { Socket } from './Socket';
-import { Button } from 'react-bootstrap';
-import { OverlayTrigger } from 'react-bootstrap';
-import { Modal } from 'react-bootstrap';
-import { Popover } from 'react-bootstrap';
-import { Tooltip } from 'react-bootstrap';
-import { ProgressBar } from 'react-bootstrap';
+import { Button } from '../../node_modules/react-bootstrap';
+import { OverlayTrigger } from '../../node_modules/react-bootstrap';
+import { Modal } from '../../node_modules/react-bootstrap';
+import { Popover } from '../../node_modules/react-bootstrap';
+import { Tooltip } from '../../node_modules/react-bootstrap';
+import { ProgressBar } from '../../node_modules/react-bootstrap';
 
 export class SwitchBtn extends React.Component {
     constructor(props){
@@ -104,10 +104,13 @@ export class SwitchBtn extends React.Component {
 
     render() {
         let link0 = this.state.link0;
-        let health0 = this.state.health0;
+        var health0 = this.state.health0;
         let link1 = this.state.link1;
-        let health1 = this.state.health1;
-        console.log(link0)
+        var health1 = this.state.health1;
+        
+        health0 = parseFloat(health0).toFixed(2);
+        health1 = parseFloat(health1).toFixed(2);
+ 
         const popover = (
             <Popover id="modal-popover" title="popover">
             very popover. such engagement
@@ -117,7 +120,7 @@ export class SwitchBtn extends React.Component {
             <Tooltip id="modal-tooltip" >
                 <img src={link0} alt="Pokemon1" />
                 <ProgressBar>
-                        <ProgressBar bsStyle="success" now={health0*100} label={`${health0*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={health0*100} label={`${Math.floor(health0*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (health0*100)} key={2} />
                 </ProgressBar>
             </Tooltip>
@@ -126,7 +129,7 @@ export class SwitchBtn extends React.Component {
             <Tooltip id="modal-tooltip" >
                 <img src={link1} alt="Pokemon1" />
                 <ProgressBar>
-                        <ProgressBar bsStyle="success" now={health1*100} label={`${health1*100}%`} key={1} />
+                        <ProgressBar bsStyle="success" now={health1*100} label={`${Math.floor(health1*100)}%`} key={1} />
                         <ProgressBar bsStyle="danger" now={100 - (health1*100)} key={2} />
                 </ProgressBar>
             </Tooltip>
