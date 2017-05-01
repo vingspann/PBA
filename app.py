@@ -247,7 +247,8 @@ def updatePokemon(ID):
             'health' : player[p].pokemon[cp].percentHealth()
         }, room=player[op].ID)
     i = i + 1
-
+    
+    updatePokeballs(ID)
     updateSpectator()
     
 def updatePokeballs(ID):
