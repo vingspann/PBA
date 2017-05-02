@@ -25,6 +25,10 @@ class bot():
         response = self.checkText(message)
         
         if len(response) > 1:
-            return True, response
-        return False, response
+                if response == "1212":
+                    return False, True, response
+                else:   
+                    return True, True, response
+        else:    
+            return True, False, response
         
