@@ -7,6 +7,9 @@ class pokeType:
         self.notVeryEffective = []
         self.noDamage = []
         
+    def setName(self, name):
+        self.name = name
+        
     def buildType(self):
         #build a request string to find super/not very effective types
         #and no damage types based on the move's typing

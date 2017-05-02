@@ -2,10 +2,52 @@ import os, flask, flask_socketio, time
 from random import randint
 from chatBot import bot
 from user import user
+from pokeType import pokeType
 
 oak = bot()
 
-
+#building a global list of types for determining
+#damage in the Battle logic
+types = []
+for i in range(18):
+    types.append(pokeType())
+    
+types[0].setName("normal")
+types[0].buildType()
+types[1].setName("fire")
+types[1].buildType()
+types[2].setName("fighting")
+types[2].buildType()
+types[3].setName("water")
+types[3].buildType()
+types[4].setName("flying")
+types[4].buildType()
+types[5].setName("grass")
+types[5].buildType()
+types[6].setName("poison")
+types[6].buildType()
+types[7].setName("electric")
+types[7].buildType()
+types[8].setName("ground")
+types[8].buildType()
+types[9].setName("psychic")
+types[9].buildType()
+types[10].setName("rock")
+types[10].buildType()
+types[11].setName("ice")
+types[11].buildType()
+types[12].setName("bug")
+types[12].buildType()
+types[13].setName("dragon")
+types[13].buildType()
+types[14].setName("ghost")
+types[14].buildType()
+types[15].setName("dark")
+types[15].buildType()
+types[16].setName("steel")
+types[16].buildType()
+types[17].setName("fairy")
+types[17].buildType()
 
 
 app = flask.Flask(__name__)
@@ -116,6 +158,8 @@ def battle():
 def battleDamage(p, cp, m, op, ocp, om):
     # p = player, cp = p's current pokemon, m = p's recent move
     # op = other player, ocp = other's current pokemon, om = op's recent move
+    
+    text3 = "na"
 
     # sets Attack and defense to special or physical depending on move type
     if player[p].pokemon[cp].move[m].damageClass == 'physical':
@@ -125,8 +169,21 @@ def battleDamage(p, cp, m, op, ocp, om):
         attack = player[p].pokemon[cp].getSpAtk()
         defense = player[op].pokemon[ocp].getSpDef()
     
-    # simple modifer for now.    
-    modifier = randint(85, 100) / 100.0
+    # Checking for Super/Not Very/No Effect modifiers
+    modifier = getBattleModifier(p, cp, m, op, ocp, om)
+    if modifier >= 2:
+        text3 = "It's super effective!"
+    elif modifier < 1 and modifier > 0:
+        text3 = "It's not very effective..."
+    elif modifier == 0:
+        text3 = "It had no effect!"
+    
+    #STAB modifier check
+    if player[p].pokemon[cp].move[m].moveType == player[p].pokemon[cp].type1 or player[p].pokemon[cp].move[m].moveType == player[p].pokemon[cp].type2:
+        modifier = modifier * 1.5
+        
+    #Random distribution number (85% - 100% of damage)
+    modifier = modifier * (randint(85, 100) / 100.0)
     
     # damage calculation
     damage = (((22.0 * player[p].pokemon[cp].move[m].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier
@@ -142,6 +199,8 @@ def battleDamage(p, cp, m, op, ocp, om):
     
     socketio.emit('battleLogEmit', {'text' : text})
     socketio.emit('battleLogEmit', {'text' : text2})
+    if text3 != "na":
+        socketio.emit('battleLogEmit', {'text' : text3})
     
     if player[op].pokemon[ocp].currentHp == 0:
         text3 = player[op].pokemon[ocp].name + " has fainted."
@@ -153,6 +212,28 @@ def battleDamage(p, cp, m, op, ocp, om):
         return False
     return True
 
+
+#this returns the correct modifier to be applied to battle damage with respect to
+#super effective, not very effective, no effect, and/or STAB modifiers
+def getBattleModifier(p, cp, m, op, ocp, om):
+    modifier = 1.0
+    for attackType in types:
+        if player[p].pokemon[cp].move[m].moveType == attackType.name:
+            for checkType in attackType.superEffective:
+                if player[op].pokemon[ocp].type1 == checkType or player[op].pokemon[ocp].type2 == checkType:
+                    modifier = modifier * 2
+                    print "super!"
+            for checkType in attackType.notVeryEffective:
+                if player[op].pokemon[ocp].type1 == checkType or player[op].pokemon[ocp].type2 == checkType:
+                    modifier = modifier * 0.5
+                    print "nve..."
+            for checkType in attackType.noDamage:
+                if player[op].pokemon[ocp].type1 == checkType or player[op].pokemon[ocp].type2 == checkType:
+                    modifier = modifier * 0  
+                    print "nada"
+
+    print "I'm filler text to be sure this function is called"
+    return modifier
         
 # This is a helper funtion for the battle to force a pokemon switch when they faint
 def battleSwitch(p, cp):
