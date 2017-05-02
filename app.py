@@ -158,6 +158,8 @@ def battle():
 def battleDamage(p, cp, m, op, ocp, om):
     # p = player, cp = p's current pokemon, m = p's recent move
     # op = other player, ocp = other's current pokemon, om = op's recent move
+    
+    text3 = "na"
 
     # sets Attack and defense to special or physical depending on move type
     if player[p].pokemon[cp].move[m].damageClass == 'physical':
@@ -167,8 +169,21 @@ def battleDamage(p, cp, m, op, ocp, om):
         attack = player[p].pokemon[cp].getSpAtk()
         defense = player[op].pokemon[ocp].getSpDef()
     
-    # simple modifer for now.    
-    modifier = randint(85, 100) / 100.0
+    # Checking for Super/Not Very/No Effect modifiers
+    modifier = getBattleModifier(p, cp, m, op, ocp, om)
+    if modifier >= 2:
+        text3 = "It's super effective!"
+    elif modifier < 1 and modifier > 0:
+        text3 = "It's not very effective..."
+    elif modifier == 0:
+        text3 = "It had no effect!"
+    
+    #STAB modifier check
+    if player[p].pokemon[cp].move[m].moveType == player[p].pokemon[cp].type1 or player[p].pokemon[cp].move[m].moveType == player[p].pokemon[cp].type2:
+        modifier = modifier * 1.5
+        
+    #Random distribution number (85% - 100% of damage)
+    modifier = modifier * (randint(85, 100) / 100.0)
     
     # damage calculation
     damage = (((22.0 * player[p].pokemon[cp].move[m].attackPower * (float(attack)/float(defense)))/ 50.0) + 2) * modifier
@@ -184,6 +199,8 @@ def battleDamage(p, cp, m, op, ocp, om):
     
     socketio.emit('battleLogEmit', {'text' : text})
     socketio.emit('battleLogEmit', {'text' : text2})
+    if text3 != "na":
+        socketio.emit('battleLogEmit', {'text' : text3})
     
     if player[op].pokemon[ocp].currentHp == 0:
         text3 = player[op].pokemon[ocp].name + " has fainted."
@@ -195,6 +212,28 @@ def battleDamage(p, cp, m, op, ocp, om):
         return False
     return True
 
+
+#this returns the correct modifier to be applied to battle damage with respect to
+#super effective, not very effective, no effect, and/or STAB modifiers
+def getBattleModifier(p, cp, m, op, ocp, om):
+    modifier = 1.0
+    for attackType in types:
+        if player[p].pokemon[cp].move[m].moveType == attackType.name:
+            for checkType in attackType.superEffective:
+                if player[op].pokemon[ocp].type1 == checkType or player[op].pokemon[ocp].type2 == checkType:
+                    modifier = modifier * 2
+                    print "super!"
+            for checkType in attackType.notVeryEffective:
+                if player[op].pokemon[ocp].type1 == checkType or player[op].pokemon[ocp].type2 == checkType:
+                    modifier = modifier * 0.5
+                    print "nve..."
+            for checkType in attackType.noDamage:
+                if player[op].pokemon[ocp].type1 == checkType or player[op].pokemon[ocp].type2 == checkType:
+                    modifier = modifier * 0  
+                    print "nada"
+
+    print "I'm filler text to be sure this function is called"
+    return modifier
         
 # This is a helper funtion for the battle to force a pokemon switch when they faint
 def battleSwitch(p, cp):
