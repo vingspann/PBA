@@ -87,7 +87,7 @@ body {
 
 #StadiumText {
      font-family: metroregular, Arial, sans-serif;
-     color: #5b5f66;
+     color: #1d1d1e;
 }
 
 #pokemonInfoCharName{
@@ -217,6 +217,15 @@ body {
     opacity: 0.9;
     background: gray;
     
+}
+
+#nameLog2 {
+    font-family: pokemon-font, Arial, sans-serif;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 1px;
+    border-radius: 5px;
 }
 
 #chatInput{
@@ -352,4 +361,30 @@ li{
 .custom-modal{
     width: 80%;
     height: 100%;
+}
+
+img {
+    margin: auto;
+}
+
+@media (max-width: 900px) {
+    .carousel {
+      width:auto;
+      height:auto;
+    }
+}
+
+h3 {
+     font-family: metroregular, Arial, sans-serif;
+     color: #1d1d1e;
+}
+
+p {
+    font-family: pokemon-font, Arial, sans-serif;
+    color: #1d1d1e;
+    font-weight: bold;
+}
+
+.carouselImg {
+    opacity: .2;
 }
