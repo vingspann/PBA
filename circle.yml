@@ -9,5 +9,8 @@ dependencies:
 deployment:
   production:
     branch: master
+    commands:
+      - webpack --config webpack.config.js
+
     heroku:
       appname: pokemon-battling-application
