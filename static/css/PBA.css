@@ -219,6 +219,15 @@ body {
     
 }
 
+#nameLog2 {
+    font-family: pokemon-font, Arial, sans-serif;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 1px;
+    border-radius: 5px;
+}
+
 #chatInput{
     display: block;
     flex:1;
@@ -377,5 +386,5 @@ p {
 }
 
 .carouselImg {
-    opacity: .5;
+    opacity: .2;
 }

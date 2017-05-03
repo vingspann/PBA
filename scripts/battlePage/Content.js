@@ -128,7 +128,19 @@ export class Content extends React.Component{
                     </Modal.Body>
                     
                     <Modal.Footer>
-                        <Button onClick={this.close}>Continue</Button>
+                       <Navbar>
+                            <Navbar.Header>
+                                <Navbar.Toggle />
+                            </Navbar.Header>
+                            <Navbar.Collapse>
+                                <Nav>
+                                    <Button bsSize="large" bsStyle="primary" onClick={this.close}>Spectate</Button>
+                                </Nav>
+                                <Nav pullRight>
+                                    <Button bsSize="large" bsStyle="primary" onClick={this.close}>Join Game</Button>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Navbar>
                     </Modal.Footer>
                 </Modal>
                 

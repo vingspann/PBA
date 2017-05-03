@@ -6,6 +6,7 @@ import { InputGroup } from '../../node_modules/react-bootstrap';
 import { FormControl } from '../../node_modules/react-bootstrap';
 import { FormGroup } from '../../node_modules/react-bootstrap';
 import { ButtonToolbar } from '../../node_modules/react-bootstrap';
+import { ButtonGroup } from '../../node_modules/react-bootstrap';
 
 export class CmdBtn extends React.Component {
     constructor(props){
@@ -25,6 +26,7 @@ export class CmdBtn extends React.Component {
         this.onClick4 = this.onClick4.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.confirmMove = this.confirmMove.bind(this);
+        this.joinBattle = this.joinBattle.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -32,7 +34,7 @@ export class CmdBtn extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        console.log('A move was clicked.')
+        console.log('A move was clicked.');
 
     }
  
@@ -40,35 +42,39 @@ export class CmdBtn extends React.Component {
         Socket.emit('CM', {'CM' : this.state.CM});
         this.setState({'CM' : 0});
         console.log(this.state.CM);
-        console.log('Button 1 clicked.')
+        console.log('Button 1 clicked.');
     }
     
     onClick2(){
-        console.log('Button 2 clicked.')
+        console.log('Button 2 clicked.');
         this.setState({'CM' : 1});
         Socket.emit('CM', {'CM' : this.state.CM});
     }
     
     onClick3(){
-        console.log('Button 3 clicked.')
+        console.log('Button 3 clicked.');
         this.setState({'CM' : 2});
         Socket.emit('CM', {'CM' : this.state.CM});
     }
     
     onClick4(){
-        console.log('Button 4 clicked.')
+        console.log('Button 4 clicked.');
         this.setState({'CM' : 3});
         Socket.emit('CM', {'CM' : this.state.CM});
     }
     
     confirmMove() {
-        console.log('Confirm move button clicked.')
+        console.log('Confirm move button clicked.');
         Socket.emit('confirmMove');
+    }
+    
+    joinBattle() {
+        console.log("join battle button clicked");
     }
 
     componentDidMount(){
         
-        Socket.emit('updateInfo')
+        Socket.emit('updateInfo');
         // Allows moves to be dynamically updated.
         Socket.on('updatePokemon', (data) =>{
             this.setState({
@@ -77,7 +83,7 @@ export class CmdBtn extends React.Component {
                 'move2' : data['move2'],
                 'move3' : data['move3'],
                 'move4' : data['move4']
-            })
+            });
         });
         
         Socket.on('connection', (data) => {
@@ -147,8 +153,13 @@ export class CmdBtn extends React.Component {
                 // Just add in html elements like the above. Don't forget a semi colon.
                 
                 moveArea =
+                <div>
                 <div id='nameLog'>
                     You are spectating
+                </div>
+                <div id='nameLog2'>
+                    <Button bsStyle="primary" bsSize="large" onClick={this.joinBattle}>Join Battle</Button>
+                </div>
                 </div>;
         };
       
