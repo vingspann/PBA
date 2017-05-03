@@ -21689,57 +21689,95 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
 	                                        React.createElement(
 	                                            'h3',
 	                                            null,
-	                                            'First slide label'
+	                                            'Welcome to PBA Stadium!!'
 	                                        ),
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+	                                            'We built this site to simulate small, simple pokemon battles.'
 	                                        )
 	                                    )
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, alt: '900x500', src: '../static/img/pokemonStadium.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/pokemonStadium.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
 	                                        React.createElement(
 	                                            'h3',
 	                                            null,
-	                                            'Second slide label'
+	                                            'Battle Log'
 	                                        ),
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+	                                            'The Battle Log is the black window in the center of your screen.  All moves and results will be displayed here.'
 	                                        )
 	                                    )
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, alt: '900x500', src: '../static/img/PBALogo.png' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
 	                                        React.createElement(
 	                                            'h3',
 	                                            null,
-	                                            'Third slide label'
+	                                            'Pokemon Info'
 	                                        ),
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
+	                                            'To the left of the Battle Log is the Pokemon Info window.  This window shows your currently selected pokemon and the opponents currently selected pokemon.'
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'Pokemon Commands'
+	                                        ),
+	                                        React.createElement(
+	                                            'p',
+	                                            null,
+	                                            'Once you have joined a battle you will see a few buttons below the Battle Log where you can select the move you want your pokemon to use.  By double clicking the button, the move will be set and clicking Confirm Move will let the system know you are ready to continue.  You can also switch out the pokemon you are using or surrender the battle if you feel so inclined.'
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'Chat'
+	                                        ),
+	                                        React.createElement(
+	                                            'p',
+	                                            null,
+	                                            'To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash.'
 	                                        )
 	                                    )
 	                                )
@@ -21750,9 +21788,35 @@
 	                        _reactBootstrap.Modal.Footer,
 	                        null,
 	                        React.createElement(
-	                            _reactBootstrap.Button,
-	                            { onClick: this.close },
-	                            'Continue'
+	                            _reactBootstrap.Navbar,
+	                            null,
+	                            React.createElement(
+	                                _reactBootstrap.Navbar.Header,
+	                                null,
+	                                React.createElement(_reactBootstrap.Navbar.Toggle, null)
+	                            ),
+	                            React.createElement(
+	                                _reactBootstrap.Navbar.Collapse,
+	                                null,
+	                                React.createElement(
+	                                    _reactBootstrap.Nav,
+	                                    null,
+	                                    React.createElement(
+	                                        _reactBootstrap.Button,
+	                                        { bsSize: 'large', bsStyle: 'primary', onClick: this.close },
+	                                        'Spectate'
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Nav,
+	                                    { pullRight: true },
+	                                    React.createElement(
+	                                        _reactBootstrap.Button,
+	                                        { bsSize: 'large', bsStyle: 'primary', onClick: this.close },
+	                                        'Join Game'
+	                                    )
+	                                )
+	                            )
 	                        )
 	                    )
 	                )
@@ -49571,6 +49635,7 @@
 	        _this.onClick4 = _this.onClick4.bind(_this);
 	        _this.handleSubmit = _this.handleSubmit.bind(_this);
 	        _this.confirmMove = _this.confirmMove.bind(_this);
+	        _this.joinBattle = _this.joinBattle.bind(_this);
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
 
 	        return _this;
@@ -49617,6 +49682,11 @@
 	        value: function confirmMove() {
 	            console.log('Confirm move button clicked.');
 	            _Socket.Socket.emit('confirmMove');
+	        }
+	    }, {
+	        key: 'joinBattle',
+	        value: function joinBattle() {
+	            console.log("join battle button clicked");
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -49732,8 +49802,21 @@
 
 	                moveArea = React.createElement(
 	                    'div',
-	                    { id: 'nameLog' },
-	                    'You are spectating'
+	                    null,
+	                    React.createElement(
+	                        'div',
+	                        { id: 'nameLog' },
+	                        'You are spectating'
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { id: 'nameLog2' },
+	                        React.createElement(
+	                            _reactBootstrap.Button,
+	                            { bsStyle: 'primary', bsSize: 'large', onClick: this.joinBattle },
+	                            'Join Battle'
+	                        )
+	                    )
 	                );
 	            };
 
