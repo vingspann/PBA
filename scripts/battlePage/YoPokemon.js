@@ -41,7 +41,8 @@ export class YoPokemon extends React.Component {
                 'opCharacter'  : data['name'],
                 'opHealth': data['health'],
                 'opLink' : data['link']
-            })
+            });
+            this.forceUpdate();
         })
         
         Socket.on('updateSpectator', (data) =>{

@@ -11,44 +11,6 @@ oak = bot()
 types = []
 for i in range(18):
     types.append(pokeType())
-    
-types[0].setName("normal")
-types[0].buildType()
-types[1].setName("fire")
-types[1].buildType()
-types[2].setName("fighting")
-types[2].buildType()
-types[3].setName("water")
-types[3].buildType()
-types[4].setName("flying")
-types[4].buildType()
-types[5].setName("grass")
-types[5].buildType()
-types[6].setName("poison")
-types[6].buildType()
-types[7].setName("electric")
-types[7].buildType()
-types[8].setName("ground")
-types[8].buildType()
-types[9].setName("psychic")
-types[9].buildType()
-types[10].setName("rock")
-types[10].buildType()
-types[11].setName("ice")
-types[11].buildType()
-types[12].setName("bug")
-types[12].buildType()
-types[13].setName("dragon")
-types[13].buildType()
-types[14].setName("ghost")
-types[14].buildType()
-types[15].setName("dark")
-types[15].buildType()
-types[16].setName("steel")
-types[16].buildType()
-types[17].setName("fairy")
-types[17].buildType()
-
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
@@ -56,6 +18,12 @@ socketio = flask_socketio.SocketIO(app)
 player = [user(), user()]
 userList = {}
 i = 0
+
+def startup():
+    setTypes()
+    setPokemon()
+    print "Finished API calls"
+
 # this is where the battle and turns will happen
 def battle():
     
@@ -102,13 +70,13 @@ def battle():
     # from fPoke to the react components
     # fturn makes it so, if they chose to switch, then they don't take an attack
     if player[f].recentMove == 5:
-        battleSwitch(f, fPoke)
+        battleSwitch(f, 1)
         fPoke = player[f].currentPokemon
         updatePokemon(player[f].ID)
         fTurn = False
     
     if player[s].recentMove == 5:
-        battleSwitch(s, sPoke)
+        battleSwitch(s, 1)
         sPoke = player[s].currentPokemon
         updatePokemon(player[s].ID)
         sTurn = False
@@ -205,7 +173,7 @@ def battleDamage(p, cp, m, op, ocp, om):
     if player[op].pokemon[ocp].currentHp == 0:
         text3 = player[op].pokemon[ocp].name + " has fainted."
         socketio.emit('battleLogEmit', {'text' : text3})
-        battleSwitch(op, ocp)
+        battleSwitch(op, 0)
         player[op].pokemonLeft = player[op].pokemonLeft - 1
         return False
     elif om == 5:
@@ -236,24 +204,29 @@ def getBattleModifier(p, cp, m, op, ocp, om):
     return modifier
         
 # This is a helper funtion for the battle to force a pokemon switch when they faint
-def battleSwitch(p, cp):
-    if cp == 0:
-        cp = 1
-    else:
-        cp = 0
-        
-    player[p].currentPokemon = cp
-    updatePokemon(player[p].ID)
+# Method is used for whether it's a death (0) or a user switching(1)
+def battleSwitch(p, method):
     
+    if player[p].pokemonLeft != 0 and method == 0:
+        for i in range(4):
+            if player[p].pokemon[i].currentHp > 0:
+                player[p].currentPokemon = i
+                updatePokemon(player[p].ID)
+                
+                return
+    elif method == 1:
+        player[p].currentPokemon = player[p].switchPokemon
+        updatePokemon(player[p].ID)
+        
 # Gave this section its own function to make surrendering easier to code
 # Method gets 0 for battle loss, and 1 for single surrender
 # Method gets 2 for double surrender
 def endBattle(w, l, method):
     
     if method == 0:
-        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
-        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + " and " + player[l].pokemon[1].name + "."
-        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
+        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
+        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + ", " + player[l].pokemon[1].name + ", " + player[l].pokemon[2].name + ", and " + player[l].pokemon[3].name + "."
+        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
     elif method == 1:
         wMsg = "You Win! Player " + str (l + 1) + " chose to surrender."
         lMsg = "You lose. You chose to surrender. "
@@ -306,7 +279,45 @@ def setPokemon():
     player[1].pokemon[3].buildMoves('Bug Buzz','Heat Wave','Hurricane','Psychic')
     player[1].pokemon[3].buildPokemon()
     player[1].pokemon[3].percentHealth()
-    
+# Builds all of the types for effective bonuse  
+def setTypes():
+    types[0].setName("normal")
+    types[0].buildType()
+    types[1].setName("fire")
+    types[1].buildType()
+    types[2].setName("fighting")
+    types[2].buildType()
+    types[3].setName("water")
+    types[3].buildType()
+    types[4].setName("flying")
+    types[4].buildType()
+    types[5].setName("grass")
+    types[5].buildType()
+    types[6].setName("poison")
+    types[6].buildType()
+    types[7].setName("electric")
+    types[7].buildType()
+    types[8].setName("ground")
+    types[8].buildType()
+    types[9].setName("psychic")
+    types[9].buildType()
+    types[10].setName("rock")
+    types[10].buildType()
+    types[11].setName("ice")
+    types[11].buildType()
+    types[12].setName("bug")
+    types[12].buildType()
+    types[13].setName("dragon")
+    types[13].buildType()
+    types[14].setName("ghost")
+    types[14].buildType()
+    types[15].setName("dark")
+    types[15].buildType()
+    types[16].setName("steel")
+    types[16].buildType()
+    types[17].setName("fairy")
+    types[17].buildType()
+
 # Helper function used by seperate socket Io calls
 def updatePokemon(ID):
     global i 
@@ -339,7 +350,7 @@ def updatePokemon(ID):
         'opLink' : player[op].pokemon[ocp].spriteLink,
         'opHealth' : player[op].pokemon[ocp].percentHealth()
     }, room=player[p].ID)
-    if(i >3):
+    if(i >1):
         # updates the opponents info of the updated info
         socketio.emit('updateOpPokemon', {
             'name' : player[p].pokemon[cp].name,
@@ -360,11 +371,15 @@ def updatePokeballs(ID):
     else: 
         return
   # pushes both pokemon
-    socketio.emit('getBothPokemon', {
+    socketio.emit('updatePokeballs', {
         'health0' : player[p].pokemon[0].percentHealth(),
         'link0' : player[p].pokemon[0].spriteLink,
         'health1' : player[p].pokemon[1].percentHealth(),
-        'link1' : player[p].pokemon[1].spriteLink
+        'link1' : player[p].pokemon[1].spriteLink,
+        'health2' : player[p].pokemon[2].percentHealth(),
+        'link2' : player[p].pokemon[2].spriteLink,
+        'health3' : player[p].pokemon[3].percentHealth(),
+        'link3' : player[p].pokemon[3].spriteLink
     }, room=player[p].ID)  
     
 def updateSpectator():
@@ -549,10 +564,11 @@ def joinGame():
 
 if __name__ == '__main__':
     
-    setPokemon()
+    startup()
     socketio.run(
             app,
             host=os.getenv('IP', '0.0.0.0'),
             port=int(os.getenv('PORT', 8080)),
             debug=True
         )
+    
