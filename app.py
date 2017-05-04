@@ -212,6 +212,7 @@ def battleSwitch(p, method):
             if player[p].pokemon[i].currentHp > 0:
                 player[p].currentPokemon = i
                 updatePokemon(player[p].ID)
+                
                 return
     elif method == 1:
         player[p].currentPokemon = player[p].switchPokemon
@@ -349,7 +350,7 @@ def updatePokemon(ID):
         'opLink' : player[op].pokemon[ocp].spriteLink,
         'opHealth' : player[op].pokemon[ocp].percentHealth()
     }, room=player[p].ID)
-    if(i >3):
+    if(i >1):
         # updates the opponents info of the updated info
         socketio.emit('updateOpPokemon', {
             'name' : player[p].pokemon[cp].name,
