@@ -38,6 +38,6 @@ class user():
         self.currentPokemon = 0
         self.recentMove = 0
         self.ID = None
-        self.pokemonLeft = 2
+        self.pokemonLeft = 4
         self.lockMove = False
         self.switchPokemon = 0
