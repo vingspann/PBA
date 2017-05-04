@@ -21532,6 +21532,8 @@
 
 	var _FBLogin = __webpack_require__(492);
 
+	var _Socket = __webpack_require__(433);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21549,10 +21551,14 @@
 	        var _this = _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this, props));
 
 	        _this.state = {
-	            'showModal': true
+	            'showModal': true,
+	            'showGameFullModal': false
 	        };
 
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
+	        _this.joinGame = _this.joinGame.bind(_this);
+	        _this.gameFullClose = _this.gameFullClose.bind(_this);
+	        _this.gameFullOpen = _this.gameFullOpen.bind(_this);
 	        _this.open = _this.open.bind(_this);
 	        _this.close = _this.close.bind(_this);
 	        return _this;
@@ -21560,7 +21566,11 @@
 
 	    _createClass(Content, [{
 	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
+	        value: function componentDidMount() {
+	            _Socket.Socket.on('gameFull', function () {
+	                this.setState({ showGameFullModal: true });
+	            });
+	        }
 	    }, {
 	        key: 'close',
 	        value: function close() {
@@ -21570,6 +21580,22 @@
 	        key: 'open',
 	        value: function open() {
 	            this.setState({ showModal: true });
+	        }
+	    }, {
+	        key: 'gameFullClose',
+	        value: function gameFullClose() {
+	            this.setState({ showGameFullModal: false });
+	        }
+	    }, {
+	        key: 'gameFullOpen',
+	        value: function gameFullOpen() {
+	            this.setState({ showGameFullModal: true });
+	        }
+	    }, {
+	        key: 'joinGame',
+	        value: function joinGame() {
+	            _Socket.Socket.emit('joinGame');
+	            this.setState({ showModal: false });
 	        }
 	    }, {
 	        key: 'render',
@@ -21689,7 +21715,7 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/slide1.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
@@ -21720,7 +21746,7 @@
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'The Battle Log is the black window in the center of your screen.  All moves and results will be displayed here.'
+	                                            'The Battle Log is the black window in the center of your screen.  All actions and results will be displayed here.'
 	                                        )
 	                                    )
 	                                ),
@@ -21758,7 +21784,7 @@
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'Once you have joined a battle you will see a few buttons below the Battle Log where you can select the move you want your pokemon to use.  By double clicking the button, the move will be set and clicking Confirm Move will let the system know you are ready to continue.  You can also switch out the pokemon you are using or surrender the battle if you feel so inclined.'
+	                                            'Once you have joined a battle you will see a few buttons below the Battle Log. Double click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.'
 	                                        )
 	                                    )
 	                                ),
@@ -21789,7 +21815,7 @@
 	                        null,
 	                        React.createElement(
 	                            _reactBootstrap.Navbar,
-	                            null,
+	                            { inverse: true },
 	                            React.createElement(
 	                                _reactBootstrap.Navbar.Header,
 	                                null,
@@ -21802,21 +21828,56 @@
 	                                    _reactBootstrap.Nav,
 	                                    null,
 	                                    React.createElement(
-	                                        _reactBootstrap.Button,
-	                                        { bsSize: 'large', bsStyle: 'primary', onClick: this.close },
-	                                        'Spectate'
+	                                        _reactBootstrap.Navbar.Brand,
+	                                        null,
+	                                        React.createElement(
+	                                            'a',
+	                                            { onClick: this.close },
+	                                            'Spectate'
+	                                        )
 	                                    )
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.Nav,
 	                                    { pullRight: true },
 	                                    React.createElement(
-	                                        _reactBootstrap.Button,
-	                                        { bsSize: 'large', bsStyle: 'primary', onClick: this.close },
-	                                        'Join Game'
+	                                        _reactBootstrap.Navbar.Brand,
+	                                        null,
+	                                        React.createElement(
+	                                            'a',
+	                                            { onClick: this.joinGame },
+	                                            'Join Game'
+	                                        )
 	                                    )
 	                                )
 	                            )
+	                        )
+	                    )
+	                ),
+	                React.createElement(
+	                    _reactBootstrap.Modal,
+	                    { show: this.state.showGameFullModal, onHide: this.gameFullClose, dialogClassName: 'custom-modal' },
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Header,
+	                        { closeButton: true },
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Title,
+	                            null,
+	                            'Game Full'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Body,
+	                        null,
+	                        'Sorry. The game is currently full. Try again later!'
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Footer,
+	                        null,
+	                        React.createElement(
+	                            _reactBootstrap.Button,
+	                            { onClick: this.gameFullClose },
+	                            'Ok'
 	                        )
 	                    )
 	                )
@@ -49635,7 +49696,7 @@
 	        _this.onClick4 = _this.onClick4.bind(_this);
 	        _this.handleSubmit = _this.handleSubmit.bind(_this);
 	        _this.confirmMove = _this.confirmMove.bind(_this);
-	        _this.joinBattle = _this.joinBattle.bind(_this);
+	        _this.joinGame = _this.joinGame.bind(_this);
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
 
 	        return _this;
@@ -49684,9 +49745,10 @@
 	            _Socket.Socket.emit('confirmMove');
 	        }
 	    }, {
-	        key: 'joinBattle',
-	        value: function joinBattle() {
-	            console.log("join battle button clicked");
+	        key: 'joinGame',
+	        value: function joinGame() {
+	            _Socket.Socket.emit('joinGame');
+	            this.setState({ showModal: false });
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -49813,8 +49875,8 @@
 	                        { id: 'nameLog2' },
 	                        React.createElement(
 	                            _reactBootstrap.Button,
-	                            { bsStyle: 'primary', bsSize: 'large', onClick: this.joinBattle },
-	                            'Join Battle'
+	                            { bsSize: 'large', onClick: this.joinGame },
+	                            'Join Game'
 	                        )
 	                    )
 	                );
