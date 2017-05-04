@@ -39,7 +39,7 @@ export class CmdBtn extends React.Component {
     }
  
     onClick1(){
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 0});
         this.setState({'CM' : 0});
         console.log(this.state.CM);
         console.log('Button 1 clicked.');
@@ -48,19 +48,19 @@ export class CmdBtn extends React.Component {
     onClick2(){
         console.log('Button 2 clicked.');
         this.setState({'CM' : 1});
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 1});
     }
     
     onClick3(){
         console.log('Button 3 clicked.');
         this.setState({'CM' : 2});
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 2});
     }
     
     onClick4(){
         console.log('Button 4 clicked.');
         this.setState({'CM' : 3});
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 3});
     }
     
     confirmMove() {
