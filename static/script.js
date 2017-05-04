@@ -21169,6 +21169,7 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (CmdBtn.__proto__ || Object.getPrototypeOf(CmdBtn)).call(this, props));
 
         _this.state = {
+            'showModal': false,
             'name': 'name',
             'move1': 'move1',
             'move2': 'move2',
@@ -21184,6 +21185,8 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.confirmMove = _this.confirmMove.bind(_this);
         _this.joinGame = _this.joinGame.bind(_this);
+        _this.open = _this.open.bind(_this);
+        _this.close = _this.close.bind(_this);
         _this.componentDidMount = _this.componentDidMount.bind(_this);
 
         return _this;
@@ -21238,6 +21241,16 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
             this.setState({ showModal: false });
         }
     }, {
+        key: 'close',
+        value: function close() {
+            this.setState({ showModal: false });
+        }
+    }, {
+        key: 'open',
+        value: function open() {
+            this.setState({ showModal: true });
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
@@ -21259,6 +21272,10 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
                     'user': data['user']
                 });
                 _this2.forceUpdate();
+            });
+
+            _Socket.Socket.on('gameFull', function () {
+                this.setState({ 'showModal': true });
             });
         }
     }, {
@@ -21372,7 +21389,34 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
             return React.createElement(
                 'div',
                 null,
-                moveArea
+                moveArea,
+                React.createElement(
+                    _reactBootstrap.Modal,
+                    { show: this.state.showModal, bsSize: 'small', onHide: this.close, dialogClassName: 'custom-modal' },
+                    React.createElement(
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
+                        React.createElement(
+                            _reactBootstrap.Modal.Title,
+                            null,
+                            'Game Full'
+                        )
+                    ),
+                    React.createElement(
+                        _reactBootstrap.Modal.Body,
+                        null,
+                        'Sorry. The game is currently full. Try again later!'
+                    ),
+                    React.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        React.createElement(
+                            _reactBootstrap.Button,
+                            { bsStyle: 'primary', onClick: this.close },
+                            'Ok'
+                        )
+                    )
+                )
             );
         }
     }]);

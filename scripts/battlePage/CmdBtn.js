@@ -7,11 +7,13 @@ import { FormControl } from '../../node_modules/react-bootstrap';
 import { FormGroup } from '../../node_modules/react-bootstrap';
 import { ButtonToolbar } from '../../node_modules/react-bootstrap';
 import { ButtonGroup } from '../../node_modules/react-bootstrap';
+import { Modal } from '../../node_modules/react-bootstrap';
 
 export class CmdBtn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+             'showModal': false,
              'name' : 'name',
              'move1' : 'move1',
              'move2' : 'move2',
@@ -27,6 +29,8 @@ export class CmdBtn extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.confirmMove = this.confirmMove.bind(this);
         this.joinGame = this.joinGame.bind(this);
+        this.open = this.open.bind(this);
+        this.close = this.close.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -72,6 +76,14 @@ export class CmdBtn extends React.Component {
         Socket.emit('joinGame');
         this.setState({ showModal: false });
     }
+    
+     close() {
+        this.setState({ showModal: false });
+    }
+
+    open() {
+        this.setState({ showModal: true });
+    }
 
     componentDidMount(){
         
@@ -93,6 +105,10 @@ export class CmdBtn extends React.Component {
             });
             this.forceUpdate();
         });
+        
+        Socket.on('gameFull', function() {
+          this.setState({ 'showModal': true});
+      });
     }
     
     
@@ -170,6 +186,20 @@ export class CmdBtn extends React.Component {
         return (
             <div>
                 {moveArea}
+                
+                <Modal show={this.state.showModal} bsSize="small" onHide={this.close} dialogClassName="custom-modal">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Game Full</Modal.Title>
+                    </Modal.Header>
+                    
+                    <Modal.Body>
+                        Sorry. The game is currently full. Try again later!
+                    </Modal.Body>
+                    
+                    <Modal.Footer>
+                      <Button bsStyle = 'primary' onClick={this.close}>Ok</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }
