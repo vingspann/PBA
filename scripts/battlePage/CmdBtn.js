@@ -26,7 +26,7 @@ export class CmdBtn extends React.Component {
         this.onClick4 = this.onClick4.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.confirmMove = this.confirmMove.bind(this);
-        this.joinBattle = this.joinBattle.bind(this);
+        this.joinGame = this.joinGame.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -68,8 +68,9 @@ export class CmdBtn extends React.Component {
         Socket.emit('confirmMove');
     }
     
-    joinBattle() {
-        console.log("join battle button clicked");
+    joinGame() {
+        Socket.emit('joinGame');
+        this.setState({ showModal: false });
     }
 
     componentDidMount(){
@@ -93,6 +94,8 @@ export class CmdBtn extends React.Component {
             this.forceUpdate();
         });
     }
+    
+    
 
 
     render() {
@@ -158,7 +161,7 @@ export class CmdBtn extends React.Component {
                     You are spectating
                 </div>
                 <div id='nameLog2'>
-                    <Button bsStyle="primary" bsSize="large" onClick={this.joinBattle}>Join Battle</Button>
+                    <Button  bsSize="large" onClick={this.joinGame}>Join Game</Button>
                 </div>
                 </div>;
         };

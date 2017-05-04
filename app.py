@@ -527,7 +527,12 @@ def on_connect():
     flask_socketio.join_room('spectator')
     socketio.emit('connection', {'user' : 3}, room='spectator')
     updateSpectator()
-    
+
+@socketio.on('joinGame')
+def joinGame():
+    gameFull = False;
+    if(gameFull):
+        socketio.emit('gameFull')
 
 if __name__ == '__main__':
     
