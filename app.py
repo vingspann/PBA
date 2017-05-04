@@ -12,42 +12,6 @@ types = []
 for i in range(18):
     types.append(pokeType())
     
-types[0].setName("normal")
-types[0].buildType()
-types[1].setName("fire")
-types[1].buildType()
-types[2].setName("fighting")
-types[2].buildType()
-types[3].setName("water")
-types[3].buildType()
-types[4].setName("flying")
-types[4].buildType()
-types[5].setName("grass")
-types[5].buildType()
-types[6].setName("poison")
-types[6].buildType()
-types[7].setName("electric")
-types[7].buildType()
-types[8].setName("ground")
-types[8].buildType()
-types[9].setName("psychic")
-types[9].buildType()
-types[10].setName("rock")
-types[10].buildType()
-types[11].setName("ice")
-types[11].buildType()
-types[12].setName("bug")
-types[12].buildType()
-types[13].setName("dragon")
-types[13].buildType()
-types[14].setName("ghost")
-types[14].buildType()
-types[15].setName("dark")
-types[15].buildType()
-types[16].setName("steel")
-types[16].buildType()
-types[17].setName("fairy")
-types[17].buildType()
 
 
 app = flask.Flask(__name__)
@@ -56,6 +20,12 @@ socketio = flask_socketio.SocketIO(app)
 player = [user(), user()]
 userList = {}
 i = 0
+
+def startup():
+    
+    setTypes()
+    setPokemon()
+
 # this is where the battle and turns will happen
 def battle():
     
@@ -290,7 +260,46 @@ def setPokemon():
     player[1].pokemon[1].buildMoves('Steel Wing','Night Slash','X-Scissor','Wing Attack')
     player[1].pokemon[1].buildPokemon()
     player[1].pokemon[1].percentHealth()
-    
+  
+# Builds all of the types for effective bonuse  
+def setTypes():
+    types[0].setName("normal")
+    types[0].buildType()
+    types[1].setName("fire")
+    types[1].buildType()
+    types[2].setName("fighting")
+    types[2].buildType()
+    types[3].setName("water")
+    types[3].buildType()
+    types[4].setName("flying")
+    types[4].buildType()
+    types[5].setName("grass")
+    types[5].buildType()
+    types[6].setName("poison")
+    types[6].buildType()
+    types[7].setName("electric")
+    types[7].buildType()
+    types[8].setName("ground")
+    types[8].buildType()
+    types[9].setName("psychic")
+    types[9].buildType()
+    types[10].setName("rock")
+    types[10].buildType()
+    types[11].setName("ice")
+    types[11].buildType()
+    types[12].setName("bug")
+    types[12].buildType()
+    types[13].setName("dragon")
+    types[13].buildType()
+    types[14].setName("ghost")
+    types[14].buildType()
+    types[15].setName("dark")
+    types[15].buildType()
+    types[16].setName("steel")
+    types[16].buildType()
+    types[17].setName("fairy")
+    types[17].buildType()
+
 # Helper function used by seperate socket Io calls
 def updatePokemon(ID):
     global i 
@@ -533,10 +542,11 @@ def joinGame():
 
 if __name__ == '__main__':
     
-    setPokemon()
+    
     socketio.run(
             app,
             host=os.getenv('IP', '0.0.0.0'),
             port=int(os.getenv('PORT', 8080)),
             debug=True
         )
+    startup()
