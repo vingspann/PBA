@@ -50335,6 +50335,8 @@
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
 	        _this.onClickSwitchOne = _this.onClickSwitchOne.bind(_this);
 	        _this.onClickSwitchTwo = _this.onClickSwitchTwo.bind(_this);
+	        _this.onClickSwitchThree = _this.onClickSwitchThree.bind(_this);
+	        _this.onClickSwitchFour = _this.onClickSwitchFour.bind(_this);
 	        _this.open = _this.open.bind(_this);
 	        _this.close = _this.close.bind(_this);
 
@@ -50373,6 +50375,42 @@
 	                });
 	                this.setState({ 'currentPokemon': 2 });
 	                console.log('Pokemon 2 selected.');
+	                this.setState({ showModal: false });
+	            }
+	        }
+	    }, {
+	        key: 'onClickSwitchThree',
+	        value: function onClickSwitchThree() {
+
+	            if (this.state.currentPokemon == 3) {
+	                console.log("Already currentPokemon");
+	            } else {
+
+	                _Socket.Socket.emit('CM', {
+	                    'CM': 5,
+	                    'currentPokemon': 3
+
+	                });
+	                this.setState({ 'currentPokemon': 3 });
+	                console.log('Pokemon 3 selected.');
+	                this.setState({ showModal: false });
+	            }
+	        }
+	    }, {
+	        key: 'onClickSwitchFour',
+	        value: function onClickSwitchFour() {
+
+	            if (this.state.currentPokemon == 4) {
+	                console.log("Already currentPokemon");
+	            } else {
+
+	                _Socket.Socket.emit('CM', {
+	                    'CM': 5,
+	                    'currentPokemon': 4
+
+	                });
+	                this.setState({ 'currentPokemon': 4 });
+	                console.log('Pokemon 4 selected.');
 	                this.setState({ showModal: false });
 	            }
 	        }
@@ -50419,9 +50457,15 @@
 	            var health0 = this.state.health0;
 	            var link1 = this.state.link1;
 	            var health1 = this.state.health1;
+	            var link2 = this.state.link2;
+	            var health2 = this.state.health2;
+	            var link3 = this.state.link3;
+	            var health3 = this.state.health3;
 
 	            health0 = parseFloat(health0).toFixed(2);
 	            health1 = parseFloat(health1).toFixed(2);
+	            health2 = parseFloat(health2).toFixed(2);
+	            health3 = parseFloat(health3).toFixed(2);
 
 	            var popover = React.createElement(
 	                _reactBootstrap.Popover,
@@ -50448,6 +50492,28 @@
 	                    null,
 	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health1 * 100, label: Math.floor(health1 * 100) + '%', key: 1 }),
 	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health1 * 100, key: 2 })
+	                )
+	            );
+	            var tooltip2 = React.createElement(
+	                _reactBootstrap.Tooltip,
+	                { id: 'modal-tooltip' },
+	                React.createElement('img', { src: link2, alt: 'Pokemon1' }),
+	                React.createElement(
+	                    _reactBootstrap.ProgressBar,
+	                    null,
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health2 * 100, label: Math.floor(health2 * 100) + '%', key: 1 }),
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health2 * 100, key: 2 })
+	                )
+	            );
+	            var tooltip3 = React.createElement(
+	                _reactBootstrap.Tooltip,
+	                { id: 'modal-tooltip' },
+	                React.createElement('img', { src: link3, alt: 'Pokemon1' }),
+	                React.createElement(
+	                    _reactBootstrap.ProgressBar,
+	                    null,
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health3 * 100, label: Math.floor(health3 * 100) + '%', key: 1 }),
+	                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health3 * 100, key: 2 })
 	                )
 	            );
 	            var switchButton = null;
@@ -50488,6 +50554,16 @@
 	                                    _reactBootstrap.OverlayTrigger,
 	                                    { overlay: tooltip1, placement: 'right' },
 	                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchTwo })
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.OverlayTrigger,
+	                                    { overlay: tooltip2, placement: 'left' },
+	                                    React.createElement('div', { className: this.state.firstPokeball, onClick: this.onClickSwitchThree })
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.OverlayTrigger,
+	                                    { overlay: tooltip3, placement: 'right' },
+	                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchFour })
 	                                )
 	                            )
 	                        ),
