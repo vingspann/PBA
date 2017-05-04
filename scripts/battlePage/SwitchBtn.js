@@ -31,6 +31,8 @@ export class SwitchBtn extends React.Component {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.onClickSwitchOne = this.onClickSwitchOne.bind(this);
         this.onClickSwitchTwo = this.onClickSwitchTwo.bind(this);
+        this.onClickSwitchThree = this.onClickSwitchThree.bind(this);
+        this.onClickSwitchFour = this.onClickSwitchFour.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
 
@@ -76,6 +78,46 @@ export class SwitchBtn extends React.Component {
 
     }
     
+     onClickSwitchThree(){
+
+        
+        if (this.state.currentPokemon == 3){
+            console.log("Already currentPokemon")
+        } else {
+           
+            Socket.emit('CM', {
+                'CM' : 5,
+                'currentPokemon' : 3
+                
+            });
+            this.setState({'currentPokemon' : 3});
+            console.log('Pokemon 3 selected.');
+            this.setState({ showModal: false });
+        }
+        
+
+    }
+    
+     onClickSwitchFour(){
+
+        
+        if (this.state.currentPokemon == 4){
+            console.log("Already currentPokemon")
+        } else {
+           
+            Socket.emit('CM', {
+                'CM' : 5,
+                'currentPokemon' : 4
+                
+            });
+            this.setState({'currentPokemon' : 4});
+            console.log('Pokemon 4 selected.');
+            this.setState({ showModal: false });
+        }
+        
+
+    }
+    
   
     
     close() {
@@ -115,6 +157,10 @@ export class SwitchBtn extends React.Component {
         var health0 = this.state.health0;
         let link1 = this.state.link1;
         var health1 = this.state.health1;
+        let link2 = this.state.link2;
+        var health2 = this.state.health2;
+        let link3 = this.state.link3;
+        var health3 = this.state.health3;
         
         health0 = parseFloat(health0).toFixed(2);
         health1 = parseFloat(health1).toFixed(2);
@@ -142,6 +188,24 @@ export class SwitchBtn extends React.Component {
                 </ProgressBar>
             </Tooltip>
         );
+        const tooltip2 = (
+            <Tooltip id="modal-tooltip" >
+                <img src={link2} alt="Pokemon1" />
+                <ProgressBar>
+                        <ProgressBar bsStyle="success" now={health2*100} label={`${Math.floor(health2*100)}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (health2*100)} key={2} />
+                </ProgressBar>
+            </Tooltip>
+        );
+        const tooltip3 = (
+            <Tooltip id="modal-tooltip" >
+                <img src={link3} alt="Pokemon1" />
+                <ProgressBar>
+                        <ProgressBar bsStyle="success" now={health3*100} label={`${Math.floor(health3*100)}%`} key={1} />
+                        <ProgressBar bsStyle="danger" now={100 - (health3*100)} key={2} />
+                </ProgressBar>
+            </Tooltip>
+        );
         let switchButton = null;
         var user = this.state.user;
         if (user == 1 || user == 2){
@@ -159,6 +223,8 @@ export class SwitchBtn extends React.Component {
                     <div>
                         <OverlayTrigger overlay={tooltip0} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
                         <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip2} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchThree}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip3} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchFour}></div></OverlayTrigger>
                     </div>
                     </Modal.Body>
                     
