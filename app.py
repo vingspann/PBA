@@ -212,7 +212,7 @@ def battleSwitch(p, method):
                 player[p].currentPokemon = i
                 updatePokemon(player[p].ID)
                 return
-    else:
+    elif method == 1:
         player[p].currentPokemon = player[p].switchPokemon
         updatePokemon(player[p].ID)
         
@@ -354,11 +354,15 @@ def updatePokeballs(ID):
     else: 
         return
   # pushes both pokemon
-    socketio.emit('getBothPokemon', {
+    socketio.emit('updatePokeballs', {
         'health0' : player[p].pokemon[0].percentHealth(),
         'link0' : player[p].pokemon[0].spriteLink,
         'health1' : player[p].pokemon[1].percentHealth(),
-        'link1' : player[p].pokemon[1].spriteLink
+        'link1' : player[p].pokemon[1].spriteLink,
+        'health2' : player[p].pokemon[2].percentHealth(),
+        'link2' : player[p].pokemon[2].spriteLink,
+        'health3' : player[p].pokemon[3].percentHealth(),
+        'link3' : player[p].pokemon[3].spriteLink
     }, room=player[p].ID)  
     
 def updateSpectator():
