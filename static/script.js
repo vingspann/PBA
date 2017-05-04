@@ -50060,6 +50060,7 @@
 	                    'opHealth': data['health'],
 	                    'opLink': data['link']
 	                });
+	                _this2.forceUpdate();
 	            });
 
 	            _Socket.Socket.on('updateSpectator', function (data) {
