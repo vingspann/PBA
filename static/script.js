@@ -50323,6 +50323,10 @@
 	            'link0': 'link0',
 	            'health1': 'health1',
 	            'link1': 'link1',
+	            'health2': 'health2',
+	            'link2': 'link2',
+	            'health3': 'health3',
+	            'link3': 'link3',
 	            'currentPokemon': 1,
 	            'user': 3
 	        };
@@ -50394,12 +50398,16 @@
 	            });
 	            _Socket.Socket.emit('updateInfo');
 	            // Allows moves to be dynamically updated.
-	            _Socket.Socket.on('getBothPokemon', function (data) {
+	            _Socket.Socket.on('updatePokeballs', function (data) {
 	                _this2.setState({
 	                    'health0': data['health0'],
 	                    'link0': data['link0'],
 	                    'health1': data['health1'],
-	                    'link1': data['link1']
+	                    'link1': data['link1'],
+	                    'health2': data['health2'],
+	                    'link2': data['link2'],
+	                    'health3': data['health3'],
+	                    'link3': data['link3']
 	                });
 	            });
 	        }
