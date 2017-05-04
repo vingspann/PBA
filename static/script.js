@@ -49712,7 +49712,7 @@
 	    }, {
 	        key: 'onClick1',
 	        value: function onClick1() {
-	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
+	            _Socket.Socket.emit('CM', { 'CM': 0 });
 	            this.setState({ 'CM': 0 });
 	            console.log(this.state.CM);
 	            console.log('Button 1 clicked.');
@@ -49722,21 +49722,21 @@
 	        value: function onClick2() {
 	            console.log('Button 2 clicked.');
 	            this.setState({ 'CM': 1 });
-	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
+	            _Socket.Socket.emit('CM', { 'CM': 1 });
 	        }
 	    }, {
 	        key: 'onClick3',
 	        value: function onClick3() {
 	            console.log('Button 3 clicked.');
 	            this.setState({ 'CM': 2 });
-	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
+	            _Socket.Socket.emit('CM', { 'CM': 2 });
 	        }
 	    }, {
 	        key: 'onClick4',
 	        value: function onClick4() {
 	            console.log('Button 4 clicked.');
 	            this.setState({ 'CM': 3 });
-	            _Socket.Socket.emit('CM', { 'CM': this.state.CM });
+	            _Socket.Socket.emit('CM', { 'CM': 3 });
 	        }
 	    }, {
 	        key: 'confirmMove',
