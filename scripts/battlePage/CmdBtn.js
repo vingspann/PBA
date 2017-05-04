@@ -26,7 +26,7 @@ export class CmdBtn extends React.Component {
         this.onClick4 = this.onClick4.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.confirmMove = this.confirmMove.bind(this);
-        this.joinBattle = this.joinBattle.bind(this);
+        this.joinGame = this.joinGame.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
 
     }
@@ -39,7 +39,7 @@ export class CmdBtn extends React.Component {
     }
  
     onClick1(){
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 0});
         this.setState({'CM' : 0});
         console.log(this.state.CM);
         console.log('Button 1 clicked.');
@@ -48,19 +48,19 @@ export class CmdBtn extends React.Component {
     onClick2(){
         console.log('Button 2 clicked.');
         this.setState({'CM' : 1});
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 1});
     }
     
     onClick3(){
         console.log('Button 3 clicked.');
         this.setState({'CM' : 2});
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 2});
     }
     
     onClick4(){
         console.log('Button 4 clicked.');
         this.setState({'CM' : 3});
-        Socket.emit('CM', {'CM' : this.state.CM});
+        Socket.emit('CM', {'CM' : 3});
     }
     
     confirmMove() {
@@ -68,8 +68,9 @@ export class CmdBtn extends React.Component {
         Socket.emit('confirmMove');
     }
     
-    joinBattle() {
-        console.log("join battle button clicked");
+    joinGame() {
+        Socket.emit('joinGame');
+        this.setState({ showModal: false });
     }
 
     componentDidMount(){
@@ -93,6 +94,8 @@ export class CmdBtn extends React.Component {
             this.forceUpdate();
         });
     }
+    
+    
 
 
     render() {
@@ -158,7 +161,7 @@ export class CmdBtn extends React.Component {
                     You are spectating
                 </div>
                 <div id='nameLog2'>
-                    <Button bsStyle="primary" bsSize="large" onClick={this.joinBattle}>Join Battle</Button>
+                    <Button  bsSize="large" onClick={this.joinGame}>Join Game</Button>
                 </div>
                 </div>;
         };

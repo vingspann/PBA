@@ -465,26 +465,7 @@ def chatLogSubmit(data):
         
         elif message == "1212":
             reset()
-        elif message == "join":
             
-            # This makes users leave the spectator mode and join the player mode
-            # if there is an open spot.
-            if player[0].ID == None:
-                print "user 1 sid: " + ID
-                flask_socketio.leave_room('spectator')
-                socketio.emit('connection', {'user' : 1}, room=ID)
-                player[0].ID = ID
-                updatePokemon(ID)
-                
-            elif player[1].ID == None:
-                socketio.emit('connection', {'user' : 2}, room=ID)
-                flask_socketio.leave_room('spectator')
-                print "user 2 sid: " + ID
-                player[1].ID = ID
-                updatePokemon(ID)
-            else:
-                msg = "I'm sorry. There are no more open battles. Please try again later."
-                socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : msg})
         else:
             socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
 
@@ -527,7 +508,28 @@ def on_connect():
     flask_socketio.join_room('spectator')
     socketio.emit('connection', {'user' : 3}, room='spectator')
     updateSpectator()
+
+@socketio.on('joinGame')
+def joinGame():
+    ID = flask.request.sid
     
+    # This makes users leave the spectator mode and join the player mode
+    # if there is an open spot.
+    if player[0].ID == None:
+        print "user 1 sid: " + ID
+        flask_socketio.leave_room('spectator')
+        socketio.emit('connection', {'user' : 1}, room=ID)
+        player[0].ID = ID
+        updatePokemon(ID)
+        
+    elif player[1].ID == None:
+        socketio.emit('connection', {'user' : 2}, room=ID)
+        flask_socketio.leave_room('spectator')
+        print "user 2 sid: " + ID
+        player[1].ID = ID
+        updatePokemon(ID)
+    else:
+        socketio.emit('gameFull')
 
 if __name__ == '__main__':
     

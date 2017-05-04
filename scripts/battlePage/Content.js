@@ -11,22 +11,29 @@ import { Modal } from '../../node_modules/react-bootstrap';
 import { Carousel } from '../../node_modules/react-bootstrap';
 import { FBLogin } from './FBLogin';
 import { Button } from '../../node_modules/react-bootstrap';
+import { Socket } from './Socket';
 
 
 export class Content extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            'showModal': true
+            'showModal': true,
+            'showGameFullModal': false
         };
         
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.joinGame = this.joinGame.bind(this);
+        this.gameFullClose = this.gameFullClose.bind(this);
+        this.gameFullOpen = this.gameFullOpen.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
     };
 
     componentDidMount(){
-      
+      Socket.on('gameFull', function() {
+          this.setState({ showGameFullModal: true});
+      });
 
     }
     
@@ -36,6 +43,19 @@ export class Content extends React.Component{
 
     open() {
         this.setState({ showModal: true });
+    }
+    
+     gameFullClose() {
+        this.setState({ showGameFullModal: false });
+    }
+
+    gameFullOpen() {
+        this.setState({ showGameFullModal: true });
+    }
+    
+    joinGame() {
+        Socket.emit('joinGame');
+        this.setState({ showModal: false });
     }
     
     
@@ -89,7 +109,7 @@ export class Content extends React.Component{
                     <div>
                         <Carousel>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Welcome to PBA Stadium!!</h3>
                                     <p>We built this site to simulate small, simple pokemon battles.</p>
@@ -99,7 +119,7 @@ export class Content extends React.Component{
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/pokemonStadium.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Battle Log</h3>
-                                    <p>The Battle Log is the black window in the center of your screen.  All moves and results will be displayed here.</p>
+                                    <p>The Battle Log is the black window in the center of your screen.  All actions and results will be displayed here.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
@@ -113,7 +133,7 @@ export class Content extends React.Component{
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Pokemon Commands</h3>
-                                    <p>Once you have joined a battle you will see a few buttons below the Battle Log where you can select the move you want your pokemon to use.  By double clicking the button, the move will be set and clicking Confirm Move will let the system know you are ready to continue.  You can also switch out the pokemon you are using or surrender the battle if you feel so inclined.</p>
+                                    <p>Once you have joined a battle you will see a few buttons below the Battle Log. Double click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
@@ -128,23 +148,39 @@ export class Content extends React.Component{
                     </Modal.Body>
                     
                     <Modal.Footer>
-                       <Navbar>
+                       <Navbar inverse>
                             <Navbar.Header>
                                 <Navbar.Toggle />
                             </Navbar.Header>
                             <Navbar.Collapse>
                                 <Nav>
-                                    <Button bsSize="large" bsStyle="primary" onClick={this.close}>Spectate</Button>
+                                    <Navbar.Brand>
+                                        <a onClick={this.close}>Spectate</a>
+                                    </Navbar.Brand>
                                 </Nav>
                                 <Nav pullRight>
-                                    <Button bsSize="large" bsStyle="primary" onClick={this.close}>Join Game</Button>
+                                    <Navbar.Brand>
+                                        <a onClick={this.joinGame}>Join Game</a>
+                                    </Navbar.Brand>
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
                     </Modal.Footer>
                 </Modal>
                 
-                
+                <Modal show={this.state.showGameFullModal} onHide={this.gameFullClose} dialogClassName="custom-modal">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Game Full</Modal.Title>
+                    </Modal.Header>
+                    
+                    <Modal.Body>
+                        Sorry. The game is currently full. Try again later!
+                    </Modal.Body>
+                    
+                    <Modal.Footer>
+                      <Button onClick={this.gameFullClose}>Ok</Button>
+                    </Modal.Footer>
+                </Modal>
                 
             </div>
            
