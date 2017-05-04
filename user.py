@@ -5,12 +5,12 @@ class user():
     
     def __init__(self):
         self.name = ''
-        self.pokemon = [character(), character()]
+        self.pokemon = [character(), character(), character(), character()]
         self.hasWon = False
         self.currentPokemon = 0
         self.recentMove = 0
         self.ID = None
-        self.pokemonLeft = 2
+        self.pokemonLeft = 4
         self.lockMove = False
         self.switchPokemon = 0
     #for i in range(2):
