@@ -74,6 +74,8 @@ class character():
             self.type1 = types[1]["type"]["name"]
         else:
             self.type1 = types[0]["type"]["name"]
+        print self.name
+        print self.type1
             
         #call the setStatValue function with API data to calculate
         #the Pokemon's stats based on the base stat of each
