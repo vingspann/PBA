@@ -11,8 +11,6 @@ oak = bot()
 types = []
 for i in range(18):
     types.append(pokeType())
-    
-
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
@@ -22,7 +20,6 @@ userList = {}
 i = 0
 
 def startup():
-    
     setTypes()
     setPokemon()
 
@@ -72,13 +69,13 @@ def battle():
     # from fPoke to the react components
     # fturn makes it so, if they chose to switch, then they don't take an attack
     if player[f].recentMove == 5:
-        battleSwitch(f, fPoke)
+        battleSwitch(f, 1)
         fPoke = player[f].currentPokemon
         updatePokemon(player[f].ID)
         fTurn = False
     
     if player[s].recentMove == 5:
-        battleSwitch(s, sPoke)
+        battleSwitch(s, 1)
         sPoke = player[s].currentPokemon
         updatePokemon(player[s].ID)
         sTurn = False
@@ -175,7 +172,7 @@ def battleDamage(p, cp, m, op, ocp, om):
     if player[op].pokemon[ocp].currentHp == 0:
         text3 = player[op].pokemon[ocp].name + " has fainted."
         socketio.emit('battleLogEmit', {'text' : text3})
-        battleSwitch(op, ocp)
+        battleSwitch(op, 0)
         player[op].pokemonLeft = player[op].pokemonLeft - 1
         return False
     elif om == 5:
@@ -206,15 +203,19 @@ def getBattleModifier(p, cp, m, op, ocp, om):
     return modifier
         
 # This is a helper funtion for the battle to force a pokemon switch when they faint
-def battleSwitch(p, cp):
-    if cp == 0:
-        cp = 1
-    else:
-        cp = 0
-        
-    player[p].currentPokemon = cp
-    updatePokemon(player[p].ID)
+# Method is used for whether it's a death (0) or a user switching(1)
+def battleSwitch(p, method):
     
+    if player[p].pokemonLeft != 0 and method == 0:
+        for i in range(4):
+            if player[p].pokemon[i].currentHp > 0:
+                player[p].currentPokemon = i
+                updatePokemon(player[p].ID)
+                return
+    else:
+        player[p].currentPokemon = player[p].switchPokemon
+        updatePokemon(player[p].ID)
+        
 # Gave this section its own function to make surrendering easier to code
 # Method gets 0 for battle loss, and 1 for single surrender
 # Method gets 2 for double surrender
