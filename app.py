@@ -22,6 +22,7 @@ i = 0
 def startup():
     setTypes()
     setPokemon()
+    print "Finished API calls"
 
 # this is where the battle and turns will happen
 def battle():
@@ -222,9 +223,9 @@ def battleSwitch(p, method):
 def endBattle(w, l, method):
     
     if method == 0:
-        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
-        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + " and " + player[l].pokemon[1].name + "."
-        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + " and " + player[w].pokemon[1].name + "."
+        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
+        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + ", " + player[l].pokemon[1].name + ", " + player[l].pokemon[2].name + ", and " + player[l].pokemon[3].name + "."
+        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
     elif method == 1:
         wMsg = "You Win! Player " + str (l + 1) + " chose to surrender."
         lMsg = "You lose. You chose to surrender. "
@@ -269,8 +270,14 @@ def setPokemon():
     player[1].pokemon[1].buildMoves('Steel Wing','Night Slash','X-Scissor','Wing Attack')
     player[1].pokemon[1].buildPokemon()
     player[1].pokemon[1].percentHealth()
-<<<<<<< HEAD
-  
+    player[1].pokemon[2].nameSet('Seismitoad')
+    player[1].pokemon[2].buildMoves('Surf','Earthquake','Hyper Voice','Poison Jab')
+    player[1].pokemon[2].buildPokemon()
+    player[1].pokemon[2].percentHealth()
+    player[1].pokemon[3].nameSet('Volcarona')
+    player[1].pokemon[3].buildMoves('Bug Buzz','Heat Wave','Hurricane','Psychic')
+    player[1].pokemon[3].buildPokemon()
+    player[1].pokemon[3].percentHealth()
 # Builds all of the types for effective bonuse  
 def setTypes():
     types[0].setName("normal")
@@ -310,17 +317,6 @@ def setTypes():
     types[17].setName("fairy")
     types[17].buildType()
 
-=======
-    player[1].pokemon[2].nameSet('Seismitoad')
-    player[1].pokemon[2].buildMoves('Surf','Earthquake','Hyper Voice','Poison Jab')
-    player[1].pokemon[2].buildPokemon()
-    player[1].pokemon[2].percentHealth()
-    player[1].pokemon[3].nameSet('Volcarona')
-    player[1].pokemon[3].buildMoves('Bug Buzz','Heat Wave','Hurricane','Psychic')
-    player[1].pokemon[3].buildPokemon()
-    player[1].pokemon[3].percentHealth()
-    
->>>>>>> master
 # Helper function used by seperate socket Io calls
 def updatePokemon(ID):
     global i 
@@ -567,11 +563,11 @@ def joinGame():
 
 if __name__ == '__main__':
     
-    
+    startup()
     socketio.run(
             app,
             host=os.getenv('IP', '0.0.0.0'),
             port=int(os.getenv('PORT', 8080)),
             debug=True
         )
-    startup()
+    
