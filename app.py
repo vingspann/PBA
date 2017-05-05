@@ -77,12 +77,17 @@ def battle():
         fPoke = player[f].currentPokemon
         updatePokemon(player[f].ID)
         fTurn = False
+        switchMsg = "Player " + str(f + 1) + " sent out " + player[f].pokemon[fPoke].name + "."
+        socketio.emit('battleLogEmit', {'text' : switchMsg})
+
     
     if player[s].recentMove == 5:
         battleSwitch(s, 1)
         sPoke = player[s].currentPokemon
         updatePokemon(player[s].ID)
         sTurn = False
+        switchMsg = "Player " + str(s + 1) + " sent out " + player[s].pokemon[sPoke].name + "."
+        socketio.emit('battleLogEmit', {'text' : switchMsg})
     
     # If they didn't switch, then they can attack
     if fTurn:
