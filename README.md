@@ -1,16 +1,34 @@
 # Pokemon Battling Application!
 
 ## App Description
-The Pokemon Battling Application (PBA) is designed to be a social application, utilizing Facebook
-login, to enable two users (or one user and our bot, "Gary Oak") to do battle with a team of Pokemon!
+The Pokemon Battling Application (PBA) is designed to be a social application utilizing Facebook
+login to enable two users to do a battle with preset (for now) teams of Pokemon!
 
-Logging in with Facebook allows users to become one of two Players, and get first choice between two
-teams of Pokemon (Initial implementation)
+Logging in with Facebook allows users to connect to the Chat Window, located on the right side of
+the webapp, ensuring that any abuse will have users' names attached. While this integration is not
+necessary for battle functionality, it prevents direct communication without some level of accountability
+on the part of a potentially toxic user.
 
 ### Initial Implementation
-Users will be able to select a team of three Pokemon on the Battle Page from two options, where the three Pokemon
-will be set to level 50 and know four battle-proficient moves available to them. When Player 2 connects, they will
-be assigned the other team of three Pokemon.
+Users were be able to select a team of two Pokemon based on the order they connected, and utilize the Chat Window
+on the right side of the webapp regardless of the state of their Facebook login. Buttons required double-clicking
+to accurately select a move, and no super effective/not very effective/had no effect damage modification occurred
+in the Battle Log.
+
+### Current Implementation (5/4/2017)
+Users are able to connect to the webapp and are presented with a carousel modal that displays information about the
+game and its features, as well as about the webapp itself (creators, technology, backstory). When accessing the page,
+users are given the choice to Spectate or Join the Game until two players are a part of the game logic. From there, any
+number of users (in theory) can connect to watch the battle take place.
+
+Each player controls a team of four predetermined Pokemon that they can switch between freely (with one current known bug)
+as their turn instead of attacking. No secondary effects of moves (status infliction, critical hits, stat changes, etc) are
+currently implemented but are definitely in the works for a future release. We do have Super Effective!, Not Very Effective...,
+Had No Effect, and Same Type Attack Boost calculations implemented for more accurate (and fun/strategic!) battle logic.
+
+The webapp includes links in the navigation bar that connect any users to additional information. One links to the PokeAPI 
+for more details about the API we use to obtain the relevant information without storing a BOATLOAD of data on our little 
+Heroku server. The other funnels to our GitHub page so that people can see behind the scenes (which clearly led you here!).
 
 ### Advanced Implementation [Stretch Goal/Post-Course Goal]
 User will be able to select a team of three Pokemon, and as each one is selected the Landing Page the user will be able
