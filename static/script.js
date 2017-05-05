@@ -22189,11 +22189,11 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                 ),
                 React.createElement(
                     'div',
-                    null,
+                    { id: 'ourPokemon' },
                     React.createElement('img', { className: 'images', src: link }),
                     React.createElement(
                         'p',
-                        { id: 'pokemonInfoCharName' },
+                        null,
                         character
                     ),
                     React.createElement(
@@ -22205,11 +22205,11 @@ var YoPokemon = exports.YoPokemon = function (_React$Component) {
                 ),
                 React.createElement(
                     'div',
-                    null,
+                    { id: 'theirPokemon' },
                     React.createElement('img', { className: 'images', src: opLink }),
                     React.createElement(
                         'p',
-                        { id: 'pokemonInfoCharName' },
+                        null,
                         opCharacter
                     ),
                     React.createElement(
