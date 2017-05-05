@@ -61,10 +61,10 @@ export class Content extends React.Component{
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav>
-                            <NavItem eventKey={1} href="https://pokeapi.co">API</NavItem>
+                            <NavItem eventKey={1} href="https://pokeapi.co" target = "_blank">API</NavItem>
                         </Nav>
                          <Nav>
-                            <NavItem eventKey={1} href="https://github.com/vingspann/PBA">GitHub</NavItem>
+                            <NavItem eventKey={1} href="https://github.com/vingspann/PBA" target = "_blank">GitHub</NavItem>
                         </Nav>
                         
                         <Nav pullRight>
@@ -97,10 +97,10 @@ export class Content extends React.Component{
                     <div>
                         <Carousel>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAsource.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Welcome to PBA Stadium!!</h3>
-                                    <p>The Pokemon Battling Application (PBA) is designed to be a social application utilizing Facebook login to enable two users to do a battle with preset (for now) teams of Pokemon!</p>
+                                    <p>The Pokemon Battling Application (PBA) is designed to be a social application utilizing Facebook login to enable two users to do a battle with preset teams of Pokemon!</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
