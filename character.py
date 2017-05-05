@@ -31,8 +31,8 @@ class character():
         self.stat[4].setName("Attack")
         self.stat[5].setName("Hit Points")
         
-        self.spriteLink = "https://cdn.iconverticons.com/files/png/1e2faeab4fac4558_128x128.png"
-    
+        self.spriteLink = "http://i.imgur.com/TqM3EyY.jpg"
+        
     #sets the name of the Pokemon in hardcoded lines, ideally will be done
     #when a Pokemon is selected by a player in a more advanced implementation
     def nameSet(self, name):
