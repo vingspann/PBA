@@ -196,6 +196,7 @@ body {
     overflow-y: auto;
     background-color: gray;
     text-align: center;
+    width: 70%;
      
 }
 
@@ -206,6 +207,8 @@ body {
 #theirPokemon {
     text-align: right;
 }
+
+
 
 #opHealthLog {
     font-family: pokemon-font, Arial, sans-serif;
