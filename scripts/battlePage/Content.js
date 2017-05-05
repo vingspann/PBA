@@ -90,7 +90,7 @@ export class Content extends React.Component{
                 
                 <Modal show={this.state.showModal} onHide={this.close} dialogClassName="custom-modal">
                     <Modal.Header closeButton>
-                        <Modal.Title>About</Modal.Title>
+                        <Modal.Title>About...</Modal.Title>
                     </Modal.Header>
                     
                     <Modal.Body>
@@ -100,7 +100,7 @@ export class Content extends React.Component{
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Welcome to PBA Stadium!!</h3>
-                                    <p>We built this site to simulate small, simple pokemon battles.</p>
+                                    <p>The Pokemon Battling Application (PBA) is designed to be a social application utilizing Facebook login to enable two users to do a battle with preset (for now) teams of Pokemon!</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
@@ -129,6 +129,20 @@ export class Content extends React.Component{
                                 <Carousel.Caption>
                                     <h3>Chat</h3>
                                     <p>To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash. Remember to login into Facebook so that you will not be anonymous and don't forget to talk to Professor Oak with the commands !! help !! bike !! gender !! type</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
+                                <Carousel.Caption>
+                                    <h3>Meet the team...</h3>
+                                    <p>We built this site to simulate small, simple pokemon battles.</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
+                                <Carousel.Caption>
+                                    <h3>Technologies</h3>
+                                    <p></p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         </Carousel>

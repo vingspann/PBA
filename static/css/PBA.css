@@ -110,7 +110,7 @@ body {
 }
 
 #pokemonInfoHeader {
-    font-family: pokemon_solidnormal, Arial, sans-serif;
+    font-family: metroregular, Arial, sans-serif;
 }
 
 #info{
@@ -195,6 +195,7 @@ body {
     background: gray;
     overflow-y: auto;
     background-color: gray;
+    text-align: center;
      
 }
 
@@ -386,5 +387,5 @@ p {
 }
 
 .carouselImg {
-    opacity: .2;
+    opacity: .3;
 }

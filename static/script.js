@@ -21684,7 +21684,7 @@
 	                        React.createElement(
 	                            _reactBootstrap.Modal.Title,
 	                            null,
-	                            'About'
+	                            'About...'
 	                        )
 	                    ),
 	                    React.createElement(
@@ -21711,7 +21711,7 @@
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'We built this site to simulate small, simple pokemon battles.'
+	                                            'The Pokemon Battling Application (PBA) is designed to be a social application utilizing Facebook login to enable two users to do a battle with preset (for now) teams of Pokemon!'
 	                                        )
 	                                    )
 	                                ),
@@ -21789,6 +21789,40 @@
 	                                            null,
 	                                            'To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash. Remember to login into Facebook so that you will not be anonymous and don\'t forget to talk to Professor Oak with the commands !! help !! bike !! gender !! type'
 	                                        )
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/slide1.jpg' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'Meet the team...'
+	                                        ),
+	                                        React.createElement(
+	                                            'p',
+	                                            null,
+	                                            'We built this site to simulate small, simple pokemon battles.'
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/slide1.jpg' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'Technologies'
+	                                        ),
+	                                        React.createElement('p', null)
 	                                    )
 	                                )
 	                            )
@@ -49743,10 +49777,18 @@
 	                });
 	                _this2.forceUpdate();
 	            });
+<<<<<<< HEAD
+	            {/*
+	                Socket.on('gameFull', (data) => {
+	                 this.setState({ 'showModal': true}).bind(this);
+	                });
+	                */}
+=======
 
 	            _Socket.Socket.on('gameFull', function (data) {
 	                _this2.setState({ 'showModal': true }).bind(_this2);
 	            });
+>>>>>>> master
 	        }
 	    }, {
 	        key: 'render',
@@ -50105,7 +50147,7 @@
 	                React.createElement(
 	                    'h3',
 	                    { id: 'pokemonInfoHeader' },
-	                    'Pokemon'
+	                    'Active Pokemon'
 	                ),
 	                React.createElement(
 	                    'div',
@@ -50113,7 +50155,7 @@
 	                    React.createElement('img', { className: 'images', src: link }),
 	                    React.createElement(
 	                        'p',
-	                        { id: 'pokemonInfoHeader' },
+	                        { id: 'pokemonInfoCharName' },
 	                        character
 	                    ),
 	                    React.createElement(
@@ -50124,17 +50166,12 @@
 	                    )
 	                ),
 	                React.createElement(
-	                    'h3',
-	                    { id: 'pokemonInfoHeader' },
-	                    'Opponent Pokemon'
-	                ),
-	                React.createElement(
 	                    'div',
 	                    null,
 	                    React.createElement('img', { className: 'images', src: opLink }),
 	                    React.createElement(
 	                        'p',
-	                        { id: 'pokemonInfoHeader' },
+	                        { id: 'pokemonInfoCharName' },
 	                        opCharacter
 	                    ),
 	                    React.createElement(
