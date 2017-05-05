@@ -105,10 +105,11 @@ export class CmdBtn extends React.Component {
             });
             this.forceUpdate();
         });
-        
+        {/*
         Socket.on('gameFull', (data) => {
           this.setState({ 'showModal': true}).bind(this);
         });
+        */}
     }
     
     
@@ -186,7 +187,7 @@ export class CmdBtn extends React.Component {
         return (
             <div>
                 {moveArea}
-                
+                {/*
                 <Modal show={this.state.showModal} bsSize="small" onHide={this.close} dialogClassName="custom-modal">
                     <Modal.Header closeButton>
                         <Modal.Title>Game Full</Modal.Title>
@@ -200,6 +201,7 @@ export class CmdBtn extends React.Component {
                       <Button bsStyle = 'primary' onClick={this.close}>Ok</Button>
                     </Modal.Footer>
                 </Modal>
+                */}
             </div>
         );
     }
