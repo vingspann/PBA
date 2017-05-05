@@ -140,7 +140,7 @@ export class Content extends React.Component{
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Chat</h3>
-                                    <p>To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash.</p>
+                                    <p>To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash. Remember to login into Facebook so that you will not be anonymous and don't forget to talk to Professor Oak with the commands !! help !! bike !! gender !! type</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         </Carousel>
