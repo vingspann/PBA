@@ -50320,6 +50320,8 @@
 	            'showModal': false,
 	            'firstPokeball': "box",
 	            'secondPokeball': "box box2",
+	            'thridPokeball': "box box3",
+	            'fourthPokeball': "box box4",
 	            'health0': 'health0',
 	            'link0': 'link0',
 	            'health1': 'health1',
@@ -50558,12 +50560,12 @@
 	                                React.createElement(
 	                                    _reactBootstrap.OverlayTrigger,
 	                                    { overlay: tooltip2, placement: 'left' },
-	                                    React.createElement('div', { className: this.state.firstPokeball, onClick: this.onClickSwitchThree })
+	                                    React.createElement('div', { className: this.state.thridPokeball, onClick: this.onClickSwitchThree })
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.OverlayTrigger,
 	                                    { overlay: tooltip3, placement: 'right' },
-	                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchFour })
+	                                    React.createElement('div', { className: this.state.fourthPokeball, onClick: this.onClickSwitchFour })
 	                                )
 	                            )
 	                        ),

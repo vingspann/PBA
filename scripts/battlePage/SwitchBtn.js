@@ -16,6 +16,8 @@ export class SwitchBtn extends React.Component {
              'showModal': false,
              'firstPokeball': "box",
              'secondPokeball': "box box2",
+             'thridPokeball' : "box box3",
+             'fourthPokeball' : "box box4",
              'health0' : 'health0',
              'link0' : 'link0',
              'health1' : 'health1',
@@ -222,8 +224,8 @@ export class SwitchBtn extends React.Component {
                     <div>
                         <OverlayTrigger overlay={tooltip0} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
                         <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip2} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchThree}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip3} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchFour}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip2} placement="left"><div className={this.state.thridPokeball} onClick={this.onClickSwitchThree}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip3} placement="right"><div className={this.state.fourthPokeball} onClick={this.onClickSwitchFour}></div></OverlayTrigger>
                     </div>
                     </Modal.Body>
                     
