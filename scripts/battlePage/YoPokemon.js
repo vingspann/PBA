@@ -82,7 +82,7 @@ export class YoPokemon extends React.Component {
             <div id = 'HealthLog'>
             
                 <h3 id="pokemonInfoHeader">Active Pokemon</h3>
-                <div>
+                <div id = 'ourPokemon'>
                     <img className="images" src={link}/> 
                     <p id="pokemonInfoCharName">{character}</p>
                     <ProgressBar>
@@ -91,7 +91,7 @@ export class YoPokemon extends React.Component {
                     </ProgressBar>
                 </div>
                 
-                <div>
+                <div id='theirPokemon'>
                     <img className="images" src={opLink}/> 
                     <p id="pokemonInfoCharName">{opCharacter}</p>
                     <ProgressBar>

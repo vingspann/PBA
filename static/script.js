@@ -22153,7 +22153,460 @@
 
 	var _ListGroup3 = _interopRequireDefault(_ListGroup2);
 
+<<<<<<< HEAD
+    function SwitchBtn(props) {
+        _classCallCheck(this, SwitchBtn);
+
+        var _this = _possibleConstructorReturn(this, (SwitchBtn.__proto__ || Object.getPrototypeOf(SwitchBtn)).call(this, props));
+
+        _this.state = {
+            'showModal': false,
+            'firstPokeball': "box",
+            'secondPokeball': "box box2",
+            'thridPokeball': "box box3",
+            'fourthPokeball': "box box4",
+            'health0': 'health0',
+            'link0': 'link0',
+            'health1': 'health1',
+            'link1': 'link1',
+            'health2': 'health2',
+            'link2': 'link2',
+            'health3': 'health3',
+            'link3': 'link3',
+            'currentPokemon': 1,
+            'user': 3
+        };
+
+        _this.componentDidMount = _this.componentDidMount.bind(_this);
+        _this.onClickSwitchOne = _this.onClickSwitchOne.bind(_this);
+        _this.onClickSwitchTwo = _this.onClickSwitchTwo.bind(_this);
+        _this.onClickSwitchThree = _this.onClickSwitchThree.bind(_this);
+        _this.onClickSwitchFour = _this.onClickSwitchFour.bind(_this);
+        _this.open = _this.open.bind(_this);
+        _this.close = _this.close.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(SwitchBtn, [{
+        key: 'onClickSwitchOne',
+        value: function onClickSwitchOne() {
+
+            if (this.state.currentPokemon == 1) {
+                console.log("Already active pokemon");
+            } else {
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 1
+
+                });
+                this.setState({ 'currentPokemon': 1 });
+                console.log('Pokemon 1 selected.');
+                this.setState({ showModal: false });
+            }
+        }
+    }, {
+        key: 'onClickSwitchTwo',
+        value: function onClickSwitchTwo() {
+
+            if (this.state.currentPokemon == 2) {
+                console.log("Already currentPokemon");
+            } else {
+
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 2
+
+                });
+                this.setState({ 'currentPokemon': 2 });
+                console.log('Pokemon 2 selected.');
+                this.setState({ showModal: false });
+            }
+        }
+    }, {
+        key: 'onClickSwitchThree',
+        value: function onClickSwitchThree() {
+
+            if (this.state.currentPokemon == 3) {
+                console.log("Already currentPokemon");
+            } else {
+
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 3
+
+                });
+                this.setState({ 'currentPokemon': 3 });
+                console.log('Pokemon 3 selected.');
+                this.setState({ showModal: false });
+            }
+        }
+    }, {
+        key: 'onClickSwitchFour',
+        value: function onClickSwitchFour() {
+
+            if (this.state.currentPokemon == 4) {
+                console.log("Already currentPokemon");
+            } else {
+
+                _Socket.Socket.emit('CM', {
+                    'CM': 5,
+                    'currentPokemon': 4
+
+                });
+                this.setState({ 'currentPokemon': 4 });
+                console.log('Pokemon 4 selected.');
+                this.setState({ showModal: false });
+            }
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            this.setState({ showModal: false });
+        }
+    }, {
+        key: 'open',
+        value: function open() {
+            this.setState({ showModal: true });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            _Socket.Socket.on('connection', function (data) {
+                _this2.setState({
+                    'user': data['user']
+                });
+                _this2.forceUpdate();
+            });
+            _Socket.Socket.emit('updateInfo');
+            // Allows moves to be dynamically updated.
+            _Socket.Socket.on('updatePokeballs', function (data) {
+                _this2.setState({
+                    'health0': data['health0'],
+                    'link0': data['link0'],
+                    'health1': data['health1'],
+                    'link1': data['link1'],
+                    'health2': data['health2'],
+                    'link2': data['link2'],
+                    'health3': data['health3'],
+                    'link3': data['link3']
+                });
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var link0 = this.state.link0;
+            var health0 = this.state.health0;
+            var link1 = this.state.link1;
+            var health1 = this.state.health1;
+            var link2 = this.state.link2;
+            var health2 = this.state.health2;
+            var link3 = this.state.link3;
+            var health3 = this.state.health3;
+
+            health0 = parseFloat(health0).toFixed(2);
+            health1 = parseFloat(health1).toFixed(2);
+            health2 = parseFloat(health2).toFixed(2);
+            health3 = parseFloat(health3).toFixed(2);
+
+            var popover = React.createElement(
+                _reactBootstrap.Popover,
+                { id: 'modal-popover', title: 'popover' },
+                'very popover. such engagement'
+            );
+            var tooltip0 = React.createElement(
+                _reactBootstrap.Tooltip,
+                { id: 'modal-tooltip' },
+                React.createElement('img', { src: link0, alt: 'Pokemon1' }),
+                React.createElement(
+                    _reactBootstrap.ProgressBar,
+                    null,
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health0 * 100, label: Math.floor(health0 * 100) + '%', key: 1 }),
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health0 * 100, key: 2 })
+                )
+            );
+            var tooltip1 = React.createElement(
+                _reactBootstrap.Tooltip,
+                { id: 'modal-tooltip' },
+                React.createElement('img', { src: link1, alt: 'Pokemon1' }),
+                React.createElement(
+                    _reactBootstrap.ProgressBar,
+                    null,
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health1 * 100, label: Math.floor(health1 * 100) + '%', key: 1 }),
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health1 * 100, key: 2 })
+                )
+            );
+            var tooltip2 = React.createElement(
+                _reactBootstrap.Tooltip,
+                { id: 'modal-tooltip' },
+                React.createElement('img', { src: link2, alt: 'Pokemon1' }),
+                React.createElement(
+                    _reactBootstrap.ProgressBar,
+                    null,
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health2 * 100, label: Math.floor(health2 * 100) + '%', key: 1 }),
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health2 * 100, key: 2 })
+                )
+            );
+            var tooltip3 = React.createElement(
+                _reactBootstrap.Tooltip,
+                { id: 'modal-tooltip' },
+                React.createElement('img', { src: link3, alt: 'Pokemon1' }),
+                React.createElement(
+                    _reactBootstrap.ProgressBar,
+                    null,
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health3 * 100, label: Math.floor(health3 * 100) + '%', key: 1 }),
+                    React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health3 * 100, key: 2 })
+                )
+            );
+            var switchButton = null;
+            var user = this.state.user;
+            if (user == 1 || user == 2) {
+                switchButton = React.createElement(
+                    'div',
+                    { id: 'switch' },
+                    React.createElement(
+                        _reactBootstrap.Button,
+                        { bsSize: 'large', onClick: this.open },
+                        'Switch'
+                    ),
+                    React.createElement(
+                        _reactBootstrap.Modal,
+                        { show: this.state.showModal, onHide: this.close },
+                        React.createElement(
+                            _reactBootstrap.Modal.Header,
+                            { closeButton: true },
+                            React.createElement(
+                                _reactBootstrap.Modal.Title,
+                                null,
+                                'Switch Pokemon'
+                            )
+                        ),
+                        React.createElement(
+                            _reactBootstrap.Modal.Body,
+                            null,
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(
+                                    _reactBootstrap.OverlayTrigger,
+                                    { overlay: tooltip0, placement: 'left' },
+                                    React.createElement('div', { className: this.state.firstPokeball, onClick: this.onClickSwitchOne })
+                                ),
+                                React.createElement(
+                                    _reactBootstrap.OverlayTrigger,
+                                    { overlay: tooltip1, placement: 'right' },
+                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchTwo })
+                                ),
+                                React.createElement(
+                                    _reactBootstrap.OverlayTrigger,
+                                    { overlay: tooltip2, placement: 'left' },
+                                    React.createElement('div', { className: this.state.thridPokeball, onClick: this.onClickSwitchThree })
+                                ),
+                                React.createElement(
+                                    _reactBootstrap.OverlayTrigger,
+                                    { overlay: tooltip3, placement: 'right' },
+                                    React.createElement('div', { className: this.state.fourthPokeball, onClick: this.onClickSwitchFour })
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            _reactBootstrap.Modal.Footer,
+                            null,
+                            React.createElement(
+                                _reactBootstrap.Button,
+                                { onClick: this.close },
+                                'Cancel'
+                            )
+                        )
+                    )
+                );
+            } else if (user == 3) {
+                switchButton = '';
+            };
+            return React.createElement(
+                'div',
+                null,
+                switchButton
+            );
+        }
+    }]);
+
+    return SwitchBtn;
+}(React.Component);
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.YoPokemon = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var React = _interopRequireWildcard(_react);
+
+var _reactBootstrap = __webpack_require__(33);
+
+var ReactBootstrap = _interopRequireWildcard(_reactBootstrap);
+
+var _Socket = __webpack_require__(30);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var YoPokemon = exports.YoPokemon = function (_React$Component) {
+    _inherits(YoPokemon, _React$Component);
+
+    function YoPokemon(props) {
+        _classCallCheck(this, YoPokemon);
+
+        var _this = _possibleConstructorReturn(this, (YoPokemon.__proto__ || Object.getPrototypeOf(YoPokemon)).call(this, props));
+
+        _this.state = {
+
+            'character': 'character',
+            'link': 'link',
+            'health': 'health',
+            'opCharacter': 'opCharacter',
+            'opHealth': 'opHealth',
+            'opLink': 'opLink'
+        };
+        _this.componentDidMount = _this.componentDidMount.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(YoPokemon, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            _Socket.Socket.emit('updateInfo');
+            // Allows moves to be dynamically updated.
+            _Socket.Socket.on('updatePokemon', function (data) {
+                _this2.setState({
+                    'character': data['name'],
+                    'health': data['health'],
+                    'link': data['link'],
+                    'opCharacter': data['opName'],
+                    'opHealth': data['opHealth'],
+                    'opLink': data['opLink']
+                });
+            });
+
+            // Allows moves to be dynamically updated.
+            _Socket.Socket.on('updateOpPokemon', function (data) {
+                _this2.setState({
+                    'opCharacter': data['name'],
+                    'opHealth': data['health'],
+                    'opLink': data['link']
+                });
+                _this2.forceUpdate();
+            });
+
+            _Socket.Socket.on('updateSpectator', function (data) {
+                _this2.setState({
+                    'health': data['healthP1'],
+                    'opHealth': data['healthP2'],
+                    'character': data['nameP1'],
+                    'opCharacter': data['nameP2'],
+                    'link': data['linkP1'],
+                    'opLink': data['linkP2']
+                });
+            });
+
+            _Socket.Socket.on('battleUpdate', function (data) {
+                _this2.setState({
+                    'health': data['curHealth'],
+                    'opHealth': data['opHealth']
+                });
+                _this2.forceUpdate();
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var character = this.state.character;
+            var link = this.state.link;
+            var health = this.state.health;
+
+            var opCharacter = this.state.opCharacter;
+            var opHealth = this.state.opHealth;
+            var opLink = this.state.opLink;
+
+            health = parseFloat(health).toFixed(2);
+            opHealth = parseFloat(opHealth).toFixed(2);
+
+            // sorry i hard coded the indexes and passed both individually.
+            // Its a little wierd with the opp charaters until both users are online. 
+            return React.createElement(
+                'div',
+                { id: 'HealthLog' },
+                React.createElement(
+                    'h3',
+                    { id: 'pokemonInfoHeader' },
+                    'Active Pokemon'
+                ),
+                React.createElement(
+                    'div',
+                    { id: 'ourPokemon' },
+                    React.createElement('img', { className: 'images', src: link }),
+                    React.createElement(
+                        'p',
+                        { id: 'pokemonInfoCharName' },
+                        character
+                    ),
+                    React.createElement(
+                        _reactBootstrap.ProgressBar,
+                        null,
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: health * 100, label: Math.floor(health * 100) + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - health * 100, key: 2 })
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { id: 'theirPokemon' },
+                    React.createElement('img', { className: 'images', src: opLink }),
+                    React.createElement(
+                        'p',
+                        { id: 'pokemonInfoCharName' },
+                        opCharacter
+                    ),
+                    React.createElement(
+                        _reactBootstrap.ProgressBar,
+                        null,
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'success', now: opHealth * 100, label: Math.floor(opHealth * 100) + '%', key: 1 }),
+                        React.createElement(_reactBootstrap.ProgressBar, { bsStyle: 'danger', now: 100 - opHealth * 100, key: 2 })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return YoPokemon;
+}(React.Component);
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+=======
 	var _ListGroupItem2 = __webpack_require__(357);
+>>>>>>> master
 
 	var _ListGroupItem3 = _interopRequireDefault(_ListGroupItem2);
 
