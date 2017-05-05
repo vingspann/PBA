@@ -259,8 +259,8 @@ def endBattle(w, l, method):
 
 # Sets the players initial pokemon when they connect
 def setPokemon():
-    player[0].pokemon[0].nameSet('Pikachu')
-    player[0].pokemon[0].buildMoves('Thunderbolt','Slam','Iron Tail','Brick Break')
+    player[0].pokemon[0].nameSet('Venusaur')
+    player[0].pokemon[0].buildMoves('Petal Dance','Earthquake','Sludge Bomb','Body Slam')
     player[0].pokemon[0].buildPokemon()
     player[0].pokemon[0].percentHealth()
     player[0].pokemon[1].nameSet('Charizard')
@@ -416,6 +416,7 @@ def reset():
     player[1].reset()
     updateSpectator()
     i = 0
+    global turn
     turn = 0
     
 @socketio.on('confirmMove')
