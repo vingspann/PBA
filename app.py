@@ -573,7 +573,10 @@ def joinGame():
         player[1].ID = ID
         updatePokemon(ID)
     else:
-        socketio.emit('gameFull')
+        msg = "This game is full."
+        name = "System Erorr"
+        socketio.emit('chatLogEmit', {'name' : name, 'text' : msg}, room=ID)
+        #socketio.emit('gameFull')
 
 if __name__ == '__main__':
     startup()
