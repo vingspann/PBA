@@ -21803,7 +21803,7 @@
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash.'
+	                                            'To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash. Remember to login into Facebook so that you will not be anonymous and don\'t forget to talk to Professor Oak with the commands !! help !! bike !! gender !! type'
 	                                        )
 	                                    )
 	                                )
