@@ -464,41 +464,41 @@ def chatLogSubmit(data):
         name = userList[ID]
 
     
-    allow, bot, message = oak.check(data['text'])
+        allow, bot, message = oak.check(data['text'])
     
-    # Determines whether or not users message will be displayed
-    if allow:
-        socketio.emit('chatLogEmit', {'name' : name, 'text' : data['text']})
-    
-    if bot:
-        if message == "1337":
-            cp1 = player[0].currentPokemon
-            cp2 = player[1].currentPokemon
-            types = player[0].pokemon[cp1].name + " is "
-            
-            if player[0].pokemon[cp1].type2 != None:
-                types = types + player[0].pokemon[cp1].type1
-                types = types + " and " + player[0].pokemon[cp1].type2
-            else:
-                types = types + player[0].pokemon[cp1].type1
-            types = types + " type."
-            socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
-            
-            types = player[1].pokemon[cp2].name + " is "
-            
-            if player[1].pokemon[cp2].type2 != None:
-                types = types + player[1].pokemon[cp2].type1
-                types = types + " and " + player[1].pokemon[cp2].type2
-            else:
-                types = types + player[1].pokemon[cp2].type1
-            types = types + " type."
-            socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
+        # Determines whether or not users message will be displayed
+        if allow:
+            socketio.emit('chatLogEmit', {'name' : name, 'text' : data['text']})
         
-        elif message == "1212":
-            reset()
+        if bot:
+            if message == "1337":
+                cp1 = player[0].currentPokemon
+                cp2 = player[1].currentPokemon
+                types = player[0].pokemon[cp1].name + " is "
             
-        else:
-            socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
+                if player[0].pokemon[cp1].type2 != None:
+                    types = types + player[0].pokemon[cp1].type1
+                    types = types + " and " + player[0].pokemon[cp1].type2
+                else:
+                    types = types + player[0].pokemon[cp1].type1
+                types = types + " type."
+                socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
+            
+                types = player[1].pokemon[cp2].name + " is "
+            
+                if player[1].pokemon[cp2].type2 != None:
+                    types = types + player[1].pokemon[cp2].type1
+                    types = types + " and " + player[1].pokemon[cp2].type2
+                else:
+                    types = types + player[1].pokemon[cp2].type1
+                types = types + " type."
+                socketio.emit('chatLogEmit', {'name' : oak.name, 'text' : types})
+        
+            elif message == "1212":
+                reset()
+            
+            else:
+                socketio.emit('chatLogEmit', {'name' : oak.name, 'text': message})
 
 @socketio.on('FBInfo')
 def onFBInfo(data):

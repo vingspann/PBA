@@ -79,10 +79,7 @@ export class SwitchBtn extends React.Component {
         
 
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> master
+
      onClickSwitchThree(){
 
         
@@ -102,10 +99,7 @@ export class SwitchBtn extends React.Component {
         
 
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> master
+
      onClickSwitchFour(){
 
         
@@ -125,12 +119,7 @@ export class SwitchBtn extends React.Component {
         
 
     }
-<<<<<<< HEAD
-    
-  
-=======
 
->>>>>>> master
     
     close() {
         this.setState({ showModal: false });
@@ -177,11 +166,7 @@ export class SwitchBtn extends React.Component {
         health0 = parseFloat(health0).toFixed(2);
         health1 = parseFloat(health1).toFixed(2);
         health2 = parseFloat(health2).toFixed(2);
-<<<<<<< HEAD
-        health3 = parseFloat(health2).toFixed(2);
-=======
         health3 = parseFloat(health3).toFixed(2);
->>>>>>> master
  
         const popover = (
             <Popover id="modal-popover" title="popover">
@@ -240,15 +225,9 @@ export class SwitchBtn extends React.Component {
                     <Modal.Body>
                     <div>
                         <OverlayTrigger overlay={tooltip0} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
-<<<<<<< HEAD
-                        <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.firstPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip2} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchThree}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip3} placement="right"><div className={this.state.firstPokeball} onClick={this.onClickSwitchFour}></div></OverlayTrigger>
-=======
                         <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
                         <OverlayTrigger overlay={tooltip2} placement="left"><div className={this.state.thridPokeball} onClick={this.onClickSwitchThree}></div></OverlayTrigger>
                         <OverlayTrigger overlay={tooltip3} placement="right"><div className={this.state.fourthPokeball} onClick={this.onClickSwitchFour}></div></OverlayTrigger>
->>>>>>> master
                     </div>
                     </Modal.Body>
                     
