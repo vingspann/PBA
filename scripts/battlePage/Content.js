@@ -128,21 +128,31 @@ export class Content extends React.Component{
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAchat.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Chat</h3>
-                                    <p>To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash. Remember to login into Facebook so that you will not be anonymous and don't forget to talk to Professor Oak with the commands !! help !! bike !! gender !! type</p>
+                                    <p>To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash. Please remember to login into Facebook to access chat functionallity and don't forget to talk to Professor Oak with the commands !! help, !! bike, !! gender, !! type.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Meet the team...</h3>
-                                    <p>We built this site to simulate small, simple pokemon battles.</p>
+                                    <p>A ramshackle, slipshod group of data driven desperados formed through a mutual opposition of optional technologies and excessive strain.  
+                                    The combination of Sean's overbearing enthusiasim and the team's all-around accommidating attitude led to a pleasantly suprising and unified vision for the project.
+                                    We're proud of what we have created here and we hope you enjoy it too.
+                                    </p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Technologies</h3>
-                                    <p></p>
+                                    <p>We built the backend using Python and Flask to build the page and send information between multiple clients and the server.</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
+                                <Carousel.Caption>
+                                    <h3>Technologies... (part2)</h3>
+                                    <p>For the actual pages we used React and Bootstrap extensively.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         </Carousel>
