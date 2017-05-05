@@ -34,6 +34,9 @@ class user():
         self.name = ''
         self.pokemon[0].currentHp = self.pokemon[0].maxHp
         self.pokemon[1].currentHp = self.pokemon[1].maxHp
+        self.pokemon[2].currentHp = self.pokemon[2].maxHp
+        self.pokemon[3].currentHp = self.pokemon[3].maxHp
+
         self.hasWon = False
         self.currentPokemon = 0
         self.recentMove = 0
