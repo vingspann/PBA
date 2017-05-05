@@ -21557,8 +21557,6 @@
 
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
 	        _this.joinGame = _this.joinGame.bind(_this);
-	        _this.gameFullClose = _this.gameFullClose.bind(_this);
-	        _this.gameFullOpen = _this.gameFullOpen.bind(_this);
 	        _this.open = _this.open.bind(_this);
 	        _this.close = _this.close.bind(_this);
 	        return _this;
@@ -21566,11 +21564,7 @@
 
 	    _createClass(Content, [{
 	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            _Socket.Socket.on('gameFull', function () {
-	                this.setState({ showGameFullModal: true });
-	            });
-	        }
+	        value: function componentDidMount() {}
 	    }, {
 	        key: 'close',
 	        value: function close() {
@@ -21580,16 +21574,6 @@
 	        key: 'open',
 	        value: function open() {
 	            this.setState({ showModal: true });
-	        }
-	    }, {
-	        key: 'gameFullClose',
-	        value: function gameFullClose() {
-	            this.setState({ showGameFullModal: false });
-	        }
-	    }, {
-	        key: 'gameFullOpen',
-	        value: function gameFullOpen() {
-	            this.setState({ showGameFullModal: true });
 	        }
 	    }, {
 	        key: 'joinGame',
@@ -21734,7 +21718,7 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/pokemonStadium.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAbattleLog.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
@@ -21753,7 +21737,7 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBApokemonInfo.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
@@ -21772,7 +21756,7 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAcmdBtns.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
@@ -21784,14 +21768,14 @@
 	                                        React.createElement(
 	                                            'p',
 	                                            null,
-	                                            'Once you have joined a battle you will see a few buttons below the Battle Log. Double click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.'
+	                                            'Once you have joined a battle you will see a few buttons below the Battle Log. Click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.'
 	                                        )
 	                                    )
 	                                ),
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAchat.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
@@ -21851,33 +21835,6 @@
 	                                    )
 	                                )
 	                            )
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    _reactBootstrap.Modal,
-	                    { show: this.state.showGameFullModal, onHide: this.gameFullClose, dialogClassName: 'custom-modal' },
-	                    React.createElement(
-	                        _reactBootstrap.Modal.Header,
-	                        { closeButton: true },
-	                        React.createElement(
-	                            _reactBootstrap.Modal.Title,
-	                            null,
-	                            'Game Full'
-	                        )
-	                    ),
-	                    React.createElement(
-	                        _reactBootstrap.Modal.Body,
-	                        null,
-	                        'Sorry. The game is currently full. Try again later!'
-	                    ),
-	                    React.createElement(
-	                        _reactBootstrap.Modal.Footer,
-	                        null,
-	                        React.createElement(
-	                            _reactBootstrap.Button,
-	                            { onClick: this.gameFullClose },
-	                            'Ok'
 	                        )
 	                    )
 	                )
@@ -49682,6 +49639,7 @@
 	        var _this = _possibleConstructorReturn(this, (CmdBtn.__proto__ || Object.getPrototypeOf(CmdBtn)).call(this, props));
 
 	        _this.state = {
+	            'showModal': false,
 	            'name': 'name',
 	            'move1': 'move1',
 	            'move2': 'move2',
@@ -49697,6 +49655,8 @@
 	        _this.handleSubmit = _this.handleSubmit.bind(_this);
 	        _this.confirmMove = _this.confirmMove.bind(_this);
 	        _this.joinGame = _this.joinGame.bind(_this);
+	        _this.open = _this.open.bind(_this);
+	        _this.close = _this.close.bind(_this);
 	        _this.componentDidMount = _this.componentDidMount.bind(_this);
 
 	        return _this;
@@ -49751,6 +49711,16 @@
 	            this.setState({ showModal: false });
 	        }
 	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ showModal: false });
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            this.setState({ showModal: true });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this2 = this;
@@ -49772,6 +49742,10 @@
 	                    'user': data['user']
 	                });
 	                _this2.forceUpdate();
+	            });
+
+	            _Socket.Socket.on('gameFull', function (data) {
+	                _this2.setState({ 'showModal': true }).bind(_this2);
 	            });
 	        }
 	    }, {
@@ -49885,7 +49859,34 @@
 	            return React.createElement(
 	                'div',
 	                null,
-	                moveArea
+	                moveArea,
+	                React.createElement(
+	                    _reactBootstrap.Modal,
+	                    { show: this.state.showModal, bsSize: 'small', onHide: this.close, dialogClassName: 'custom-modal' },
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Header,
+	                        { closeButton: true },
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Title,
+	                            null,
+	                            'Game Full'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Body,
+	                        null,
+	                        'Sorry. The game is currently full. Try again later!'
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Footer,
+	                        null,
+	                        React.createElement(
+	                            _reactBootstrap.Button,
+	                            { bsStyle: 'primary', onClick: this.close },
+	                            'Ok'
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
