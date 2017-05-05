@@ -199,6 +199,14 @@ body {
      
 }
 
+#ourPokemon {
+    text-align: left;
+}
+
+#theirPokemon {
+    text-align: right;
+}
+
 #opHealthLog {
     font-family: pokemon-font, Arial, sans-serif;
     flex-grow: 1;
