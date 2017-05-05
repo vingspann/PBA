@@ -44,7 +44,7 @@ Brandon Avery - Page layout, logic flow, coast-based imbibing extraordinaire
 
 Will Czubiak - Backend development, socket poking, master of potatoes
 
-Jason Fitzgerald - Chat log, Battle log, backend lumberjack (logs? heyo!)
+Jason Fitzgerald - Chat log, Pokemon Pane, he'll log your pane!
 
 ## Aspects Completed
 ### Handin-1
