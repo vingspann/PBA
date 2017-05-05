@@ -49777,11 +49777,18 @@
 	                });
 	                _this2.forceUpdate();
 	            });
+<<<<<<< HEAD
 	            {/*
 	                Socket.on('gameFull', (data) => {
 	                 this.setState({ 'showModal': true}).bind(this);
 	                });
 	                */}
+=======
+
+	            _Socket.Socket.on('gameFull', function (data) {
+	                _this2.setState({ 'showModal': true }).bind(_this2);
+	            });
+>>>>>>> master
 	        }
 	    }, {
 	        key: 'render',
@@ -49894,7 +49901,34 @@
 	            return React.createElement(
 	                'div',
 	                null,
-	                moveArea
+	                moveArea,
+	                React.createElement(
+	                    _reactBootstrap.Modal,
+	                    { show: this.state.showModal, bsSize: 'small', onHide: this.close, dialogClassName: 'custom-modal' },
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Header,
+	                        { closeButton: true },
+	                        React.createElement(
+	                            _reactBootstrap.Modal.Title,
+	                            null,
+	                            'Game Full'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Body,
+	                        null,
+	                        'Sorry. The game is currently full. Try again later!'
+	                    ),
+	                    React.createElement(
+	                        _reactBootstrap.Modal.Footer,
+	                        null,
+	                        React.createElement(
+	                            _reactBootstrap.Button,
+	                            { bsStyle: 'primary', onClick: this.close },
+	                            'Ok'
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
