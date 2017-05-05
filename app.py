@@ -5,7 +5,8 @@ from user import user
 from pokeType import pokeType
 
 oak = bot()
-
+global turn
+turn = 0
 #building a global list of types for determining
 #damage in the Battle logic
 types = []
@@ -26,7 +27,8 @@ def startup():
 
 # this is where the battle and turns will happen
 def battle():
-    
+    global turn
+    turn += 1
     # initial if statement so computer skips code section with least amount of checks
     if player[0].recentMove == 6 or player[1].recentMove == 6:
         if player[0].recentMove == 6 and player[1].recentMove == 6:
@@ -38,7 +40,8 @@ def battle():
         # if either player surrenders this ends the battle sequence.
         return
     
-    
+    turnMsg = "Turn " + str(turn)
+    socketio.emit('battleLogEmit', {'text' : turnMsg})
     p1 = player[0].currentPokemon
     p2 = player[1].currentPokemon
     m1 = player[0].recentMove
@@ -74,12 +77,17 @@ def battle():
         fPoke = player[f].currentPokemon
         updatePokemon(player[f].ID)
         fTurn = False
+        switchMsg = "Player " + str(f + 1) + " sent out " + player[f].pokemon[fPoke].name + "."
+        socketio.emit('battleLogEmit', {'text' : switchMsg})
+
     
     if player[s].recentMove == 5:
         battleSwitch(s, 1)
         sPoke = player[s].currentPokemon
         updatePokemon(player[s].ID)
         sTurn = False
+        switchMsg = "Player " + str(s + 1) + " sent out " + player[s].pokemon[sPoke].name + "."
+        socketio.emit('battleLogEmit', {'text' : switchMsg})
     
     # If they didn't switch, then they can attack
     if fTurn:
@@ -121,6 +129,10 @@ def battle():
     
         # Sends the winner and losers number to the ending function
         endBattle(w, l, 0)
+            
+    line = "===================================="
+    socketio.emit('battleLogEmit', {'text' : line})
+
         
 # Helper function to make battle function less repetative
 def battleDamage(p, cp, m, op, ocp, om):
@@ -404,6 +416,7 @@ def reset():
     player[1].reset()
     updateSpectator()
     i = 0
+    turn = 0
     
 @socketio.on('confirmMove')
 def confirmMove():
