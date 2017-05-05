@@ -164,6 +164,8 @@ export class SwitchBtn extends React.Component {
         
         health0 = parseFloat(health0).toFixed(2);
         health1 = parseFloat(health1).toFixed(2);
+        health2 = parseFloat(health2).toFixed(2);
+        health3 = parseFloat(health2).toFixed(2);
  
         const popover = (
             <Popover id="modal-popover" title="popover">
@@ -222,9 +224,9 @@ export class SwitchBtn extends React.Component {
                     <Modal.Body>
                     <div>
                         <OverlayTrigger overlay={tooltip0} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchOne}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip1} placement="right"><div className={this.state.firstPokeball} onClick={this.onClickSwitchTwo}></div></OverlayTrigger>
                         <OverlayTrigger overlay={tooltip2} placement="left"><div className={this.state.firstPokeball} onClick={this.onClickSwitchThree}></div></OverlayTrigger>
-                        <OverlayTrigger overlay={tooltip3} placement="right"><div className={this.state.secondPokeball} onClick={this.onClickSwitchFour}></div></OverlayTrigger>
+                        <OverlayTrigger overlay={tooltip3} placement="right"><div className={this.state.firstPokeball} onClick={this.onClickSwitchFour}></div></OverlayTrigger>
                     </div>
                     </Modal.Body>
                     

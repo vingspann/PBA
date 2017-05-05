@@ -20435,8 +20435,6 @@ var Content = exports.Content = function (_React$Component) {
 
         _this.componentDidMount = _this.componentDidMount.bind(_this);
         _this.joinGame = _this.joinGame.bind(_this);
-        _this.gameFullClose = _this.gameFullClose.bind(_this);
-        _this.gameFullOpen = _this.gameFullOpen.bind(_this);
         _this.open = _this.open.bind(_this);
         _this.close = _this.close.bind(_this);
         return _this;
@@ -20444,11 +20442,7 @@ var Content = exports.Content = function (_React$Component) {
 
     _createClass(Content, [{
         key: 'componentDidMount',
-        value: function componentDidMount() {
-            _Socket.Socket.on('gameFull', function () {
-                this.setState({ showGameFullModal: true });
-            });
-        }
+        value: function componentDidMount() {}
     }, {
         key: 'close',
         value: function close() {
@@ -20458,16 +20452,6 @@ var Content = exports.Content = function (_React$Component) {
         key: 'open',
         value: function open() {
             this.setState({ showModal: true });
-        }
-    }, {
-        key: 'gameFullClose',
-        value: function gameFullClose() {
-            this.setState({ showGameFullModal: false });
-        }
-    }, {
-        key: 'gameFullOpen',
-        value: function gameFullOpen() {
-            this.setState({ showGameFullModal: true });
         }
     }, {
         key: 'joinGame',
@@ -20662,7 +20646,7 @@ var Content = exports.Content = function (_React$Component) {
                                         React.createElement(
                                             'p',
                                             null,
-                                            'Once you have joined a battle you will see a few buttons below the Battle Log. Double click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.'
+                                            'Once you have joined a battle you will see a few buttons below the Battle Log. Click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.'
                                         )
                                     )
                                 ),
@@ -20729,33 +20713,6 @@ var Content = exports.Content = function (_React$Component) {
                                     )
                                 )
                             )
-                        )
-                    )
-                ),
-                React.createElement(
-                    _reactBootstrap.Modal,
-                    { show: this.state.showGameFullModal, onHide: this.gameFullClose, dialogClassName: 'custom-modal' },
-                    React.createElement(
-                        _reactBootstrap.Modal.Header,
-                        { closeButton: true },
-                        React.createElement(
-                            _reactBootstrap.Modal.Title,
-                            null,
-                            'Game Full'
-                        )
-                    ),
-                    React.createElement(
-                        _reactBootstrap.Modal.Body,
-                        null,
-                        'Sorry. The game is currently full. Try again later!'
-                    ),
-                    React.createElement(
-                        _reactBootstrap.Modal.Footer,
-                        null,
-                        React.createElement(
-                            _reactBootstrap.Button,
-                            { onClick: this.gameFullClose },
-                            'Ok'
                         )
                     )
                 )
@@ -21274,8 +21231,8 @@ var CmdBtn = exports.CmdBtn = function (_React$Component) {
                 _this2.forceUpdate();
             });
 
-            _Socket.Socket.on('gameFull', function () {
-                this.setState({ 'showModal': true });
+            _Socket.Socket.on('gameFull', function (data) {
+                _this2.setState({ 'showModal': true }).bind(_this2);
             });
         }
     }, {
@@ -21967,6 +21924,8 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
 
             health0 = parseFloat(health0).toFixed(2);
             health1 = parseFloat(health1).toFixed(2);
+            health2 = parseFloat(health2).toFixed(2);
+            health3 = parseFloat(health2).toFixed(2);
 
             var popover = React.createElement(
                 _reactBootstrap.Popover,
@@ -22054,7 +22013,7 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
                                 React.createElement(
                                     _reactBootstrap.OverlayTrigger,
                                     { overlay: tooltip1, placement: 'right' },
-                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchTwo })
+                                    React.createElement('div', { className: this.state.firstPokeball, onClick: this.onClickSwitchTwo })
                                 ),
                                 React.createElement(
                                     _reactBootstrap.OverlayTrigger,
@@ -22064,7 +22023,7 @@ var SwitchBtn = exports.SwitchBtn = function (_React$Component) {
                                 React.createElement(
                                     _reactBootstrap.OverlayTrigger,
                                     { overlay: tooltip3, placement: 'right' },
-                                    React.createElement('div', { className: this.state.secondPokeball, onClick: this.onClickSwitchFour })
+                                    React.createElement('div', { className: this.state.firstPokeball, onClick: this.onClickSwitchFour })
                                 )
                             )
                         ),

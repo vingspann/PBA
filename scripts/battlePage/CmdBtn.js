@@ -106,9 +106,9 @@ export class CmdBtn extends React.Component {
             this.forceUpdate();
         });
         
-        Socket.on('gameFull', function() {
-          this.setState({ 'showModal': true});
-      });
+        Socket.on('gameFull', (data) => {
+          this.setState({ 'showModal': true}).bind(this);
+        });
     }
     
     

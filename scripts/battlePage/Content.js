@@ -24,16 +24,12 @@ export class Content extends React.Component{
         
         this.componentDidMount = this.componentDidMount.bind(this);
         this.joinGame = this.joinGame.bind(this);
-        this.gameFullClose = this.gameFullClose.bind(this);
-        this.gameFullOpen = this.gameFullOpen.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
     };
 
     componentDidMount(){
-      Socket.on('gameFull', function() {
-          this.setState({ showGameFullModal: true});
-      });
+      
 
     }
     
@@ -43,14 +39,6 @@ export class Content extends React.Component{
 
     open() {
         this.setState({ showModal: true });
-    }
-    
-     gameFullClose() {
-        this.setState({ showGameFullModal: false });
-    }
-
-    gameFullOpen() {
-        this.setState({ showGameFullModal: true });
     }
     
     joinGame() {
@@ -133,7 +121,7 @@ export class Content extends React.Component{
                                 <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Pokemon Commands</h3>
-                                    <p>Once you have joined a battle you will see a few buttons below the Battle Log. Double click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.</p>
+                                    <p>Once you have joined a battle you will see a few buttons below the Battle Log. Click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
@@ -165,20 +153,6 @@ export class Content extends React.Component{
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
-                    </Modal.Footer>
-                </Modal>
-                
-                <Modal show={this.state.showGameFullModal} onHide={this.gameFullClose} dialogClassName="custom-modal">
-                    <Modal.Header closeButton>
-                        <Modal.Title>Game Full</Modal.Title>
-                    </Modal.Header>
-                    
-                    <Modal.Body>
-                        Sorry. The game is currently full. Try again later!
-                    </Modal.Body>
-                    
-                    <Modal.Footer>
-                      <Button onClick={this.gameFullClose}>Ok</Button>
                     </Modal.Footer>
                 </Modal>
                 
