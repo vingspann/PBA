@@ -79,6 +79,7 @@ export class SwitchBtn extends React.Component {
         
 
     }
+
      onClickSwitchThree(){
 
         
@@ -98,6 +99,7 @@ export class SwitchBtn extends React.Component {
         
 
     }
+
      onClickSwitchFour(){
 
         
