@@ -21813,7 +21813,7 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/slide1.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/pythonFlaskslide.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
@@ -21832,7 +21832,7 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/slide1.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/bootstrapReact.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,
@@ -21845,6 +21845,25 @@
 	                                            'p',
 	                                            null,
 	                                            'For the actual pages we used React and Bootstrap extensively.'
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    _reactBootstrap.Carousel.Item,
+	                                    null,
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAsource.jpg' }),
+	                                    React.createElement(
+	                                        _reactBootstrap.Carousel.Caption,
+	                                        null,
+	                                        React.createElement(
+	                                            'h3',
+	                                            null,
+	                                            'Why PBA Stadium?'
+	                                        ),
+	                                        React.createElement(
+	                                            'p',
+	                                            null,
+	                                            'Other Pokemon battle simulators already exist, but we want to incorporate social media to encourage participation, facilitate community building, and curb abuse. '
 	                                        )
 	                                    )
 	                                )
