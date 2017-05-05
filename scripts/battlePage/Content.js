@@ -104,28 +104,28 @@ export class Content extends React.Component{
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/pokemonStadium.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAbattleLog.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Battle Log</h3>
                                     <p>The Battle Log is the black window in the center of your screen.  All actions and results will be displayed here.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBApokemonInfo.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Pokemon Info</h3>
                                     <p>To the left of the Battle Log is the Pokemon Info window.  This window shows your currently selected pokemon and the opponents currently selected pokemon.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAcmdBtns.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Pokemon Commands</h3>
                                     <p>Once you have joined a battle you will see a few buttons below the Battle Log. Click the button and the move will be set.  Clicking Confirm Move will let the system know you are ready to continue.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/Pokémon_Stadium_2.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAchat.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Chat</h3>
                                     <p>To the right of the Battle Log is our chat window.  Feel free to converse about Pokemon or talk trash.</p>

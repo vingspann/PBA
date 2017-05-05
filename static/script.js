@@ -20596,7 +20596,7 @@ var Content = exports.Content = function (_React$Component) {
                                 React.createElement(
                                     _reactBootstrap.Carousel.Item,
                                     null,
-                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/pokemonStadium.jpg' }),
+                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAbattleLog.jpg' }),
                                     React.createElement(
                                         _reactBootstrap.Carousel.Caption,
                                         null,
@@ -20615,7 +20615,7 @@ var Content = exports.Content = function (_React$Component) {
                                 React.createElement(
                                     _reactBootstrap.Carousel.Item,
                                     null,
-                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBApokemonInfo.jpg' }),
                                     React.createElement(
                                         _reactBootstrap.Carousel.Caption,
                                         null,
@@ -20634,7 +20634,7 @@ var Content = exports.Content = function (_React$Component) {
                                 React.createElement(
                                     _reactBootstrap.Carousel.Item,
                                     null,
-                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAcmdBtns.jpg' }),
                                     React.createElement(
                                         _reactBootstrap.Carousel.Caption,
                                         null,
@@ -20653,7 +20653,7 @@ var Content = exports.Content = function (_React$Component) {
                                 React.createElement(
                                     _reactBootstrap.Carousel.Item,
                                     null,
-                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/Pok\xE9mon_Stadium_2.jpg' }),
+                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAchat.jpg' }),
                                     React.createElement(
                                         _reactBootstrap.Carousel.Caption,
                                         null,
