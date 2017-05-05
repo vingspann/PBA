@@ -21794,7 +21794,7 @@
 	                                React.createElement(
 	                                    _reactBootstrap.Carousel.Item,
 	                                    null,
-	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAmeeTheTeam.jpg' }),
+	                                    React.createElement('img', { width: 900, height: 500, className: 'carouselImg', alt: '900x500', src: '../static/img/PBAmeetTheTeam.jpg' }),
 	                                    React.createElement(
 	                                        _reactBootstrap.Carousel.Caption,
 	                                        null,

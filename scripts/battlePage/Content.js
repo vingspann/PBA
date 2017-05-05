@@ -132,7 +132,7 @@ export class Content extends React.Component{
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAmeeTheTeam.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAmeetTheTeam.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Meet the team...</h3>
                                     <p>A ramshackle, slipshod group of data driven desperados formed through a mutual opposition of optional technologies and excessive strain.  
