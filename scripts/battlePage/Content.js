@@ -142,17 +142,24 @@ export class Content extends React.Component{
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/pythonFlaskslide.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Technologies</h3>
                                     <p>We built the backend using Python and Flask to build the page and send information between multiple clients and the server.</p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/slide1.jpg"/>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/bootstrapReact.jpg"/>
                                 <Carousel.Caption>
                                     <h3>Technologies... (part2)</h3>
                                     <p>For the actual pages we used React and Bootstrap extensively.</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img width={900} height={500} className="carouselImg" alt="900x500" src="../static/img/PBAsource.jpg"/>
+                                <Carousel.Caption>
+                                    <h3>Why PBA Stadium?</h3>
+                                    <p>Other Pokemon battle simulators already exist, but we want to incorporate social media to encourage participation, facilitate community building, and curb abuse. </p>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         </Carousel>
