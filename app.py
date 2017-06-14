@@ -240,8 +240,8 @@ def battleSwitch(p, method):
 def endBattle(w, l, method):
     
     if method == 0:
-        msg1 = "Player " + str(w + 1) + "defeated Player " + str(l + 1) + "\'s team " + player[l].pokemon[0].name + ", " + player[l].pokemon[1].name + ", " + player[l].pokemon[2].name + ", and " + player[l].pokemon[3].name + "."
-        msg2 = "With their team " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
+        msg1 = "Player " + str(w + 1) + " defeated Player " + str(l + 1) + "\'s team of " + player[l].pokemon[0].name + ", " + player[l].pokemon[1].name + ", " + player[l].pokemon[2].name + ", and " + player[l].pokemon[3].name + "."
+        msg2 = "With their team of " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
         
     elif method == 1:
         msg1 = "Player " + str (w + 1) + " wins!"
