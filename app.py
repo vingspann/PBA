@@ -27,6 +27,12 @@ def startup():
 
 # this is where the battle and turns will happen
 def battle():
+    
+    # This resets the battleLog when two players start a new game
+    # I can move this be sooner, but I figured this would be a good spot for now
+    if turn is 0:
+        socketio.emit('battleLogReset');
+    
     global turn
     turn += 1
     # initial if statement so computer skips code section with least amount of checks
