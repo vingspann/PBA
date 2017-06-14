@@ -20,7 +20,7 @@ export class BattleLog extends React.Component{
            this.updateScroll();
         });
         Socket.on('battleLogReset', (data) =>{
-            this.state.log = [];
+            this.setState({ 'log': [] });
         });
     }
     
