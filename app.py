@@ -27,13 +27,13 @@ def startup():
 
 # this is where the battle and turns will happen
 def battle():
-    
+    global turn
     # This resets the battleLog when two players start a new game
     # I can move this be sooner, but I figured this would be a good spot for now
     if turn is 0:
         socketio.emit('battleLogReset');
     
-    global turn
+    
     turn += 1
     # initial if statement so computer skips code section with least amount of checks
     if player[0].recentMove == 6 or player[1].recentMove == 6:
@@ -254,6 +254,7 @@ def endBattle(w, l, method):
         msg2 = "Player " + str(l + 1) + "chose to surrender."
     elif method == 2:
         msg1 = "Battle ended in a draw. Both players surrendered."
+        msg2 = ""
     print "win emits"
     # Emits a seperate msg to each player, and all spectators get the same message
     socketio.emit('battleLogEmit', {'text' : msg1})
