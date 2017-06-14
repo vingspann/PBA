@@ -251,7 +251,7 @@ def endBattle(w, l, method):
         
     elif method == 1:
         msg1 = "Player " + str (w + 1) + " wins!"
-        msg2 = "Player " + str(l + 1) + "chose to surrender."
+        msg2 = "Player " + str(l + 1) + " chose to surrender."
     elif method == 2:
         msg1 = "Battle ended in a draw. Both players surrendered."
         msg2 = ""
