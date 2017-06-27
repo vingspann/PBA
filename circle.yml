@@ -1,9 +1,13 @@
-#dependencies:
-#  override:
-#    - nvm install 6
-#    - npm install
-#    - npm install webpack -g
-#    - npm i prop-types
+machine:
+  node:
+    version: 6.11.0
+
+dependencies:
+  override:
+    - nvm install 6
+    - npm install
+    - npm install webpack -g
+    - npm i prop-types
 #    - webpack
 
 deployment:
