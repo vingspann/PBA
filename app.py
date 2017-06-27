@@ -28,6 +28,12 @@ def startup():
 # this is where the battle and turns will happen
 def battle():
     global turn
+    # This resets the battleLog when two players start a new game
+    # I can move this be sooner, but I figured this would be a good spot for now
+    if turn is 0:
+        socketio.emit('battleLogReset');
+    
+    
     turn += 1
     # initial if statement so computer skips code section with least amount of checks
     if player[0].recentMove == 6 or player[1].recentMove == 6:
@@ -117,6 +123,11 @@ def battle():
     # Lets them select a new move for the next turn.
     player[0].lockMove = False
     player[1].lockMove = False
+    
+    #Moved the turn delimeter to up here. This allows the final message to appear after the final turn.
+    line = "===================================="
+    socketio.emit('battleLogEmit', {'text' : line})
+    
     if player[0].pokemonLeft == 0 or player[1].pokemonLeft == 0: 
     
         # Defaults to player 0 winner. Changes if they lost
@@ -130,8 +141,7 @@ def battle():
         # Sends the winner and losers number to the ending function
         endBattle(w, l, 0)
             
-    line = "===================================="
-    socketio.emit('battleLogEmit', {'text' : line})
+    
 
         
 # Helper function to make battle function less repetative
@@ -236,22 +246,20 @@ def battleSwitch(p, method):
 def endBattle(w, l, method):
     
     if method == 0:
-        wMsg = "Congratulations! You won with " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
-        lMsg = "Oh no! You lost with " + player[l].pokemon[0].name + ", " + player[l].pokemon[1].name + ", " + player[l].pokemon[2].name + ", and " + player[l].pokemon[3].name + "."
-        specMsg = "Player " + str(w + 1) + " won with their team of " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
+        msg1 = "Player " + str(w + 1) + " defeated Player " + str(l + 1) + "\'s team of " + player[l].pokemon[0].name + ", " + player[l].pokemon[1].name + ", " + player[l].pokemon[2].name + ", and " + player[l].pokemon[3].name + "."
+        msg2 = "With their team of " + player[w].pokemon[0].name + ", " + player[w].pokemon[1].name + ", " + player[w].pokemon[2].name + ", and " + player[w].pokemon[3].name + "."
+        
     elif method == 1:
-        wMsg = "You Win! Player " + str (l + 1) + " chose to surrender."
-        lMsg = "You lose. You chose to surrender. "
-        specMsg = "Player " + str(w + 1) + " wins. Player " + str (l + 1) + " surrendered."
+        msg1 = "Player " + str (w + 1) + " wins!"
+        msg2 = "Player " + str(l + 1) + " chose to surrender."
     elif method == 2:
-        wMsg = "It's a draw! You both surrendered."
-        lMsg = wMsg
-        specMsg = "Battle ended in a draw. Both players surrendered."
+        msg1 = "Battle ended in a draw. Both players surrendered."
+        msg2 = ""
     print "win emits"
     # Emits a seperate msg to each player, and all spectators get the same message
-    socketio.emit('battleLogEmit', {'text' : wMsg}, room=player[w].ID)
-    socketio.emit('battleLogEmit', {'text' : lMsg}, room=player[l].ID)
-    socketio.emit('battleLogEmit', {'text' : specMsg}, room='spectator')
+    socketio.emit('battleLogEmit', {'text' : msg1})
+    socketio.emit('battleLogEmit', {'text' : msg2})
+
     reset()
 
 # This function will emit to CmdBtn to dynamically update the names of the moves
